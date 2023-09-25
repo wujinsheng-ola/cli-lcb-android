@@ -1,0 +1,177 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'center.uploadpgy.plugin'
+def gitHash = "git rev-parse HEAD".execute().text.trim()
+def buildTime = new Date().format("yyyy-MM-dd-HH-mm-ss")
+android {
+//    ndkVersion "23.1.7779620"
+//    ndkVersion "major.minor.build"
+    compileSdkVersion "${rootProject.ext.android.compileSdkVersion}" as Integer
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion as Integer
+        targetSdkVersion rootProject.ext.android.targetSdkVersion as Integer
+        applicationId rootProject.ext.android.applicationId
+        versionName rootProject.ext.android.versionName
+        versionCode rootProject.ext.android.versionCode as Integer
+        ndk {
+            abiFilters "arm64-v8a", "armeabi-v7a"
+//            , "x86"
+        }
+        multiDexEnabled true
+
+        manifestPlaceholders = rootProject.ext.manifestPlaceholders
+        buildConfigField "String", "GIT_HASH", "\"${gitHash}\""
+        buildConfigField "String", "GOOGLE_REWARD_ID", "\"${rootProject.ext.dependVersion.googleRewardId}\""
+        buildConfigField "String", "GOOGLE_BANNER_ID", "\"${rootProject.ext.dependVersion.googleBannerId}\""
+        buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+    }
+
+    signingConfigs {
+        release {
+            keyAlias "${rootProject.ext.keystore.keyAlias}"
+            keyPassword "${rootProject.ext.keystore.keyPassword}"
+            storeFile file("${rootProject.ext.keystore.storeFile}")
+            storePassword "${rootProject.ext.keystore.storePassword}"
+            println("release storeFile:" + file("${rootProject.ext.keystore.storeFile}").getAbsolutePath())
+            // 使用旧版签名，禁用V2版签名模式
+            v2SigningEnabled true
+        }
+    }
+    android {
+        compileOptions {
+            sourceCompatibility 1.8
+            targetCompatibility 1.8
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildTypes {
+        debug {
+            setProperty("archivesBaseName", "${defaultConfig.applicationId}-${defaultConfig.versionName}-${defaultConfig.versionCode}")
+            signingConfig signingConfigs.release
+//            minifyEnabled true
+//            shrinkResources true
+//            zipAlignEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
+        }
+        release {
+            setProperty("archivesBaseName", "${defaultConfig.applicationId}-${defaultConfig.versionName}-${defaultConfig.versionCode}-${buildTime}")
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            if (variant.buildType == "release") {
+                outputFileName = "bb" + "_release_time_" + releaseTime() + ".apk"
+            }
+            if (variant.buildType == "debug") {
+                outputFileName = "bb" + "_debug_time_" + releaseTime() + ".apk"
+            }
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+        pickFirst 'lib/*/libc++_shared.so'
+    }
+
+    lintOptions {
+        // true:关闭lint报告的分析进度
+        quiet true
+        // true:错误发生后停止gradle构建
+        abortOnError false
+        // true:只报告error
+//        ignoreWarnings true
+//        // true:忽略有错误的文件的全/绝对路径(默认是true)
+//        absolutePaths true
+//        // true:检查所有问题点，包含其他默认关闭项
+//        checkAllWarnings true
+//        // true:所有warning当做error
+//        warningsAsErrors true
+//        // 关闭指定问题检查
+//        disable 'TypographyFractions','TypographyQuotes'
+//        // 打开指定问题检查
+//        enable 'RtlHardcoded','RtlCompat', 'RtlEnabled'
+//        // 仅检查指定问题
+//        check 'NewApi', 'InlinedApi'
+//        // true:error输出文件不包含源码行号
+//        noLines true
+//        // true：显示错误的所有发生位置，不截取
+//        showAll true
+//        // 回退lint设置(默认规则)
+//        lintConfig file("default-lint.xml")
+//        // true：生成txt格式报告(默认false)
+//        textReport true
+//        // 重定向输出；可以是文件或'stdout'
+//        textOutput 'stdout'
+//        // true：生成XML格式报告
+//        xmlReport false
+//        // 指定xml报告文档(默认lint-results.xml)
+//        xmlOutput file("lint-report.xml")
+//        // true：生成HTML报告(带问题解释，源码位置，等)
+//        htmlReport true
+//        // html报告可选路径(构建器默认是lint-results.html )
+//        htmlOutput file("lint-report.html")
+//        //  true：所有正式版构建执行规则生成崩溃的lint检查，如果有崩溃问题将停止构建
+//        checkReleaseBuilds true
+//        // 在发布版本编译时检查(即使不包含lint目标)，指定问题的规则生成崩溃
+//        fatal 'NewApi', 'InlineApi'
+//        // 指定问题的规则生成错误
+//        error 'Wakelock', 'TextViewEdits'
+//        // 指定问题的规则生成警告
+//        warning 'ResourceAsColor'
+//        // 忽略指定问题的规则(同关闭检查)
+//        ignore 'TypographyQuotes'
+    }
+}
+
+def releaseTime() {
+    return new Date().format("yyyyMMddHHmmss")
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation platform('com.google.firebase:firebase-bom:29.1.0')
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+    debugImplementation project(path: ':framework-core')
+    debugImplementation project(path: ':translate-core')
+    debugImplementation project(path: ':lcb-protocols')
+    kapt "androidx.room:room-compiler:${rootProject.ext.room_version}"
+}
+
+
+uploadPgyParams {
+    apiKey = "ea40be973a30db7fcc3e09941793ca8b"
+//    apiKey = "cfaf5b8c8fb6d39b783389b1854701e2"
+    appName = "release"//暂时无用 buildTypeName = "Release"
+    buildInstallType = 1
+    buildPassword = ""
+}
+

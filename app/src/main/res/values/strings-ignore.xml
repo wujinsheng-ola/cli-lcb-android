@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="month_prefix" translatable="false">-</string>
+    <string name="year_prefix" translatable="false">-</string>
+    <string name="notification_channel_id" translatable="false">squeeze_video</string>
+</resources>

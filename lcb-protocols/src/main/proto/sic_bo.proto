@@ -1,0 +1,109 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+enum SIC_BO_ENUM_DEFINE {
+    SIC_BO_UNKNOWN = 0;
+    SIC_BO_GAME_PAUSE = 1;  // 游戏暂停
+    SIC_BO_GAME_CLOSE = 2;  // 游戏关闭
+}
+
+message SicBoMeta {
+    // @inject_tag: json:"sic_bo_init_status"
+    int32 sic_bo_init_status = 1; // SicBo初始化状态
+    // @inject_tag: json:"profit_line"
+    int64 profit_line = 2; // 利润分割线，到达此金额进行利润分割
+    // @inject_tag: json:"profit_money"
+    int64 profit_money = 3; // 利润分割金额，达到利润分割线后，分走的金额
+    // @inject_tag: json:"prize_pool_refill_line"
+    int64 prize_pool_refill_line = 4;// 奖池补充线
+    // @inject_tag: json:"prize_pool_lower_limit_today"
+    int64 prize_pool_lower_limit_today = 5; // 每日奖池底限
+    // @inject_tag: json:"reward_upper_limit_rate"
+    int64 reward_upper_limit_rate = 6; // 反奖上限
+    // @inject_tag: json:"gold_finger_rate"
+    int64 gold_finger_rate = 7; // 作弊率
+    SicBoTimeSharding time_info = 8;
+    // @inject_tag: json:"sic_bo_config"
+    repeated SicBoConfig sic_bo_config = 9; // 中奖配置
+}
+
+message SicBoTimeSharding {
+    // @inject_tag: json:"staking_duration"
+    int64 staking_duration = 1;  // 下注
+    // @inject_tag: json:"lottery_duration"
+    int64 lottery_duration = 2;  // 开奖
+    // @inject_tag: json:"show_result_duration"
+    int64 show_result_duration = 3;  // 结果展示时间
+    // @inject_tag: json:"show_chip_duration"
+    int64 show_chip_duration = 4;  // 筹码动效时间
+    // @inject_tag: json:"show_dice_duration"
+    int64 show_dice_duration = 5;  // 筹码展示时间
+    // @inject_tag: json:"over_duration"
+    int64 over_duration = 6;  // 结束
+}
+
+enum SIC_BO_ID {
+    SIC_BO_ID_UNKNOWN = 0;
+    SIC_BO_ID_SMALL = 1; // 小
+    SIC_BO_ID_BIG = 2;  // 大
+    SIC_BO_ID_TRIPLES = 3; // 豹子
+    SIC_BO_ID_REFUND = 4; // 退款
+}
+
+enum SIC_BO_CHIP_LIST {
+    CHIP_UNKNOWN = 0;
+    CHIP_10  = 10;
+    CHIP_100 = 100;
+    CHIP_1K  = 1000;
+    CHIP_10K = 10000;
+}
+
+enum SIC_BO_STATUS {
+    SIC_BO_STATUS_UNKNOW = 0;
+    SIC_BO_STATUS_STAKING = 1;  // 下注
+    SIC_BO_STATUS_LOTTERY = 2;  // 开奖
+    SIC_BO_STATUS_OVER = 3;  // 结束
+}
+
+message SicBoConfig {
+    // @inject_tag: json:"SIC_BO_ID"
+    SIC_BO_ID id = 1;
+    // @inject_tag: json:"odds"
+    int32 odds = 2; // 赔率
+    // @inject_tag: json:"hit_rate"
+    int32 hit_rate = 3;  // 中奖率
+}
+
+// 下注明细
+message SicBoBet {
+    SIC_BO_ID id = 1;
+    int64 bet = 2;
+}
+
+message SicBoRoundExtra {
+    repeated SicBoBet betList = 1;
+    repeated int32 dice = 2;
+}
+
+// 下注明细
+message SicBoUserExtra {
+    repeated SicBoUserBet detail = 1;
+}
+
+message SicBoUserBet {
+    SIC_BO_ID id = 1;
+    int64 bet = 2;
+}
+
+enum SIC_BO_SWITCH{
+    SIC_BO_SWITCH_CLOSE = 0; // 开关关闭
+    SIC_BO_SWITCH_OPEN  = 1; // 开关打开
+}
+
+message SicBoSwitch {
+    // @inject_tag: json:"switch"
+    int32 switch = 1; // 0关，1开
+    uint32 level_limit = 2;
+}

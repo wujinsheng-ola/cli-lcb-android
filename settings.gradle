@@ -1,0 +1,4 @@
+include ':app'
+include ':framework-core'
+include ':translate-core'
+include ':lcb-protocols'
