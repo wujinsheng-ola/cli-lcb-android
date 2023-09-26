@@ -7,6 +7,8 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.Utils
 import com.bumptech.glide.Glide
 import com.salton123.app.BaseApplication
+import sg.partying.lcb.android.config.AppConfig
+import sg.partying.lcb.android.config.ConfigProvider
 
 /**
  * User: newSalton@outlook.com
@@ -34,6 +36,8 @@ class XApp : BaseApplication() {
                 override fun onBackground(activity: Activity?) {
                 }
             })
+        val configProvider = ConfigProvider()
+        AppConfig.init(configProvider)
     }
 
 

@@ -38,6 +38,14 @@ ext {
             "crashreport_upgrade"      : "com.tencent.bugly:crashreport_upgrade:1.5.23",
             "nativecrashreport"        : "com.tencent.bugly:nativecrashreport:3.9.2", //libBugly.so
             "immersionbar"             : "com.geyifeng.immersionbar:immersionbar:3.2.2",
+            "gson"                     : "com.google.code.gson:gson:2.8.6",
+            "okhttp"                   : "com.squareup.okhttp3:okhttp:3.14.7",
+            "logging-interceptor"      : "com.squareup.okhttp3:logging-interceptor:3.9.1",
+            "adapter-rxjava"           : "com.squareup.retrofit2:adapter-rxjava2:2.9.0",
+            "retrofit"                 : "com.squareup.retrofit2:retrofit:2.9.0",
+            "rxandroid"                : "io.reactivex.rxjava2:rxandroid:2.1.0",
+            "converter-gson"           : "com.squareup.retrofit2:converter-gson:2.9.0",
+
     ]
 
     //依赖第三方配置
