@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.salton123.base.feature.ImmersionFeature
+import sg.partying.lcb.android.Session
 
 /**
  * Time:2022/1/27 10:52
@@ -14,8 +15,12 @@ class SplashActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         ImmersionFeature(this).onBind()
         super.onCreate(savedInstanceState)
-        startActivity(Intent(this, HomeActivity::class.java))
-        finish()
+        if (Session.isLogined) {
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+        }else{
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
     }
 
     override fun onBackPressed() {
