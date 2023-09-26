@@ -8,7 +8,8 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.salton123.eleph.R;
+import sg.partying.lcb.android.R;
+
 
 /**
  * User: newSalton@outlook.com

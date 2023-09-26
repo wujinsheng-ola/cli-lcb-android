@@ -55,7 +55,7 @@
 
     <application
 
-        android:name=".XApp"
+        android:name="com.salton123.eleph.XApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"

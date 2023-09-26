@@ -1,6 +1,7 @@
 package com.salton123.utils;
 
-import com.salton123.eleph.R;
+
+import sg.partying.lcb.android.R;
 
 /**
  * User: newSalton@outlook.com

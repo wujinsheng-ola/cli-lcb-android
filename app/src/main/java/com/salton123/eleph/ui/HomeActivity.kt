@@ -5,16 +5,13 @@ import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.TimeUtils
 import com.salton123.base.DelegateActivity
 import com.salton123.base.feature.ImmersionFeature
 import com.salton123.base.feature.PermissionFeature
-import com.salton123.eleph.R
-import com.salton123.log.XLog
 import com.salton123.utils.FragmentUtils
-import com.salton123.utils.PreferencesUtils
 import com.salton123.widget.BottomBarLayout
 import kt.toast
+import sg.partying.lcb.android.R
 
 /**
  * Time:2022/1/29 11:40 上午

@@ -2,7 +2,7 @@ package com.salton123.eleph.ui
 
 import android.os.Bundle
 import com.salton123.base.BaseFragment
-import com.salton123.eleph.R
+import sg.partying.lcb.android.R
 
 /**
  * Time:2022/4/1 11:22 上午

@@ -13,7 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.salton123.eleph.R;
+import sg.partying.lcb.android.R;
+
 
 /**
  * User: newSalton@outlook.com

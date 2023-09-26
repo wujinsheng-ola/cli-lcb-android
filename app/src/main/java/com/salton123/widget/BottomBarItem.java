@@ -15,9 +15,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.salton123.eleph.R;
 
 import java.util.Locale;
+
+import sg.partying.lcb.android.R;
 
 /**
  * User: newSalton@outlook.com

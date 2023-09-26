@@ -10,10 +10,11 @@ import android.widget.LinearLayout;
 
 import androidx.viewpager.widget.ViewPager;
 
-import com.salton123.eleph.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import sg.partying.lcb.android.R;
 
 /**
  * User: newSalton@outlook.com
