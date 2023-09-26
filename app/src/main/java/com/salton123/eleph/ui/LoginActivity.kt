@@ -2,14 +2,14 @@ package com.salton123.eleph.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import com.salton123.base.DelegateActivity
 import com.salton123.base.feature.ImmersionFeature
-import com.salton123.eleph.dialog.PhoneLoginDialog
-import com.salton123.utils.RxUtils
+import com.salton123.eleph.NetworkViewModel
 import sg.partying.lcb.android.R
-import sg.partying.lcb.android.api.partyApi
 
 class LoginActivity : DelegateActivity() {
+    private val viewModel by viewModels<NetworkViewModel>()
     lateinit var phoneLogin: View
     override fun getLayout(): Int = R.layout.activity_login
 
@@ -20,15 +20,10 @@ class LoginActivity : DelegateActivity() {
     override fun initViewAndData() {
         phoneLogin = f(R.id.phoneLogin)
         phoneLogin.setOnClickListener {
-
-            partyApi.loginOptions()
-                .compose(RxUtils.schedulersTransformer())
-                .subscribe {
-                it.data
-            }
-            PhoneLoginDialog.show(activity()) {
-
-            }
+            viewModel.loginOptions()
+//            PhoneLoginDialog.show(activity()) {
+//
+//            }
         }
     }
 

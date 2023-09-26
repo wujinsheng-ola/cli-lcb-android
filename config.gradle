@@ -44,6 +44,7 @@ ext {
             "adapter-rxjava"           : "com.squareup.retrofit2:adapter-rxjava2:2.9.0",
             "retrofit"                 : "com.squareup.retrofit2:retrofit:2.9.0",
             "rxandroid"                : "io.reactivex.rxjava2:rxandroid:2.1.0",
+            "JetpackMvvm"              : 'com.github.hegaojian:JetpackMvvm:1.2.7',
             "converter-gson"           : "com.squareup.retrofit2:converter-gson:2.9.0",
 
     ]

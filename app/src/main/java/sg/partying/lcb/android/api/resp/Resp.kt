@@ -7,9 +7,12 @@ import com.google.gson.annotations.SerializedName
  * Author:
  * Description:
  */
-data class Resp<T>(@SerializedName("success") var success: Boolean = false, @SerializedName("msg") var msg: String = "", @SerializedName("data") var data: T)
-
+data class Resp<T>(
+    @SerializedName("success") var success: Boolean = false,
+                   @SerializedName("msg") var msg: String = "",
+    @SerializedName("data") var data: T)
 data class LoginOption(
     @SerializedName("main") var main: List<String> = mutableListOf(),
     @SerializedName("sub") var sub: List<String> = mutableListOf(),
 )
+
