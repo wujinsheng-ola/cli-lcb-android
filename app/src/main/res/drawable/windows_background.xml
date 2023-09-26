@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item>
-        <layer-list>
-            <item>
-                <shape>
-                    <solid android:color="#ffffffff" />
-                </shape>
-            </item>
-            <item android:gravity="center">
-                <bitmap android:gravity="center" android:src="@drawable/ic_launcher" />
-            </item>
-        </layer-list>
+        <bitmap android:src="@drawable/unity_static_splash_bg" />
     </item>
-</selector>
+
+    <item
+        android:gravity="top"
+        android:top="68dp">
+        <bitmap
+            android:gravity="center_horizontal"
+            android:src="@drawable/unity_static_splash" />
+    </item>
+
+</layer-list>

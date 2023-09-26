@@ -66,7 +66,24 @@
         android:supportsRtl="true"
         android:theme="@style/EmuiAppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <profileable android:shell="true"/>
+        <profileable android:shell="true" />
+
+        <activity
+            android:name="com.salton123.eleph.ui.SplashActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="${applicationId}.intent.action.openpage" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name="com.salton123.eleph.ui.HomeActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
@@ -135,27 +152,7 @@
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             tools:targetApi="n" />
-        <activity
-            android:name="com.salton123.eleph.ui.SplashActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:hardwareAccelerated="true"
-            android:launchMode="singleTop"
-            android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="${applicationId}.intent.action.openpage" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-
-        <service
-            android:name="com.salton123.service.SqueezeService"
-            android:enabled="true"
-            android:exported="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

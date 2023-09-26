@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="false"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/mainContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+
+    <com.salton123.widget.BottomBarLayout
+        android:id="@+id/bottomBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.salton123.widget.BottomBarItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:clipChildren="true"
+            android:gravity="bottom|center_horizontal"
+            app:iconNormal="@drawable/ic_tab_scan_normal"
+            app:iconSelected="@drawable/ic_tab_scan_select"
+            app:itemText="@string/tab_home"
+            app:textColorNormal="#929292"
+            app:textColorSelected="@color/colorPrimary" />
+
+        <com.salton123.widget.BottomBarItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:clipChildren="true"
+            android:gravity="bottom|center_horizontal"
+            app:iconNormal="@drawable/ic_tab_history_normal"
+            app:iconSelected="@drawable/ic_tab_history_select"
+            app:itemText="@string/tab_gallery"
+            app:textColorNormal="#929292"
+            app:textColorSelected="@color/colorPrimary" />
+
+    </com.salton123.widget.BottomBarLayout>
+
+</LinearLayout>
