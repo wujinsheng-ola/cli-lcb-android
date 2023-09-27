@@ -13,6 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import sg.partying.lcb.android.api.interceptor.ErrorInterceptor
 import sg.partying.lcb.android.api.interceptor.HeadInterceptor
+import sg.partying.lcb.android.api.interceptor.SignInterceptor
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -38,6 +39,7 @@ class NetworkApi : BaseNetworkApi() {
             //设置缓存配置 缓存最大10M
             cache(Cache(File(BaseApplication.sInstance.cacheDir, "cxk_cache"), 10 * 1024 * 1024))
             addInterceptor(HeadInterceptor())
+            addInterceptor(SignInterceptor())
             addInterceptor(ErrorInterceptor())
             addInterceptor(CacheInterceptor())
             builder.addInterceptor(interceptor)

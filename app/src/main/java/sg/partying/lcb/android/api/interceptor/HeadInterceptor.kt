@@ -26,6 +26,7 @@ class HeadInterceptor : Interceptor {
         builder.addHeader("User-Mac", "9f6d581813458bd8")
         builder.addHeader("User-Did", "DurZjlM75zMTGa+WdrjrCQTmmpe+OOttMGkRwB+lrbd+85mxz/qE5uD7fgnoBQs6OKkvMqI4zqOlXqmerPmRHqDA")
         builder.addHeader("User-ABI", "arm64-v8a")
+        builder.addHeader("User-refer", "com.android.shell")
         return chain.proceed(builder.build())
     }
 
