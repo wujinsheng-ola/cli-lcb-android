@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/btn_shape_login_guide_phone"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivLoginIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_google_login" />
+
+        <TextView
+            android:id="@+id/tvLoginName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/login_via_type"
+            android:textColor="@color/black70"
+            android:textSize="20sp" />
+
+    </FrameLayout>
+</LinearLayout>

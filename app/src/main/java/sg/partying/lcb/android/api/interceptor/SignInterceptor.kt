@@ -35,7 +35,7 @@ class SignInterceptor : Interceptor {
             "_ipv" to if (isVerify) "1" else "0",
             "_platform" to "android",
             "_index" to "${++queryIndex}",
-            "_model" to DeviceUtils.getModel(),
+            "_model" to DeviceUtils.getAndroidID(),
             "_timestamp" to "${System.currentTimeMillis() / 1000}",
             "_abi" to Build.CPU_ABI
         )

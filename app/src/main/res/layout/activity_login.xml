@@ -29,37 +29,12 @@
         android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/llLoginType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/googleLogin"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/btn_shape_login_guide_phone"
-            android:gravity="center"
-            android:textColor="@color/black70"
-            android:text="通过Google登录"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/phoneLogin"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/btn_shape_login_guide_phone"
-            android:gravity="center"
-            android:textColor="@color/black70"
-            android:text="通过Phone登录"
-            android:textStyle="bold" />
 
     </LinearLayout>
 </FrameLayout>

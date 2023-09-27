@@ -14,14 +14,17 @@ import sg.partying.lcb.android.api.resp.Resp
  * Author:
  * Description:
  */
-class NetworkViewModel: BaseViewModel() {
-    val niceNameData by lazy { MutableLiveData<ResultState<Resp<LoginOption>>>() }
+class NetworkViewModel : BaseViewModel() {
+    private val loginOptionsRet by lazy { MutableLiveData<ResultState<Resp<LoginOption>>>() }
 
-    fun loginOptions() {
+    fun loginOptions(): MutableLiveData<ResultState<Resp<LoginOption>>> {
         requestNoCheck({
             apiService.loginOptions()
         }, { apiResponse ->
-            niceNameData.paresResult(apiResponse)
-        }, {}, true)
+            loginOptionsRet.paresResult(apiResponse)
+        }, {
+            it.printStackTrace()
+        }, true)
+        return loginOptionsRet
     }
 }
