@@ -30,6 +30,11 @@ android {
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
     }
 
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
     signingConfigs {
         release {
             keyAlias "${rootProject.ext.keystore.keyAlias}"

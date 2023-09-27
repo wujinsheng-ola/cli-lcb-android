@@ -1,13 +1,12 @@
 package com.salton123.eleph.ui
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.salton123.app.BaseApplication
 import com.salton123.base.DelegateActivity
 import com.salton123.base.feature.ImmersionFeature
@@ -20,6 +19,8 @@ import sg.partying.lcb.android.R
 class LoginActivity : DelegateActivity() {
     private val viewModel by viewModels<NetworkViewModel>()
     private lateinit var llLoginType: LinearLayout
+    private lateinit var tvUserService: TextView
+    private lateinit var tvPrivatePolicy: TextView
     override fun getLayout(): Int = R.layout.activity_login
 
     override fun initVariable(savedInstanceState: Bundle?) {
@@ -28,6 +29,8 @@ class LoginActivity : DelegateActivity() {
 
     override fun initViewAndData() {
         llLoginType = f(R.id.llLoginType)
+        tvUserService = f(R.id.tvUserService)
+        tvPrivatePolicy = f(R.id.tvPrivatePolicy)
         viewModel.loginOptions().observe(this) {
             if (it is ResultState.Success) {
                 it.data.data.main
@@ -60,6 +63,22 @@ class LoginActivity : DelegateActivity() {
                 }
             }
         }
+        tvUserService.paint.flags = Paint.UNDERLINE_TEXT_FLAG
+        tvUserService.paint.isAntiAlias = true
+        tvUserService.setOnClickListener {
+            openActivity(WebActivity::class.java, Bundle().apply {
+                putString("url", "https://www.salton123.com/terms-of-service")
+            })
+        }
+
+        tvPrivatePolicy.paint.flags = Paint.UNDERLINE_TEXT_FLAG
+        tvPrivatePolicy.paint.isAntiAlias = true
+        tvPrivatePolicy.setOnClickListener {
+            openActivity(WebActivity::class.java, Bundle().apply {
+                putString("url", "https://www.salton123.com/terms-of-service")
+            })
+        }
+
     }
 
 }
