@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="default_login_color_list">
+        <item>@color/default_login_color</item>
+        <item>@color/default_login_color_stub</item>
+    </array>
+</resources>

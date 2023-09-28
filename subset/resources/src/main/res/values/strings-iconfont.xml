@@ -1,0 +1,29 @@
+<resources>
+    <string name="if_launcher" translatable="false">&#xe60d;</string>
+    <string name="if_queue_in" translatable="false">&#xe693;</string>
+    <string name="if_more" translatable="false">&#xe6a5;</string>
+    <string name="if_arrow_right" translatable="false">&#xe743;</string>
+    <string name="if_arrow_left" translatable="false">&#xe744;</string>
+    <string name="if_arrow_up" translatable="false">&#xe745;</string>
+    <string name="if_arrow_down" translatable="false">&#xe7b2;</string>
+    <string name="if_arrow_backward" translatable="false">&#xe755;</string>
+    <string name="if_play" translatable="false">&#xe67a;</string>
+    <string name="if_write" translatable="false">&#xe62e;</string>
+    <string name="if_info" translatable="false">&#xe77e;</string>
+    <string name="if_delete" translatable="false">&#xe67e;</string>
+    <string name="if_no_data" translatable="false">&#xe62c;</string>
+    <string name="if_menu" translatable="false">&#xe7f2;</string>
+    <string name="if_coder" translatable="false">&#xe6bb;</string>
+    <string name="if_resize" translatable="false">&#xe720;</string>
+    <string name="if_favorite" translatable="false">&#xe8b9;</string>
+    <string name="if_favorited" translatable="false">&#xe8c6;</string>
+    <string name="if_setting" translatable="false">&#xe67d;</string>
+    <string name="if_share" translatable="false">&#xe8b0;</string>
+    <string name="if_play_fill" translatable="false">&#xe752;</string>
+    <string name="if_compression" translatable="false"> &#xe8bd; </string>
+
+    <string name="if_home" translatable="false">&#xe603;</string>
+    <string name="if_retangel" translatable="false">&#xe648;</string>
+    <string name="if_right_arrow" translatable="false">&#xe642;</string>
+    <string name="if_left_arrow" translatable="false">&#xe628;</string>
+</resources>
