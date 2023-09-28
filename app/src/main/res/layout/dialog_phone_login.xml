@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_shape_phone_login"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -31,7 +33,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="20dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/btn_shape_login_guide_phone_input_style"
         android:orientation="horizontal">
 
@@ -52,21 +54,104 @@
             android:id="@+id/query"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:background="@drawable/ease_seabar_input"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:hint="手机号"
-            android:imeOptions="actionSearch"
-            android:paddingLeft="5dp"
+            android:imeOptions="actionNext"
+            android:paddingStart="5dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:singleLine="true"
+            android:textColor="@color/black"
             android:textColorHint="#8C8C8C"
             android:textSize="16sp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/btn_shape_login_guide_phone_input_style"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.hjq.widget.view.ClearEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/ease_seabar_input"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="密码"
+            android:imeOptions="actionDone"
+            android:paddingStart="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="#8C8C8C"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/color_fever_btn_fill_purple_style"
+            android:backgroundTint="#FFFCD314"
+            android:gravity="center"
+            android:text="下一步"
+            android:textColor="#ffffffff"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvLogin"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/color_fever_btn_fill_purple_style"
+                android:backgroundTint="#FFFCD314"
+                android:gravity="center"
+                android:text="登录"
+                android:textColor="#ffffffff"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="1dp" />
+
+            <TextView
+                android:id="@+id/tvVerifyLogin"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/color_fever_btn_fill_purple_style"
+                android:backgroundTint="#FF51C0FF"
+                android:gravity="center"
+                android:text="验证码登录"
+                android:textColor="#ffffffff"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
