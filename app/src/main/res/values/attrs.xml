@@ -69,4 +69,22 @@
         <!-- 宽高比例 -->
         <attr name="sizeRatio" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="GradientTextView">
+        <attr name="gt_color_list" format="reference" />
+        <attr name="gt_gradient_direction" format="enum">
+            <enum name="left" value="0" />
+            <enum name="up" value="1" />
+            <enum name="right" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
+        <attr name="gt_gradient_angle" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="loop_scroller">
+        <attr name="loop_src" format="integer" />
+        <attr name="loop_mask_color" format="color" />
+        <attr name="loop_is_scroll" format="boolean" />
+        <attr name="loop_speed" format="integer" />
+        <attr name="loop_orientation" format="integer" />
+    </declare-styleable>
 </resources>

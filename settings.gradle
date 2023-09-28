@@ -1,5 +1,2 @@
-include ':app'
-include ':framework-core'
-include ':translate-core'
-include ':lcb-protocols'
-include ':lcb-network'
+include ':app',':lcb-network',':resources',':framework-core',':translate-core',':lcb-protocols'
+project(":resources").projectDir = new File("subset/resources")

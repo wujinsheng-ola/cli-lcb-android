@@ -100,7 +100,7 @@
             android:launchMode="singleTop"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"
+            android:theme="@style/LoginTheme"
             tools:targetApi="n" />
         <activity
             android:name="com.salton123.eleph.ui.WebActivity"
