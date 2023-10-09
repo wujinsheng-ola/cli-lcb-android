@@ -5,6 +5,7 @@ import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.requestNoCheck
 import me.hgj.jetpackmvvm.state.ResultState
 import me.hgj.jetpackmvvm.state.paresResult
+import retrofit2.http.Field
 import sg.partying.lcb.android.api.apiService
 import sg.partying.lcb.android.api.resp.LoginOption
 import sg.partying.lcb.android.api.resp.Resp
@@ -16,6 +17,7 @@ import sg.partying.lcb.android.api.resp.Resp
  */
 class NetworkViewModel : BaseViewModel() {
     private val loginOptionsRet by lazy { MutableLiveData<ResultState<Resp<LoginOption>>>() }
+    private val passwordLoginRet by lazy { MutableLiveData<ResultState<Resp<LoginOption>>>() }
 
     fun loginOptions(): MutableLiveData<ResultState<Resp<LoginOption>>> {
         requestNoCheck({
@@ -27,4 +29,19 @@ class NetworkViewModel : BaseViewModel() {
         }, true)
         return loginOptionsRet
     }
+
+//    fun passwordLogin(
+//        mobile: String,
+//        password: String,
+//        area: String,
+//    ): MutableLiveData<ResultState<Resp<LoginOption>>> {
+//        requestNoCheck({
+//            apiService.passwordLogin(mobile, password, area, "", "")
+//        }, { apiResponse ->
+//            passwordLoginRet.paresResult(apiResponse)
+//        }, {
+//            it.printStackTrace()
+//        }, true)
+//        return passwordLoginRet
+//    }
 }

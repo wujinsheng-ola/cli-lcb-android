@@ -1,8 +1,10 @@
 package kt
 
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.salton123.app.BaseApplication
+import com.salton123.callback.SingleClickListener
 import com.salton123.framework.BuildConfig
 import com.salton123.utils.task.ThreadQueue
 
@@ -63,4 +65,12 @@ fun Int.getDimension(): Float {
 
 fun Int.getColor(): Int {
     return BaseApplication.sInstance.resources.getColor(this)
+}
+
+fun View.singleClick(interval: Int = 1000, callback: ((View?) -> Unit)?) {
+    setOnClickListener(object : SingleClickListener(interval) {
+        override fun onSingleClick(v: View?) {
+            callback?.invoke(v)
+        }
+    })
 }

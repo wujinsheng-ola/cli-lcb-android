@@ -38,6 +38,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/etArea"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -51,7 +52,7 @@
             android:textSize="18dp" />
 
         <com.hjq.widget.view.ClearEditText
-            android:id="@+id/query"
+            android:id="@+id/etMobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -71,12 +72,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/llPassword"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/btn_shape_login_guide_phone_input_style"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:visibility="visible">
 
         <com.hjq.widget.view.ClearEditText
@@ -105,6 +107,7 @@
         android:layout_marginTop="20dp">
 
         <TextView
+            android:id="@+id/tvNext"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_gravity="center"
@@ -113,6 +116,7 @@
             android:backgroundTint="#FFFCD314"
             android:gravity="center"
             android:text="下一步"
+            android:visibility="gone"
             android:textColor="#ffffffff"
             android:textSize="16sp" />
 
@@ -120,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/tvLogin"
