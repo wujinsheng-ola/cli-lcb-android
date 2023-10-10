@@ -144,7 +144,7 @@ public class BottomBarItem extends LinearLayout {
 
     private void init() {
         setOrientation(VERTICAL);
-        setGravity(Gravity.CENTER | Gravity.BOTTOM);
+        setGravity(Gravity.CENTER);
 
         View view = initView();
 
@@ -175,6 +175,7 @@ public class BottomBarItem extends LinearLayout {
 
         LayoutParams textLayoutParams = (LayoutParams) mTextView.getLayoutParams();
         textLayoutParams.topMargin = marginTop;
+        textLayoutParams.gravity = Gravity.CENTER;
         mTextView.setLayoutParams(textLayoutParams);
 
         if (openTouchBg) {

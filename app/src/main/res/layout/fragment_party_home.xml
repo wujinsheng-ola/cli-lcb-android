@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_party_home_screen"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/immersionBarHeight"
+        android:background="@drawable/game_page_top"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/statusBarHeight">
+
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/fragmentPagerIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/actionBarHeight"
+            android:layout_gravity="start"
+            android:background="@android:color/transparent" />
+
+    </FrameLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
