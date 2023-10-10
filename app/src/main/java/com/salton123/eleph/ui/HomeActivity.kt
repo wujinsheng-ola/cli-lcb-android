@@ -21,7 +21,7 @@ import sg.partying.lcb.android.R
 class HomeActivity : DelegateActivity() {
 
     override fun getLayout(): Int = R.layout.activity_home
-    private val mHomeComp by lazy { HelloFragment() }
+    private val mHomeComp by lazy { PartyHomeFragment() }
     private val mGalleryComp by lazy { HelloFragment() }
     private lateinit var bottomBarLayout: BottomBarLayout
     private lateinit var mainContent: FrameLayout
