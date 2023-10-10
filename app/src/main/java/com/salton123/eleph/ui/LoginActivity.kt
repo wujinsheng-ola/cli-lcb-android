@@ -55,6 +55,7 @@ class LoginActivity : DelegateActivity() {
                             tvLoginName.text = String.format(R.string.login_via_type.getString(), "Phone")
                             loginTypeView.setOnClickListener {
                                 PhoneLoginDialog.show(activity()) {
+                                    openActivity(HomeActivity::class.java,Bundle())
                                 }
                             }
                             llLoginType.addView(loginTypeView)

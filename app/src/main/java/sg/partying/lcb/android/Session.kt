@@ -30,4 +30,14 @@ object Session {
         get() {
             return uid > 0 && token.isNotEmpty()
         }
+
+    var area: String = "86"
+        get() {
+            return PreferencesUtils.getString("area", "86")
+        }
+        set(value) {
+            PreferencesUtils.getString("area", value)
+            field = value
+        }
+
 }
