@@ -80,7 +80,7 @@ class PhoneLoginDialog(context: Context) : CenterPopupView(context) {
                 withContext(Dispatchers.IO) {
                     val encryptPassword = EncryptUtils.encryptSHA1ToString(EncodeUtils.urlDecode(password, "UTF-8")).lowercase()
                     XLog.i(TAG, "encryptPassword:$encryptPassword")
-                    val cachedDToken = PreferencesUtils.getString("dtoken","")
+                    val cachedDToken = PreferencesUtils.getString("dtoken", "")
                     val ret = apiService.passwordLogin(mobile, encryptPassword, area, cachedDToken, "")
                     if (ret.success) {
                         XLog.i(TAG, "${ret.data}")
@@ -114,7 +114,8 @@ class PhoneLoginDialog(context: Context) : CenterPopupView(context) {
                         PreferencesUtils.putInt("title", ret.data.title)
                         PreferencesUtils.putInt("title_new", ret.data.titleNew)
                         PreferencesUtils.putString("tmp_icon", ret.data.tmpIcon)
-                        PreferencesUtils.putString("token", ret.data.token)
+//                        PreferencesUtils.putString("token", ret.data.token)
+                        Session.token = ret.data.token
 //                        PreferencesUtils.putInt("uid", ret.data.uid)
                         Session.uid = ret.data.uid
                         PreferencesUtils.putInt("version", ret.data.version)
