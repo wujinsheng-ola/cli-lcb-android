@@ -62,8 +62,19 @@ public class ImageLoader {
         }
         Glide.with(imageView)
                 .load(url)
-                .centerInside()
+                .centerCrop()
                 .thumbnail(0.5f)
                 .into(imageView);
+    }
+
+    public static void loadFitCenter(ImageView imageView, String url) {
+        if (BuildConfig.DEBUG) {
+            XLog.d(ImageLoader.class, "[loadFitCenter]" + ",url:" + url);
+        }
+        Glide.with(imageView)
+            .load(url)
+            .fitCenter()
+            .thumbnail(0.5f)
+            .into(imageView);
     }
 }

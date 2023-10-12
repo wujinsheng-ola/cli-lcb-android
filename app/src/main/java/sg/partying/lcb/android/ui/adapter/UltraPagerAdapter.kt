@@ -42,7 +42,7 @@ class UltraPagerAdapter : PagerAdapter() {
         imageView.setOnClickListener { view: View? ->
             itemImageClick?.invoke(position, mDatas[position])
         }
-        ImageLoader.loadCenterCrop(imageView, mDatas[position].image)
+        ImageLoader.loadFitCenter(imageView, mDatas[position].image)
         container.addView(viewGroup)
         return viewGroup
     }

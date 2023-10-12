@@ -44,7 +44,7 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
             }
         }
         viewModel.videoLiveFeed().observe(this) {
-            if (it is ResultState.Success) {
+            if (it is ResultState.Success && it.data.data != null) {
                 ultraPagerAdapter.update(it.data.data)
                 ultraViewPager.apply {
                     setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
