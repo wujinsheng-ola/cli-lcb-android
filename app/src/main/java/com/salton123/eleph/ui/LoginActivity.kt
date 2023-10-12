@@ -33,7 +33,6 @@ class LoginActivity : DelegateActivity() {
         tvPrivatePolicy = f(R.id.tvPrivatePolicy)
         viewModel.loginOptions().observe(this) {
             if (it is ResultState.Success) {
-                it.data.data.main
                 it.data.data.sub.forEach { sub ->
                     when (sub) {
                         "google" -> {

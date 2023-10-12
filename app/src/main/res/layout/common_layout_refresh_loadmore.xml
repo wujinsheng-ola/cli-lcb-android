@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
     app:srlFooterTriggerRate="0"
     app:srlHeaderMaxDragRate="2.0">
 
-    <com.salton123.soulove.common.widget.TRefreshHeader
+    <com.salton123.widget.TRefreshHeader
         android:layout_width="match_parent"
         android:layout_height="30dp" />
 
@@ -20,4 +20,4 @@
         android:nestedScrollingEnabled="true"
         android:overScrollMode="never" />
 
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>

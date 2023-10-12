@@ -54,3 +54,14 @@ data class LoginRet(
     @SerializedName("vip") var vip: Int = 0,
     @SerializedName("vip_new") var vipNew: Int = 0
 )
+
+data class BannerItem(
+    @SerializedName("cover_url") var coverUrl: String = "",
+    @SerializedName("data") var data: String = "",
+    @SerializedName("duration") var duration: Int = 0,
+    @SerializedName("id") var id: String = "",
+    @SerializedName("image") var image: String = "",
+    @SerializedName("title") var title: String = "",
+    @SerializedName("type") var type: String = "",
+    @SerializedName("url") var url: String
+)

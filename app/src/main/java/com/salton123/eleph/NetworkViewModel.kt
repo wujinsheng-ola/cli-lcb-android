@@ -7,6 +7,7 @@ import me.hgj.jetpackmvvm.state.ResultState
 import me.hgj.jetpackmvvm.state.paresResult
 import retrofit2.http.Field
 import sg.partying.lcb.android.api.apiService
+import sg.partying.lcb.android.api.resp.BannerItem
 import sg.partying.lcb.android.api.resp.LoginOption
 import sg.partying.lcb.android.api.resp.Resp
 
@@ -17,7 +18,7 @@ import sg.partying.lcb.android.api.resp.Resp
  */
 class NetworkViewModel : BaseViewModel() {
     private val loginOptionsRet by lazy { MutableLiveData<ResultState<Resp<LoginOption>>>() }
-    private val passwordLoginRet by lazy { MutableLiveData<ResultState<Resp<LoginOption>>>() }
+    private val videoLiveFeedRet by lazy { MutableLiveData<ResultState<Resp<MutableList<BannerItem>>>>() }
 
     fun loginOptions(): MutableLiveData<ResultState<Resp<LoginOption>>> {
         requestNoCheck({
@@ -28,6 +29,17 @@ class NetworkViewModel : BaseViewModel() {
             it.printStackTrace()
         }, true)
         return loginOptionsRet
+    }
+
+    fun videoLiveFeed(): MutableLiveData<ResultState<Resp<MutableList<BannerItem>>>> {
+        requestNoCheck({
+            apiService.videoLiveFeed()
+        }, { apiResponse ->
+            videoLiveFeedRet.paresResult(apiResponse)
+        }, {
+            it.printStackTrace()
+        }, true)
+        return videoLiveFeedRet
     }
 
 //    fun passwordLogin(

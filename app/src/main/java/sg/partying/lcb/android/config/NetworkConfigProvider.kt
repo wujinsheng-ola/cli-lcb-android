@@ -14,6 +14,7 @@ class NetworkConfigProvider : IConfigProvider {
     }
 
     override fun initDebug() {
+//        http://partystar-dev.iambanban.com/homepage/recommendedRoomList
         API_BASE_URL = "http://partystar-dev.iambanban.com/";
     }
 

@@ -43,7 +43,7 @@ ext {
             "crashreport_upgrade"          : "com.tencent.bugly:crashreport_upgrade:1.5.23",
             "nativecrashreport"            : "com.tencent.bugly:nativecrashreport:3.9.2",
             "lottie"                       : "com.airbnb.android:lottie:3.3.1",
-            "SmartRefreshLayout"           : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0",
+            "refresh-layout-kernel"        : "io.github.scwang90:refresh-layout-kernel:2.0.5",
             "BaseRecyclerViewAdapterHelper": "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6",
             "xpopup"                       : "com.github.li-xiaojun:XPopup:2.9.0",
             "toast"                        : "com.hjq:toast:8.0",

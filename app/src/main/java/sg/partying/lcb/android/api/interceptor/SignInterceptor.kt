@@ -47,24 +47,28 @@ class SignInterceptor : Interceptor {
             }
         }
         val argsList = mutableListOf<String>()
-        val sortMap = args.toSortedMap()
-        sortMap.asIterable().forEach {
+        args.toSortedMap().asIterable().forEach {
             argsList.add("${it.key}=" + Uri.encode(it.value))
         }
         val sign = EncryptUtils.encryptMD5ToString("${argsList.joinToString("&")}!rilegoule#").toLowerCase()
-        argsList.add("_sign=$sign")
+
+        val targetArgsList = mutableListOf<String>()
+        args.asIterable().forEach {
+            targetArgsList.add("${it.key}=" + Uri.encode(it.value))
+        }
+        targetArgsList.add("_sign=$sign")
         if (Session.uid > 0) {
-            argsList.add("_blid=${Session.uid}")
+            targetArgsList.add("_blid=${Session.uid}")
         }
         if (!params.isNullOrEmpty()) {
             params.keys.forEachIndexed { index, s ->
                 if (params[s] != null) {
                     val param = Uri.encode(params[s].toString())
-                    argsList.add("$s=$param")
+                    targetArgsList.add("$s=$param")
                 }
             }
         }
-        val finalUrl = url + (if (url.indexOf("?") > -1) '&' else "?") + argsList.joinToString("&")
+        val finalUrl = url + (if (url.indexOf("?") > -1) '&' else "?") + targetArgsList.joinToString("&")
         XLog.i(tag, "[generateSignUrl] $finalUrl")
         return finalUrl
     }

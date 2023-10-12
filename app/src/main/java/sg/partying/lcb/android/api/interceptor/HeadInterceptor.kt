@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.LanguageUtils
 import com.salton123.app.BaseApplication
 import okhttp3.Interceptor
 import okhttp3.Response
+import sg.partying.lcb.android.Session
 import sg.partying.lcb.android.util.PackageUtils
 import java.io.IOException
 
@@ -34,6 +35,9 @@ class HeadInterceptor : Interceptor {
         builder.addHeader("User-Did", "DurZjlM75zMTGa+WdrjrCQTmmpe+OOttMGkRwB+lrbd+85mxz/qE5uD7fgnoBQs6OKkvMqI4zqOlXqmerPmRHqDA")
         builder.addHeader("User-ABI", Build.CPU_ABI)
         builder.addHeader("User-refer", "com.android.shell")
+        if(Session.isLogined) {
+            builder.addHeader("user-token", Session.token)
+        }
         return chain.proceed(builder.build())
     }
 }
