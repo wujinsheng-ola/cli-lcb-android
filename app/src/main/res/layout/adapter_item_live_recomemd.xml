@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <com.github.siyamed.shapeimageview.RoundedImageView
+        android:id="@+id/ivThumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_video_item_home"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_placeholder"
+        app:siBorderAlpha="0.0"
+        app:siBorderColor="@android:color/transparent"
+        app:siBorderWidth="0dp"
+        app:siForeground="@android:color/transparent"
+        app:siRadius="5dp"
+        app:siSquare="false" />
+
+    <ImageView
+        android:id="@+id/ivBadgeToday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/badge_today"
+        android:visibility="gone"
+        tools:visibility="gone" />
+
+    <com.salton123.view.IconFontTextView
+        android:id="@+id/tvCompressed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_date_shape"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:paddingTop="1dp"
+        android:paddingEnd="5dp"
+        android:paddingBottom="1dp"
+        android:text="@string/if_compression"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <com.salton123.view.IconFontTextView
+        android:id="@+id/ivFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:background="@drawable/bg_favorite_shape"
+        android:paddingStart="5dp"
+        android:paddingTop="1dp"
+        android:paddingEnd="5dp"
+        android:paddingBottom="1dp"
+        android:text="@string/if_favorited"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/ivBadgeVideoUnlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="6dp"
+        android:src="@drawable/badge_video_unlock"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <com.salton123.view.IconFontTextView
+        android:id="@+id/tvPlayTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:background="@drawable/bg_video_duration"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="5dp"
+        android:paddingBottom="3dp"
+        android:textColor="@color/white90"
+        android:textSize="10sp"
+        tools:text="&#xe752; 00:00" />
+
+    <TextView
+        android:id="@+id/tvProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_circle_progress"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"
+        tools:text="10%" />
+</merge>

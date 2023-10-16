@@ -1,6 +1,6 @@
 package sg.partying.lcb.android.api
 
-import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.blankj.utilcode.util.GsonUtils
 import com.google.gson.GsonBuilder
 import com.salton123.app.BaseApplication
 import me.hgj.jetpackmvvm.network.BaseNetworkApi
@@ -11,13 +11,14 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.wire.WireConverterFactory
 import sg.partying.lcb.android.api.interceptor.ErrorInterceptor
 import sg.partying.lcb.android.api.interceptor.HeadInterceptor
 import sg.partying.lcb.android.api.interceptor.SignInterceptor
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-class NetworkApi : BaseNetworkApi() {
+open class NetworkApi : BaseNetworkApi() {
     private val CONNECT_TIMEOUT: Long = 60
     private val READ_TIMEOUT: Long = 100
     private val WRITE_TIMEOUT: Long = 60
@@ -58,7 +59,8 @@ class NetworkApi : BaseNetworkApi() {
      */
     override fun setRetrofitBuilder(builder: Retrofit.Builder): Retrofit.Builder {
         return builder.apply {
-            addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            addConverterFactory(WireConverterFactory.create())
+            addConverterFactory(GsonConverterFactory.create(GsonUtils.getGson()))
         }
     }
 }

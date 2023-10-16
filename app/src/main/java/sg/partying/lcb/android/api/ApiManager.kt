@@ -7,3 +7,8 @@ import sg.partying.lcb.android.config.NetworkConfigProvider
 val apiService: ApiService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
     NetworkApi.INSTANCE.getApi(ApiService::class.java, NetworkConfigProvider.API_BASE_URL)
 }
+
+val pbApiService: PbApiService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+    PbNetworkApi.INSTANCE.getApi(PbApiService::class.java, NetworkConfigProvider.API_BASE_URL)
+}
+

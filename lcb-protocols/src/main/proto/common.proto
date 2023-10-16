@@ -1,0 +1,219 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+message Common {
+    bool success = 1;
+    string msg = 2;
+}
+
+message CommonData {
+    optional int32 err_code = 1; // 0 成功，其他失败
+    optional string msg = 2;
+}
+
+// 通用的响应体, 如果没有其他数据需要返回, 直接使用这个响应体给客户端即可
+message RspCommon {
+    CommonData common = 1;
+}
+
+message Empty {}
+
+enum ErrorCode {
+    SUCCEED = 0;
+    /******  通用错误 *******/
+
+    ERROR_INVALID_PARAMS = 1000001; // 参数错误
+    ERROR_INTERNAL_SERVER_ERROR = 1000002; // 服务器内部错误
+    ERROR_USER_HAS_NO_PERMISSION = 1000003; // 用户没有权限
+    ERROR_USER_NEED_LOGIN = 1000004; // 用户需要登录
+    ERROR_REQUEST_FREQUENTLY = 1000005; // 请求过于频繁
+    ERROR_USER_NOT_EXIST = 1000006; // 用户不存在
+    ERROR_USER_IS_BANNED = 1000007; // 用户被封禁
+    ERROR_DATA_NOT_FOUND = 1000008; // 要操作的数据未找到
+    ERROR_NOT_SUPPORT_FEATURE = 1000009; // 不支持当前功能
+    ERROR_UNKNOWN_ERROR = 1000010; // 未知错误
+    ERROR_YOU_HAS_BLOCKED_TARGET = 1000011; // 你已经拉黑对方
+    ERROR_YOU_HAS_BEEN_BLOCKED_BY_TARGET = 1000012; // 对方已经拉黑了你
+    ERROR_YOU_MONEY_NOT_ENOUGH = 1000013; // 余额不足
+    ERROR_ACCOUNT_IS_EXISTED = 1000014; // 用户已存在
+    ERROR_DUPLICATED_DATA = 1000015; // 命中了数据库唯一约束
+
+    /******  通用错误 *******/
+
+
+    ERROR_USER_IS_NOT_IN_ROOM = 1010001; // 用户已经不在房间里
+    ERROR_USER_IS_NOT_IN_THIS_ROOM = 1010002; // 用户已经不在当前房间里
+    ERROR_USER_WEALTH_LV_IS_NOT_ENOUGH_TO_LINK_MIC = 1010003; // 用户财富等级不够, 不能连麦
+    ERROR_YOU_HAVE_BEEN_KICKED_OUT = 1010004; // 被踢出
+    ERROR_WORD_DIRTY = 1010005; // 脏字检测未通过
+    ERROR_DONOT_OP_AGIN = 1010006; // 请不要重复操作
+    ERROR_LINKMIC_INVITATION_EXPIRED = 1010007; // 连麦邀请已过期
+    ERROR_LINKMIC_USER_IS_LINKING = 1010008; // 尝试连麦的用户正在连麦中
+    ERROR_ROOM_IS_NOT_EXISTS_OR_IS_CLOSED = 1010009; // 房间不存在或已关闭
+    ERROR_LINKMIC_USER_LIVE_CALL_NOT_OPEN = 1010010; // 对方没有打开连麦功能
+    ERROR_LINKMIC_LINK_MIC_IS_BREAK = 1010011; // 当前连麦已经中断了
+    ERROR_PK_TARGET_IS_PKING = 1010012; // 对方正在 PK 中
+    ERROR_PK_TARGET_IS_CALLED_BY_ANOTHER = 1010013; // PK功能, 对方正在被其他主播邀请中
+    ERROR_PK_INVITATION_EXPIRED = 1010014; // PK 邀请已失效
+    ERROR_PK_INVITATION_NOT_FOUND = 1010015; // PK 邀请信息找不到了
+    ERROR_PK_IS_BREAK = 1010016; // 当前PK已经结束了
+    ERROR_PK_USER_LIVE_CALL_NOT_OPEN = 1010017;// 对方没打开PK功能
+    ERROR_PK_HAS_BEEN_REJECTED_TOO_MUCH = 1010018;// 已经被对方拒绝太多次
+    ERROR_THE_INVITER_IS_NOT_IN_MATCH_QUEUE = 1010019;// 邀请人已经不在匹配队列中了
+
+
+    ERROR_SIC_BO_STAKING_TIMEOUT = 1010200;// SicBo下注超时
+
+    ERROR_RED_PACKET_PACKET_EMPTY = 1010300;// 红包已经抢光了
+    ERROR_RED_PACKET_PACKET_EXPIRED = 1010301;// 红包已经过期了
+    ERROR_RED_PACKET_FORBIDDEN = 1010302;// 已经被认定为黑产，无法抢红包
+    ERROR_RED_PACKET_MONEY_NOT_ENOUGH = 1010303; // 余额不足，无法发红包
+    ERROR_RED_PACKET_HAS_GRAPED = 1010304; // 已经抢过这个红包了，不能再抢
+    ERROR_RED_PACKET_ROOM_IS_LOCKED = 1010305; // 房间已锁，不能发红包
+    ERROR_RED_PACKET_WRONG_CODE = 1010306; // 口令红包的口令不正确
+    ERROR_RED_PACKET_INVALID_CODE = 1010307; // 口令红包的口令不合法（如命中了敏感词）
+
+    ERROR_USER_ALREADY_JOIN_FAMILY = 1010400; // 用户已经加入家族
+    ERROR_FAMILY_NAME_ALREADY_USED = 1010401; // 家族名已经被使用
+    ERROR_FAMILY_NAME_TOO_LONG = 1010402; // 家族名过长
+    ERROR_FAMILY_MEMBER_FULL = 1010403; // 家族人数已满
+    ERROR_JONIN_LV_IS_NOT_ENOUGH = 1010405; // 加入家族等级不足
+    ERROR_FAMILY_ANNOUNCEMENT_TOO_LONG = 1010406; // 公告长度过长
+    ERROR_FAMILY_NOT_EXIST = 1010407; // 家族不存在
+    ERROR_FAMILY_NO_EDIT_PRIVILEGE = 1010408; // 没有编辑权限
+    ERROR_FAMILY_ALREADY_APPLY = 1010409; // 已经发送过加入申请
+    ERROR_FAMILY_ALREADY_DEAL = 1010410; // 已经处理过该请求
+    ERROR_FAMILY_PATRIARCH_NOT_LEAVE_ALLOW = 1010411; // 族长不允许离开家族
+    ERROR_FAMILY_BIG_AREA_NOT_MATCH = 1010412; // 与家族大区不匹配
+    ERROR_FAMILY_MANAGE_USER_IS_FULL = 1010413; // 家族管理员人数已满
+    ERROR_CREATE_FAMILY_LV_IS_NOT_ENOUGH = 1010414; // 创建家族等级不足
+    ERROR_USER_HAS_NO_FAMILY = 1010415; // 用户还没有加入家族
+    ERROR_USER_HAS_NOT_JOIN_FAMILY = 1010416; // 用户还没有加入该家族
+    ERROR_USER_ALREADY_SEND_INVITE_MSG = 1010417; // 已经发送过邀请信息
+    
+    ERROR_TEAM_PK_NOT_OPERABLE = 1010500; //正在房间PK模式中，不可操作
+    ERROR_TEAM_PK_ALREADY_IN_PK_MODE = 1010501; //当前已处于房间PK模式中
+    ERROR_TEAM_PK_HOST_ADMINS_TURNED_ON_1 = 1010502; //房主或其他管理员已开启房间PK模式
+    ERROR_TEAM_PK_HOST_ADMINS_TURNED_ON_2 = 1010503; //房主或其他管理员已开始PK
+    ERROR_TEAM_PK_SWITCH_CONTEND = 1010504; //功能未开
+
+    ERROR_AGENT_TRANSFER_MONEY_NOT_MATCH = 1010601; // 币商转账金额客户端金额与实际金额不匹配
+
+    // 斋月活动
+    ERROR_RAMADAN_LAMP_EXCHANGE_NOT_ENOUGH = 1010701; // 斋灯兑换不足
+    ERROR_RAMADAN_DAILY_LAMP_EXCHANGE_NOT_ENOUGH = 1010702; // 高级商店斋灯兑换不足
+    ERROR_RAMADAN_LAMP_REWARD_NOT_ENOUGH = 1010703; // 斋灯不足，无法领取奖励
+
+    // 认证
+    ERROR_CERTIFICATION_SIGN_EXPIRED = 1010801; // 认证过期
+
+    // 爆火箭
+    ERROR_BOOM_ROCKET_ROOM_GIFT_PARTICIPATION = 1010901; // 房间送礼才能参与
+    ERROR_BOOM_ROCKET_DID_NOT_GRAB = 1010902; // 未抢到
+    ERROR_BOOM_ROCKET_DID_FINISHED_SNATCHING = 1010903;  // 抢完了
+    ERROR_BOOM_ROCKET_DID_ALREADY_RECEIVED = 1010904;  // 已经抢完了
+
+    // 靓号商城
+    ERROR_PRETTY_CAN_NOT_BUY = 1011001;  // 靓号已下架或被占用,不能购买
+    ERROR_CUSTOMIZE_PRETTY_EXPIRED = 1011003;  // 自选靓号资格过期
+
+    // 支付密码
+    ERROR_PAYMENT_PASSWORD_WRONG_PASSWORD           = 1011101; // 支付密码错误，请检查后重试
+    ERROR_PAYMENT_PASSWORD_WRONG_VERIFY_CODE        = 1011102; // 验证码错误，请检查后重试   对应多语言key：secure_email_verify_toast_2
+    ERROR_PAYMENT_PASSWORD_NOT_SET                  = 1011103; // 支付密码未设置，或者需要重新设置
+    ERROR_PAYMENT_PASSWORD_VERIFY_LIMIT             = 1011104; // 密码输入错误次数过多
+    ERROR_PAYMENT_SEND_EMAIL_LIMIT                  = 1011105; // 发送邮箱验证码次数过多
+    ERROR_PAYMENT_CODE_VERIFY_WRONG_LIMIT           = 1011106; // 验证邮箱验证错误次数过多      对应多语言key：secure_email_code_get_frequent
+    ERROR_PAYMENT_PASSWORD_VERIFY_CODE_TIMEOUT      = 1011107; // 验证码失效，请重试
+    ERROR_PAYMENT_PASSWORD_USER_HAS_BOUND_EMAIL     = 1011108; // 用户邮箱已经被绑定          对应多语言key：secure_email_error_have_bound
+
+    // 现金兑换钻石黑名单
+    ERROR_EXCHANGE_CASH_TO_DIAMOND_IN_BLACKLIST     = 1011201; // 现金兑换钻石时用户在黑名单中返回
+
+    // 优惠券
+    ERROR_COUPON_NOT_ENOUGH = 1011301;  // 优惠券不足
+
+    ERROR_DRAGON_TIGER_STAKING_TIMEOUT = 1011401;// 龙虎斗下注超时
+
+    // 赛马
+    ERROR_HORSE_RACE_PAUSE = 1011501; // 赛马暂停
+    ERROR_HORSE_RACE_CLOSE = 1011502; // 赛马关闭
+    ERROR_HORSE_RACE_STAKING_TIMEOUT = 1011503;// 赛马下注超时
+}
+
+message AdminAuditCommon {
+    int32 state = 1;  // 必返回字段 ：1成功  2失败
+    string message = 2;  // 必返回字段 ：消息
+    int32 retry = 3; //  可选字段：1重试 2不重试（仅在state = 2时使用）
+}
+
+message PossibleRspBody {
+    optional bool success  = 1;
+    optional string msg = 2;
+}
+
+message MultiLangText {
+    string zh_tw = 1;
+    string zh_cn = 2;
+    string ar = 3;
+    string ko = 4;
+    string id = 5;
+    string th = 6;
+    string la = 7;
+    string vi = 8;
+    string tr = 9;
+    string ms = 10;
+    string en = 11;
+    string ja = 12;
+    string bn = 13;
+    string hi = 14;
+    string ur = 15;
+    string tl = 16;
+}
+
+enum AwardType {
+    AwardType_UNKNOWN = 0;
+    AwardType_DIAMOND = 1; // 钻石
+    AwardType_COMMIDITY = 2; // 物品
+    AwardType_MEDAL = 3; // 勋章
+    AwardType_ROOM_BACKGROUND = 4; // 房间背景
+    AwardType_VIP = 5; // vip
+    AwardType_EXP = 6; // 经验
+    AwardType_PRETTY_ID = 7; // 自选靓号
+}
+
+message AwardExpand {
+    uint32 level = 1; // 等级， vip使用
+}
+
+message AwardInfo {
+    uint32 type = 1; // 奖励类型, 详见 AwardType
+    uint32 id = 2; // 奖励物品ID commodity为cid，房间背景为bg_id, 自选靓号id
+    string icon = 3; // 奖励物品图片
+    string name = 4; // 奖励物品名称
+    uint32 num = 5; // 奖励物品数量o
+    uint32 exp_days = 6; // 奖励物品的有效期天数
+    string commdity_type = 7; //物品类型
+    uint32 diamond = 8; //道具价值
+    AwardExpand award_expand = 9; // 扩展参数
+}
+
+message UserProfile {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+}
+
+message PageParams {
+    optional uint32 page_index = 1; // 第几页，从 1 开始计
+    optional uint32 page_size = 2; // 每页多少数据
+}
+
+message PageResData {
+    optional uint32 total_count = 1;
+    optional uint32 page_index = 2;
+    optional uint32 page_size = 3;
+    optional uint32 page_count = 4;
+}

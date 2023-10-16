@@ -69,7 +69,7 @@ public class ImageLoader {
 
     public static void loadFitCenter(ImageView imageView, String url) {
         if (BuildConfig.DEBUG) {
-            XLog.d(ImageLoader.class, "[loadFitCenter]" + ",url:" + url);
+//            XLog.d(ImageLoader.class, "[loadFitCenter]" + ",url:" + url);
         }
         Glide.with(imageView)
             .load(url)

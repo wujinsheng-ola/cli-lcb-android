@@ -14,8 +14,8 @@ class NetworkConfigProvider : IConfigProvider {
     }
 
     override fun initDebug() {
-//        http://partystar-dev.iambanban.com/homepage/recommendedRoomList
-        API_BASE_URL = "http://partystar-dev.iambanban.com/";
+//        API_BASE_URL = "http://partystar-dev.iambanban.com/";
+        API_BASE_URL = "https://api.partyother.com/"
     }
 
     override fun initAlpha() {
@@ -23,7 +23,7 @@ class NetworkConfigProvider : IConfigProvider {
     }
 
     override fun initProduct() {
-        API_BASE_URL = "";
+        API_BASE_URL = "https://api.partyother.com/"
     }
 
     override fun afterInit() {
