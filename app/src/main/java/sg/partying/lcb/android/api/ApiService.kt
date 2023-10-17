@@ -2,18 +2,17 @@ package sg.partying.lcb.android.api
 
 import pb.ReqFeedRecommendRoom
 import pb.ReqFeedRoom
-import pb.ResFeedRecommendRoom
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
-import retrofit2.http.Multipart
 import retrofit2.http.POST
 import sg.partying.lcb.android.api.resp.BannerItem
 import sg.partying.lcb.android.api.resp.LoginOption
 import sg.partying.lcb.android.api.resp.LoginRet
 import sg.partying.lcb.android.api.resp.PbResp
+import sg.partying.lcb.android.api.resp.LiveRecommendModel
 import sg.partying.lcb.android.api.resp.Resp
 
 interface ApiService {
@@ -41,13 +40,9 @@ interface ApiService {
     suspend fun recommendLiveChatRoom(@Body req: ReqFeedRoom): PbResp<ReqFeedRecommendRoom>
 
     //    String url = '${System.domain}foryou/recommend?page=$page&version=3&nearby=$nearby&feed_type=${isVideoLive ? 'liveroom' : 'chat'}';
-    @POST("foryou/recommend")
+    @POST("foryou/recommend?page=1&version=3&limit=5&nearby=0&feed_type=liveroom")
     @FormUrlEncoded
     suspend fun getRecommend(
-        @Field("page") page: String,
-        @Field("version") version: String,
-        @Field("nearby") nearby: String,
-        @Field("feed_type") feedType: String,
         @Field("browseRids") browseRids: String,
         @Field("browseUids") browseUids: String,
         @Field("sex") sex: String,
@@ -55,5 +50,5 @@ interface ApiService {
         @Field("cityCode") cityCode: String,
         @Field("longitude") longitude: String,
         @Field("latitude") latitude: String,
-    ): Resp<String>
+    ): Resp<LiveRecommendModel>
 }

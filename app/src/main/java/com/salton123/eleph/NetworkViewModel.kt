@@ -3,12 +3,7 @@ package com.salton123.eleph
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.GsonUtils
 import com.salton123.app.BaseApplication
-import com.squareup.wire.Message
 import com.squareup.wire.ProtoAdapter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.requestNoCheck
 import me.hgj.jetpackmvvm.network.interceptor.CacheInterceptor
@@ -34,6 +29,7 @@ import sg.partying.lcb.android.api.interceptor.SignInterceptor
 import sg.partying.lcb.android.api.resp.BannerItem
 import sg.partying.lcb.android.api.resp.LoginOption
 import sg.partying.lcb.android.api.resp.PbResp
+import sg.partying.lcb.android.api.resp.LiveRecommendModel
 import sg.partying.lcb.android.api.resp.Resp
 import sg.partying.lcb.android.config.NetworkConfigProvider
 import java.io.File
@@ -49,6 +45,7 @@ class NetworkViewModel : BaseViewModel() {
     private val loginOptionsRet by lazy { MutableLiveData<ResultState<Resp<LoginOption>>>() }
     private val videoLiveFeedRet by lazy { MutableLiveData<ResultState<Resp<MutableList<BannerItem>>>>() }
     private val recommendLiveChatRoom by lazy { MutableLiveData<ResultState<PbResp<ReqFeedRecommendRoom>>>() }
+    private val liveLiveRecommendModel by lazy { MutableLiveData<ResultState<Resp<LiveRecommendModel>>>() }
 
     fun loginOptions(): MutableLiveData<ResultState<Resp<LoginOption>>> {
         requestNoCheck({
@@ -84,13 +81,15 @@ class NetworkViewModel : BaseViewModel() {
         return recommendLiveChatRoom
     }
 
-    fun getRecommend() {
-        GlobalScope.launch {
-            withContext(Dispatchers.IO) {
-//                foryou/recommend?page=1&version=3&limit=5&nearby=0&feed_type=liveroom
-//                apiService.getRecommend("1","3","0","liveroom","0","0","1","0",),
-            }
-        }
+    fun getRecommend(): MutableLiveData<ResultState<Resp<LiveRecommendModel>>> {
+        requestNoCheck({
+            apiService.getRecommend("0", "0", "1", "0", "", "", "")
+        }, { apiResponse ->
+            liveLiveRecommendModel.paresResult(apiResponse)
+        }, {
+            it.printStackTrace()
+        }, true)
+        return liveLiveRecommendModel
     }
 
     fun test() {

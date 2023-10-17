@@ -4,10 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import androidx.activity.viewModels
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -20,17 +18,15 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.tmall.ultraviewpager.UltraViewPager
-import kotlinx.coroutines.launch
-import kt.toast
 import me.hgj.jetpackmvvm.state.ResultState
-import pb.FeedRecommendRoomData
-import pb.ReqFeedRoom
 import sg.partying.lcb.android.R
+import sg.partying.lcb.android.model.IMultiType
+import sg.partying.lcb.android.model.LiveRecommendContent
 import sg.partying.lcb.android.ui.adapter.UltraPagerAdapter
-import sg.partying.lcb.android.ui.adapter.VideoSectionAdapter
+import sg.partying.lcb.android.ui.adapter.RecommendInfoAdapter
 
 const val VIDEO_LIST_SPAN_COUNT = 2
-const val VIDEO_LIST_DIVIDER_SIZE = 5f
+const val VIDEO_LIST_DIVIDER_SIZE = 10f
 
 class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     private val TAG = "LiveRecommendFragment"
@@ -38,8 +34,8 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     private lateinit var refreshLayout: SmartRefreshLayout
     private lateinit var cardView: CardView
     private lateinit var recyclerView: RecyclerView
-    private lateinit var mAdapter: VideoSectionAdapter
-    private var dataList: MutableList<FeedRecommendRoomData> = mutableListOf()
+    private lateinit var recommendInfoAdapter: RecommendInfoAdapter
+    private var dataList: MutableList<IMultiType> = mutableListOf()
 
     var page = 1
     private val ultraPagerAdapter by lazy { UltraPagerAdapter() }
@@ -52,10 +48,10 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     override fun initViewAndData() {
         cardView = f(R.id.cardView)
         recyclerView = f(R.id.recyclerView)
-        mAdapter = VideoSectionAdapter()
-        recyclerView.adapter = mAdapter
+        recommendInfoAdapter = RecommendInfoAdapter()
+        recyclerView.adapter = recommendInfoAdapter
         (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
-        mAdapter.setNewInstance(dataList)
+        recommendInfoAdapter.setData(dataList)
         val gridLayoutManager = GridLayoutManager(activity, VIDEO_LIST_SPAN_COUNT)
         recyclerView.layoutManager = gridLayoutManager
         GridItemDecoration.Builder()
@@ -99,19 +95,18 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
             }
         }
         getData()
-
     }
 
-    fun getData() {
-        viewModel.test()
-        val req = ReqFeedRoom(page, 20)
-//        viewModel.recommendLiveChatRoom(req).observe(this) {
-//            if (it is ResultState.Success && it.data.data != null) {
-//                println(it.data.data)
-////                dataList.addAll(it.data.data.data.data)
-////                mAdapter.notifyDataSetChanged()
-//            }
-//        }
+    private fun getData() {
+        viewModel.getRecommend().observe(this) {
+            if (it is ResultState.Success && it.data.data != null) {
+                val datas = it.data.data.liveRecommendRoomInfos.map { item ->
+                    LiveRecommendContent(item)
+                }
+                dataList.addAll(datas)
+                recommendInfoAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {

@@ -1,102 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    app:cardBackgroundColor="#FFC3B4D2"
+    app:cardCornerRadius="12dp"
     tools:parentTag="android.widget.FrameLayout">
 
-    <com.github.siyamed.shapeimageview.RoundedImageView
-        android:id="@+id/ivThumbnail"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_video_item_home"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_placeholder"
-        app:siBorderAlpha="0.0"
-        app:siBorderColor="@android:color/transparent"
-        app:siBorderWidth="0dp"
-        app:siForeground="@android:color/transparent"
-        app:siRadius="5dp"
-        app:siSquare="false" />
-
-    <ImageView
-        android:id="@+id/ivBadgeToday"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/badge_today"
-        android:visibility="gone"
-        tools:visibility="gone" />
+        android:padding="5dp">
 
-    <com.salton123.view.IconFontTextView
-        android:id="@+id/tvCompressed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_date_shape"
-        android:gravity="center"
-        android:paddingStart="5dp"
-        android:paddingTop="1dp"
-        android:paddingEnd="5dp"
-        android:paddingBottom="1dp"
-        android:text="@string/if_compression"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        <com.github.siyamed.shapeimageview.RoundedImageView
+            android:id="@+id/ivThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_placeholder"
+            app:siBorderAlpha="0.0"
+            app:siBorderColor="@android:color/transparent"
+            app:siBorderWidth="0dp"
+            app:siForeground="@color/color_ffc3b4d2"
+            app:siRadius="12dp"
+            app:siSquare="false" />
 
-    <com.salton123.view.IconFontTextView
-        android:id="@+id/ivFavorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|top"
-        android:background="@drawable/bg_favorite_shape"
-        android:paddingStart="5dp"
-        android:paddingTop="1dp"
-        android:paddingEnd="5dp"
-        android:paddingBottom="1dp"
-        android:text="@string/if_favorited"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        <ImageView
+            android:id="@+id/ivBadgeToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/badge_today"
+            android:visibility="gone"
+            tools:visibility="gone" />
 
-    <ImageView
-        android:id="@+id/ivBadgeVideoUnlock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:layout_margin="6dp"
-        android:src="@drawable/badge_video_unlock"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        <com.salton123.view.IconFontTextView
+            android:id="@+id/tvCompressed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="5dp"
+            android:paddingTop="1dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="1dp"
+            android:text="@string/if_compression"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:background="@color/black70"
+            tools:visibility="visible" />
 
-    <com.salton123.view.IconFontTextView
-        android:id="@+id/tvPlayTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:background="@drawable/bg_video_duration"
-        android:gravity="center"
-        android:paddingStart="5dp"
-        android:paddingTop="3dp"
-        android:paddingEnd="5dp"
-        android:paddingBottom="3dp"
-        android:textColor="@color/white90"
-        android:textSize="10sp"
-        tools:text="&#xe752; 00:00" />
+        <com.salton123.view.IconFontTextView
+            android:id="@+id/tvOnlineNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|top"
+            android:padding="10dp"
+            android:paddingStart="5dp"
+            android:paddingTop="1dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="1dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:background="@color/black70"
+            tools:text="10"
+            tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/tvProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/shape_circle_progress"
-        android:gravity="center"
-        android:padding="5dp"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="gone"
-        tools:text="10%" />
-</merge>
+        <ImageView
+            android:id="@+id/ivBadgePk"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="25dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_video_item_show_pk"
+            android:paddingStart="5dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="2dp"
+            android:src="@drawable/ic_pk_icon"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <com.salton123.view.IconFontTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:paddingStart="5dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/white90"
+            android:textSize="10sp"
+            tools:background="@color/black70"
+            tools:text="直播封面标题" />
+
+        <TextView
+            android:id="@+id/tvProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_circle_progress"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:text="10%" />
+    </FrameLayout>
+</androidx.cardview.widget.CardView>
