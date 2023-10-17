@@ -6,10 +6,11 @@
     tools:background="@color/black20">
 
     <TextView
+        android:id="@+id/tvDevelopMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|top"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="20dp"
         android:padding="5dp"
         android:text="开发者模式"
@@ -57,10 +58,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:text="@string/setting_user_help_protocol"
-            android:textColorLink="#FF49FF56"
             android:linksClickable="true"
+            android:text="@string/setting_user_help_protocol"
             android:textColor="#FF49FF56"
+            android:textColorLink="#FF49FF56"
             android:textSize="12sp" />
 
         <TextView

@@ -99,6 +99,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme"
             tools:targetApi="n" />
+
+        <activity
+            android:name="com.salton123.eleph.ui.DevelopModeActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTop"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name="com.salton123.eleph.ui.WebActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"

@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Application
 import android.content.pm.PackageManager
 import android.os.Process
+import androidx.annotation.IntDef
 import com.salton123.app.BaseApplication.Companion.getInstance
 import java.io.File
 

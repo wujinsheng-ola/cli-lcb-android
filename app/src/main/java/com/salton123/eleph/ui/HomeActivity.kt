@@ -13,6 +13,7 @@ import com.salton123.widget.BottomBarLayout
 import kt.toast
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.ui.PartyHomeFragment
+import sg.partying.lcb.android.ui.PartyMeFragment
 
 /**
  * Time:2022/1/29 11:40 上午
@@ -23,7 +24,7 @@ class HomeActivity : DelegateActivity() {
 
     override fun getLayout(): Int = R.layout.activity_home
     private val mHomeComp by lazy { PartyHomeFragment() }
-    private val mGalleryComp by lazy { HelloFragment() }
+    private val mGalleryComp by lazy { PartyMeFragment() }
     private lateinit var bottomBarLayout: BottomBarLayout
     private lateinit var mainContent: FrameLayout
     private val mData = arrayOf<Fragment>(mHomeComp, mGalleryComp)

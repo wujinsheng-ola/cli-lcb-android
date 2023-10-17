@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:background="#4C318B">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:text="环境设置"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+
+        <RadioButton
+            android:id="@+id/rbProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="正式环境"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/rbAlpha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Alpha环境"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/rbDebug"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Dev环境"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+</LinearLayout>
