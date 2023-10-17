@@ -12,8 +12,8 @@ public class ConfigProvider implements IConfigProvider {
 
     private void registerConfigProvider() {
         if (mProviderList.isEmpty()) {
-            mProviderList.add(new NetworkConfigProvider());
-            mProviderList.add(new AgoraConfigProvider());
+            mProviderList.add(NetworkConfigProvider.INSTANCE);
+            mProviderList.add(AgoraConfigProvider.INSTANCE);
         }
     }
 

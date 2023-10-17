@@ -1,4 +1,5 @@
 package com.salton123.rtc.agora
+
 import com.salton123.config.IConfigProvider
 
 /**
@@ -6,25 +7,22 @@ import com.salton123.config.IConfigProvider
  * Author:
  * Description:
  */
-class AgoraConfigProvider : IConfigProvider {
-    companion object {
-        var API_BASE_URL = "";
-    }
+object AgoraConfigProvider : IConfigProvider {
+    var AGORA_APP_ID = ""
 
     override fun beforeInit() {
     }
 
     override fun initDebug() {
-//        API_BASE_URL = "http://partystar-dev.iambanban.com/";
-        API_BASE_URL = "https://api.partyother.com/"
+        AGORA_APP_ID = "https://api.partyother.com/"
     }
 
     override fun initAlpha() {
-        API_BASE_URL = "";
+        AGORA_APP_ID = ""
     }
 
     override fun initProduct() {
-        API_BASE_URL = "https://api.partyother.com/"
+        AGORA_APP_ID = "https://api.partyother.com/"
     }
 
     override fun afterInit() {

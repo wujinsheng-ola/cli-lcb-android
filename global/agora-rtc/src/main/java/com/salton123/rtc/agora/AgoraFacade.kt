@@ -16,10 +16,9 @@ import io.agora.rtc2.video.VideoEncoderConfiguration
 object AgoraFacade {
     private const val tag = "AgoraFacade"
     private val agoraEventHandler: AgoraEventHandler = AgoraEventHandler()
-    private const val AGORA_APP_ID = "673bdd4c79c94e04823fde7953fa7831"
     lateinit var rtcEngine: RtcEngine
     fun init(context: Context) {
-        rtcEngine = RtcEngine.create(context, AGORA_APP_ID, agoraEventHandler)
+        rtcEngine = RtcEngine.create(context, AgoraConfigProvider.AGORA_APP_ID, agoraEventHandler)
         rtcEngine.apply {
             setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING)
             setClientRole(Constants.CLIENT_ROLE_BROADCASTER)

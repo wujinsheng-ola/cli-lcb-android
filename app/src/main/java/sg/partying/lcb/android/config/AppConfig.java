@@ -14,7 +14,7 @@ public class AppConfig {
         if (sConfigProvider == null) {
             throw new RuntimeException("you must setProvider first");
         }
-        AppMode appMode = AppMode.Debug;
+        AppMode appMode = AppMode.Product;
         sConfigProvider.beforeInit();
         switch (appMode) {
             case Debug:

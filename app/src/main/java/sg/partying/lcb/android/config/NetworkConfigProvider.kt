@@ -7,21 +7,17 @@ import com.salton123.config.IConfigProvider
  * Author:
  * Description:
  */
-class NetworkConfigProvider : IConfigProvider {
-    companion object {
-        var API_BASE_URL = "";
-    }
-
+object NetworkConfigProvider : IConfigProvider {
+    var API_BASE_URL = ""
     override fun beforeInit() {
     }
 
     override fun initDebug() {
-//        API_BASE_URL = "http://partystar-dev.iambanban.com/";
-        API_BASE_URL = "https://api.partyother.com/"
+        API_BASE_URL = "http://partystar-dev.iambanban.com/"
     }
 
     override fun initAlpha() {
-        API_BASE_URL = "";
+        API_BASE_URL = ""
     }
 
     override fun initProduct() {
