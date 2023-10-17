@@ -1,2 +1,2 @@
-include ':app',':lcb-network',':resources',':framework-core',':translate-core',':lcb-protocols'
+include ':app', ':lcb-network', ':resources', ':framework-core', ':translate-core', ':lcb-protocols', ":agora-rtc"
 project(":resources").projectDir = new File("subset/resources")

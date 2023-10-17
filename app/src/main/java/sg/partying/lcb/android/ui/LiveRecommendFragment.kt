@@ -98,11 +98,13 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     }
 
     private fun getData() {
+//        viewModel.test()
         viewModel.getRecommend().observe(this) {
             if (it is ResultState.Success && it.data.data != null) {
                 val datas = it.data.data.liveRecommendRoomInfos.map { item ->
                     LiveRecommendContent(item)
                 }
+                dataList.clear()
                 dataList.addAll(datas)
                 recommendInfoAdapter.notifyDataSetChanged()
             }

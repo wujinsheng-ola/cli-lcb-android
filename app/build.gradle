@@ -168,6 +168,7 @@ dependencies {
     debugImplementation project(path: ':framework-core')
     debugImplementation project(path: ':translate-core')
     debugImplementation project(path: ':lcb-protocols')
+    debugImplementation project(path: ':agora-rtc')
     kapt "androidx.room:room-compiler:${rootProject.ext.room_version}"
 }
 
