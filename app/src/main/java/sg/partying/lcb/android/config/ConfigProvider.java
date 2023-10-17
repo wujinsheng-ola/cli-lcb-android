@@ -1,6 +1,9 @@
 package sg.partying.lcb.android.config;
 
 
+import com.salton123.config.IConfigProvider;
+import com.salton123.rtc.agora.AgoraConfigProvider;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +13,7 @@ public class ConfigProvider implements IConfigProvider {
     private void registerConfigProvider() {
         if (mProviderList.isEmpty()) {
             mProviderList.add(new NetworkConfigProvider());
+            mProviderList.add(new AgoraConfigProvider());
         }
     }
 

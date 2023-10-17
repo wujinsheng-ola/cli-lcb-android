@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 android {
+    namespace 'com.salton123.resources'
     compileSdkVersion rootProject.ext.android.compileSdkVersion
 
     defaultConfig {

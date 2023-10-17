@@ -1,5 +1,7 @@
 package sg.partying.lcb.android.config;
 
+import com.salton123.config.IConfigProvider;
+
 public class AppConfig {
     public enum AppMode {
         Debug, Alpha, Product

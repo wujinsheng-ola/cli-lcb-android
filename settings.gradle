@@ -1,2 +1,11 @@
-include ':app', ':lcb-network', ':resources', ':framework-core', ':translate-core', ':lcb-protocols', ":agora-rtc"
+include ':app', ':resources', ':framework', ':common', ':translate', ":agora-rtc"
 project(":resources").projectDir = new File("subset/resources")
+project(":common").projectDir = new File("subset/common")
+project(":translate").projectDir = new File("subset/translate")
+
+include ':protocols'
+project(":protocols").projectDir = new File("subset/protocols")
+//project(":lcb-network").projectDir = new File("subset/lcb-network")
+
+project(":framework").projectDir = new File("global/framework")
+project(":agora-rtc").projectDir = new File("global/agora-rtc")

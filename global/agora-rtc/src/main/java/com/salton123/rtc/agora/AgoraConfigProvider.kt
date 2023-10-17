@@ -1,5 +1,4 @@
-package sg.partying.lcb.android.config
-
+package com.salton123.rtc.agora
 import com.salton123.config.IConfigProvider
 
 /**
@@ -7,7 +6,7 @@ import com.salton123.config.IConfigProvider
  * Author:
  * Description:
  */
-class NetworkConfigProvider : IConfigProvider {
+class AgoraConfigProvider : IConfigProvider {
     companion object {
         var API_BASE_URL = "";
     }
