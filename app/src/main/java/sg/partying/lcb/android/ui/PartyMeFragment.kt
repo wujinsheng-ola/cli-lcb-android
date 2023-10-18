@@ -3,7 +3,6 @@ package sg.partying.lcb.android.ui
 import android.os.Bundle
 import android.widget.TextView
 import com.salton123.base.BaseFragment
-import com.salton123.eleph.ui.LoginActivity
 import kt.singleClick
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.Session

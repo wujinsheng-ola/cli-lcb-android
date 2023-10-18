@@ -1,4 +1,4 @@
-package com.salton123.eleph
+package sg.partying.lcb.android.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.GsonUtils

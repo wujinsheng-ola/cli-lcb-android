@@ -1,4 +1,4 @@
-package com.salton123.view;
+package com.salton123.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

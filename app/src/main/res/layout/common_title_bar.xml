@@ -15,7 +15,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.salton123.view.IconFontTextView
+        <com.salton123.widget.IconFontTextView
             android:id="@+id/tvBack"
             android:layout_width="45dp"
             android:layout_height="match_parent"
@@ -35,7 +35,7 @@
             android:textColor="@color/black"
             android:textSize="16.0sp" />
 
-        <com.salton123.view.IconFontTextView
+        <com.salton123.widget.IconFontTextView
             android:id="@+id/tvMore"
             android:layout_width="45dp"
             android:layout_height="match_parent"

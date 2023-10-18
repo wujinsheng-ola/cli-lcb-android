@@ -1,4 +1,4 @@
-package com.salton123.eleph.ui
+package sg.partying.lcb.android.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -12,8 +12,6 @@ import com.salton123.utils.FragmentUtils
 import com.salton123.widget.BottomBarLayout
 import kt.toast
 import sg.partying.lcb.android.R
-import sg.partying.lcb.android.ui.PartyHomeFragment
-import sg.partying.lcb.android.ui.PartyMeFragment
 
 /**
  * Time:2022/1/29 11:40 上午

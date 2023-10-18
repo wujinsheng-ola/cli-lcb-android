@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.salton123.base.BaseFragment
-import com.salton123.eleph.NetworkViewModel
+import sg.partying.lcb.android.viewmodel.NetworkViewModel
 import com.salton123.log.XLog
 import com.salton123.utils.ScreenUtils
 import com.salton123.widget.itemdecoration.provider.GridItemDecoration

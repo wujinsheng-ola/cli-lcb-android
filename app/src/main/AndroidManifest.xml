@@ -68,7 +68,7 @@
         <profileable android:shell="true" />
 
         <activity
-            android:name="com.salton123.eleph.ui.SplashActivity"
+            android:name=".ui.SplashActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:hardwareAccelerated="true"
@@ -84,7 +84,7 @@
 
         </activity>
         <activity
-            android:name="com.salton123.eleph.ui.HomeActivity"
+            android:name=".ui.HomeActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:launchMode="singleTop"
             android:resizeableActivity="false"
@@ -92,7 +92,7 @@
             tools:targetApi="n" />
 
         <activity
-            android:name="com.salton123.eleph.ui.LoginActivity"
+            android:name=".ui.LoginActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:launchMode="singleTop"
             android:resizeableActivity="false"
@@ -101,14 +101,14 @@
             tools:targetApi="n" />
 
         <activity
-            android:name="com.salton123.eleph.ui.DevelopModeActivity"
+            android:name=".ui.DevelopModeActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:launchMode="singleTop"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             tools:targetApi="n" />
         <activity
-            android:name="com.salton123.eleph.ui.WebActivity"
+            android:name=".ui.WebActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:launchMode="singleTop"
             android:resizeableActivity="false"

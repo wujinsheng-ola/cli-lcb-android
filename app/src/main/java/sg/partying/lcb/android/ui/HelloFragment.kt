@@ -1,4 +1,4 @@
-package com.salton123.eleph.ui
+package sg.partying.lcb.android.ui
 
 import android.os.Bundle
 import com.salton123.base.BaseFragment

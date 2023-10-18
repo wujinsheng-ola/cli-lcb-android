@@ -1,18 +1,14 @@
-package com.salton123.eleph.dialog
+package sg.partying.lcb.android.dialog
 
 import android.content.Context
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.viewModels
 import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.EncryptUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.google.gson.annotations.SerializedName
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.CenterPopupView
-import com.salton123.eleph.NetworkViewModel
 import com.salton123.log.XLog
 import com.salton123.utils.PreferencesUtils
 import kotlinx.coroutines.Dispatchers
@@ -21,11 +17,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kt.singleClick
 import kt.toast
-import okio.Utf8
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.Session
 import sg.partying.lcb.android.api.apiService
-import sg.partying.lcb.android.api.resp.Resp
 
 /**
  * Time:2023/9/26 11:54

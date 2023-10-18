@@ -1,4 +1,4 @@
-package com.salton123.eleph.ui
+package sg.partying.lcb.android.ui
 
 import android.widget.RadioButton
 import android.widget.RadioGroup

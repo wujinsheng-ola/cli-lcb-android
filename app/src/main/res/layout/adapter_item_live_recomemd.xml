@@ -36,7 +36,7 @@
             android:visibility="gone"
             tools:visibility="gone" />
 
-        <com.salton123.view.IconFontTextView
+        <com.salton123.widget.IconFontTextView
             android:id="@+id/tvCompressed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             tools:background="@color/black70"
             tools:visibility="visible" />
 
-        <com.salton123.view.IconFontTextView
+        <com.salton123.widget.IconFontTextView
             android:id="@+id/tvOnlineNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <com.salton123.view.IconFontTextView
+        <com.salton123.widget.IconFontTextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

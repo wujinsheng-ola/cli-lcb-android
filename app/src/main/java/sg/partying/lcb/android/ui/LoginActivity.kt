@@ -1,4 +1,4 @@
-package com.salton123.eleph.ui
+package sg.partying.lcb.android.ui
 
 import android.graphics.Paint
 import android.os.Bundle
@@ -11,8 +11,8 @@ import com.salton123.app.BaseApplication
 import com.salton123.base.DelegateActivity
 import com.salton123.base.feature.ImmersionFeature
 import com.salton123.config.AppModeEnum
-import com.salton123.eleph.NetworkViewModel
-import com.salton123.eleph.dialog.PhoneLoginDialog
+import sg.partying.lcb.android.viewmodel.NetworkViewModel
+import sg.partying.lcb.android.dialog.PhoneLoginDialog
 import com.salton123.soulove.CommonClassPath
 import kt.getString
 import kt.singleClick
