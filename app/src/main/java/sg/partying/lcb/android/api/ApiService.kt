@@ -40,7 +40,7 @@ interface ApiService {
     suspend fun recommendLiveChatRoom(@Body req: ReqFeedRoom): PbResp<ReqFeedRecommendRoom>
 
     //    String url = '${System.domain}foryou/recommend?page=$page&version=3&nearby=$nearby&feed_type=${isVideoLive ? 'liveroom' : 'chat'}';
-    @POST("foryou/recommend?page=1&version=3&limit=5&nearby=0&feed_type=liveroom")
+    @POST("foryou/recommend?page=1&version=3&limit=100&nearby=0&feed_type=liveroom")
     @FormUrlEncoded
     suspend fun getRecommend(
         @Field("browseRids") browseRids: String,

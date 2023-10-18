@@ -8,21 +8,21 @@ import com.salton123.config.IConfigProvider
  * Description:
  */
 object AgoraConfigProvider : IConfigProvider {
-    var AGORA_APP_ID = ""
+    var AGORA_APP_ID = "b9a2fe88a3cd4f55ad6ebef7ac8cac30"
 
     override fun beforeInit() {
     }
 
     override fun initDebug() {
-        AGORA_APP_ID = "https://api.partyother.com/"
+        AGORA_APP_ID = "b9a2fe88a3cd4f55ad6ebef7ac8cac30"
     }
 
     override fun initAlpha() {
-        AGORA_APP_ID = ""
+        AGORA_APP_ID = "b9a2fe88a3cd4f55ad6ebef7ac8cac30"
     }
 
     override fun initProduct() {
-        AGORA_APP_ID = "https://api.partyother.com/"
+        AGORA_APP_ID = "b9a2fe88a3cd4f55ad6ebef7ac8cac30"
     }
 
     override fun afterInit() {

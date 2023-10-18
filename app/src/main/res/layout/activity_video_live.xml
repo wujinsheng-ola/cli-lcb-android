@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--    视频直播层-->
+    <FrameLayout
+        android:id="@+id/liveLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <!--    资料层(房间信息、在线列表、底部按钮)-->
+    <FrameLayout
+        android:id="@+id/profileLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <!--    公屏层-->
+    <FrameLayout
+        android:id="@+id/chatLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--    礼物层-->
+    <FrameLayout
+        android:id="@+id/giftLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

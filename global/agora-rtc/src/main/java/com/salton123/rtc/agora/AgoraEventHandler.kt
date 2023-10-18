@@ -2,6 +2,7 @@ package com.salton123.rtc.agora
 
 import android.graphics.Rect
 import android.util.Log
+import com.blankj.utilcode.util.GsonUtils
 import io.agora.rtc2.ClientRoleOptions
 import io.agora.rtc2.Constants
 import io.agora.rtc2.IRtcEngineEventHandler
@@ -368,7 +369,7 @@ class AgoraEventHandler : IRtcEngineEventHandler() {
         eventHandlers.forEach {
             it.onUplinkNetworkInfoUpdated(info)
         }
-        Log.i(tag, "onUplinkNetworkInfoUpdated:$info")
+        Log.i(tag, "onUplinkNetworkInfoUpdated:${GsonUtils.toJson(info)}")
     }
 
     override fun onDownlinkNetworkInfoUpdated(info: DownlinkNetworkInfo?) {
@@ -376,7 +377,7 @@ class AgoraEventHandler : IRtcEngineEventHandler() {
         eventHandlers.forEach {
             it.onDownlinkNetworkInfoUpdated(info)
         }
-        Log.i(tag, "onDownlinkNetworkInfoUpdated:$info")
+        Log.i(tag, "onDownlinkNetworkInfoUpdated:${GsonUtils.toJson(info)}")
     }
 
     override fun onEncryptionError(errorType: Int) {
@@ -480,7 +481,7 @@ class AgoraEventHandler : IRtcEngineEventHandler() {
         eventHandlers.forEach {
             it.onRtcStats(stats)
         }
-        Log.i(tag, "onRtcStats:$stats")
+        Log.i(tag, "onRtcStats:${GsonUtils.toJson(stats)}")
     }
 
 
@@ -514,7 +515,7 @@ class AgoraEventHandler : IRtcEngineEventHandler() {
         eventHandlers.forEach {
             it.onRemoteVideoStats(stats)
         }
-        Log.i(tag, "onRemoteVideoStats:$stats")
+        Log.i(tag, "onRemoteVideoStats:${GsonUtils.toJson(stats)}")
     }
 
     override fun onLocalAudioStats(stats: LocalAudioStats?) {
@@ -522,7 +523,7 @@ class AgoraEventHandler : IRtcEngineEventHandler() {
         eventHandlers.forEach {
             it.onLocalAudioStats(stats)
         }
-        Log.i(tag, "onLocalAudioStats:$stats")
+        Log.i(tag, "onLocalAudioStats:${GsonUtils.toJson(stats)}")
     }
 
     override fun onFirstLocalVideoFrame(source: Constants.VideoSourceType?, width: Int, height: Int, elapsed: Int) {
@@ -538,7 +539,7 @@ class AgoraEventHandler : IRtcEngineEventHandler() {
         eventHandlers.forEach {
             it.onRemoteAudioStats(stats)
         }
-        Log.i(tag, "onRemoteAudioStats:$stats")
+        Log.i(tag, "onRemoteAudioStats:${GsonUtils.toJson(stats)}")
     }
 
     override fun onLocalVideoStats(source: Constants.VideoSourceType?, stats: LocalVideoStats?) {
@@ -546,7 +547,7 @@ class AgoraEventHandler : IRtcEngineEventHandler() {
         eventHandlers.forEach {
             it.onLocalVideoStats(source, stats)
         }
-        Log.i(tag, "onLocalVideoStats:$source,$stats")
+        Log.i(tag, "onLocalVideoStats:$source,${GsonUtils.toJson(stats)}")
     }
 
     override fun onLocalVideoStat(sentBitrate: Int, sentFrameRate: Int) {

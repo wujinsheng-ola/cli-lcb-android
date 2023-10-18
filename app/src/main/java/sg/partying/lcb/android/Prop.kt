@@ -2,6 +2,8 @@ package sg.partying.lcb.android
 
 import android.os.Environment
 import androidx.lifecycle.MutableLiveData
+import sg.partying.lcb.android.api.resp.LiveRecommendRoomInfo
+import sg.partying.lcb.android.api.resp.RoomInfo
 import java.io.File
 
 /**
@@ -10,7 +12,10 @@ import java.io.File
  * Description:
  */
 object Prop {
+    var currentRoomInfo: RoomInfo? = null
     val toParentPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath + File.separator + "eleph" + File.separator
     var qrCodeTempSavePath = toParentPath + "temp.jpg"
     var changeTabLiveData: MutableLiveData<Int> = MutableLiveData()
+
+
 }

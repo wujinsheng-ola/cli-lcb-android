@@ -2,6 +2,7 @@ package com.salton123.rtc.agora
 
 import android.content.Context
 import android.util.Log
+import io.agora.rtc2.ChannelMediaOptions
 import io.agora.rtc2.Constants
 import io.agora.rtc2.IRtcEngineEventHandler
 import io.agora.rtc2.RtcEngine
@@ -43,10 +44,16 @@ object AgoraFacade {
         agoraEventHandler.removeListener(listener)
     }
 
-    fun joinChannel(channelName: String, uid: String) {
-        Log.i(tag, "joinChannel:$channelName")
-        rtcEngine.joinChannelWithUserAccount("", channelName, uid)
+    fun joinChannel(token: String, channelName: String, uid: Int) {
+        Log.i(tag, "joinChannel:$token,$channelName,$uid")
+        val options = ChannelMediaOptions()
+        options.publishCameraTrack = true
+        options.publishMicrophoneTrack = true
+        options.autoSubscribeAudio = true
+        options.autoSubscribeVideo = true
+        rtcEngine.joinChannel(token, channelName, uid, options)
     }
+
 
     /**
      * 可以获取直播间内用户的UserInfo

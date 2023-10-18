@@ -19,7 +19,9 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.tmall.ultraviewpager.UltraViewPager
 import me.hgj.jetpackmvvm.state.ResultState
+import sg.partying.lcb.android.Prop
 import sg.partying.lcb.android.R
+import sg.partying.lcb.android.api.resp.RoomInfo
 import sg.partying.lcb.android.model.IMultiType
 import sg.partying.lcb.android.model.LiveRecommendContent
 import sg.partying.lcb.android.ui.adapter.UltraPagerAdapter
@@ -94,6 +96,13 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
                 cardView.visibility = View.GONE
             }
         }
+        recommendInfoAdapter.onItemClick = { type, position ->
+            if (type is LiveRecommendContent) {
+                val content = type.liveRecommendRoomInfo;
+                Prop.currentRoomInfo = RoomInfo("agora", content.agoraToken, content.rid, content.password, content.uid)
+            }
+            openActivity(LiveRoomActivity::class.java, Bundle())
+        }
         getData()
     }
 
@@ -119,5 +128,6 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     override fun onLoadMore(refreshLayout: RefreshLayout) {
         refreshLayout.finishLoadMore(1000)
     }
+
 
 }
