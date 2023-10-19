@@ -32,7 +32,7 @@ object AgoraFacade {
                     VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT
                 )
             )
-            enableVideo()
+//            enableVideo()
         }
     }
 
