@@ -1,7 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 android {
-    namespace 'com.salton123.resources'
+    namespace 'com.salton123.live'
     compileSdkVersion rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
@@ -9,9 +10,6 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
-        vectorDrawables.useSupportLibrary = true
-
-//        buildConfigField "String", "buglyAppId", "\"${rootProject.ext.dependVersion.buglyAppId}\""
     }
 
     compileOptions {
@@ -21,7 +19,14 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    implementation rootProject.ext.supportLibs
-    api project(path: ':translate')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api project(path: ':common')
+    api project(path: ':agora-rtc')
+    kapt "androidx.room:room-compiler:${rootProject.ext.room_version}"
+}
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
 }

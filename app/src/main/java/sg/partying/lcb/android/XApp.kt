@@ -3,6 +3,7 @@ package sg.partying.lcb.android
 import android.app.Activity
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
+import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.Utils
 import com.bumptech.glide.Glide
@@ -40,6 +41,7 @@ class XApp : BaseApplication() {
         val configProvider = ConfigProvider()
         AppConfig.init(configProvider)
         AgoraFacade.init(this)
+        ARouter.init(this)
     }
 
 

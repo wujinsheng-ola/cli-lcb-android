@@ -3,6 +3,7 @@ package com.salton123.soulove.api
 import android.content.Context
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
+import com.salton123.soulove.Constants
 
 /**
  * Time:6/26/21 7:02 PM
@@ -20,12 +21,9 @@ object RouterManager {
         ARouter.getInstance().build(this).navigation(context)
     }
 
-    @JvmStatic
-    fun loginMain(context: Context) {
 
+    //
+    fun goLiveRoom(context: Context) {
+        Constants.Router.App.LIVE_ROOM.goPage(context)
     }
-//
-//    fun fundationHomePage(context: Context): Fragment? {
-//        return Constants.Router.Fundation.MAIN.buildPage(context)
-//    }
 }

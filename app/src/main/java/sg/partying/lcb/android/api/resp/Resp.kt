@@ -170,14 +170,3 @@ data class RoomType(
     @SerializedName("show") var show: String,
     @SerializedName("string_key") var stringKey: String
 )
-
-/**
- * 标准的房间信息
- */
-data class RoomInfo(
-    @SerializedName("rtc_type") var rtcType: String,
-    @SerializedName("rtc_token") var rtcToken: String,
-    @SerializedName("room_id") var rid: String,
-    @SerializedName("room_pwd") var roomPwd: Int,
-    @SerializedName("anchor_id") var anchorId: Int,
-)

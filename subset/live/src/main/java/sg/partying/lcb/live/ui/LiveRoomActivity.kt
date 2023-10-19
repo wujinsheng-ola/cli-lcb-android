@@ -1,14 +1,17 @@
-package sg.partying.lcb.android.ui
+package sg.partying.lcb.live.ui
 
 import android.os.Bundle
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.salton123.base.DelegateActivity
 import com.salton123.base.feature.ImmersionFeature
+import com.salton123.live.R
+import com.salton123.soulove.Constants
 import com.salton123.utils.FragmentUtils
 import kt.toast
 import sg.partying.lcb.android.Prop
-import sg.partying.lcb.android.R
-import sg.partying.lcb.android.ui.fragment.LiveRoomFragment
+import sg.partying.lcb.live.ui.fragment.LiveRoomFragment
 
+@Route(path = Constants.Router.App.LIVE_ROOM)
 class LiveRoomActivity : DelegateActivity() {
 
     override fun getLayout(): Int = R.layout.activity_video_live

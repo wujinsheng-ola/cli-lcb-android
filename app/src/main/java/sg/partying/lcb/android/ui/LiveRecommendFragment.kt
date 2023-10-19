@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.salton123.base.BaseFragment
 import sg.partying.lcb.android.viewmodel.NetworkViewModel
 import com.salton123.log.XLog
+import com.salton123.soulove.api.RouterManager
 import com.salton123.utils.ScreenUtils
 import com.salton123.widget.itemdecoration.provider.GridItemDecoration
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -21,11 +22,11 @@ import com.tmall.ultraviewpager.UltraViewPager
 import me.hgj.jetpackmvvm.state.ResultState
 import sg.partying.lcb.android.Prop
 import sg.partying.lcb.android.R
-import sg.partying.lcb.android.api.resp.RoomInfo
 import sg.partying.lcb.android.model.IMultiType
 import sg.partying.lcb.android.model.LiveRecommendContent
 import sg.partying.lcb.android.ui.adapter.UltraPagerAdapter
 import sg.partying.lcb.android.ui.adapter.RecommendInfoAdapter
+import sg.partying.lcb.model.RoomInfo
 
 const val VIDEO_LIST_SPAN_COUNT = 2
 const val VIDEO_LIST_DIVIDER_SIZE = 10f
@@ -100,8 +101,9 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
             if (type is LiveRecommendContent) {
                 val content = type.liveRecommendRoomInfo;
                 Prop.currentRoomInfo = RoomInfo("agora", content.agoraToken, content.rid, content.password, content.uid)
+//                AgoraFacade.joinChannel(content.agoraToken, content.rid, Session.uid)
+                RouterManager.goLiveRoom(activity())
             }
-            openActivity(LiveRoomActivity::class.java, Bundle())
         }
         getData()
     }

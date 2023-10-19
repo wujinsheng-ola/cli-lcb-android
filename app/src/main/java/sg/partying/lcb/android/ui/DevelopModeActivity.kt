@@ -2,7 +2,7 @@ package sg.partying.lcb.android.ui
 
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import com.salton123.base.BaseActivity
+import sg.partying.lcb.base.BaseActivity
 import com.salton123.config.AppModeEnum
 import com.salton123.soulove.CommonClassPath
 import sg.partying.lcb.android.R

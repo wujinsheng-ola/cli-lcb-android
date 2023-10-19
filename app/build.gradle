@@ -165,12 +165,13 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
-    api project(path: ':common')
-    api project(path: ':translate')
+    api project(':common')
+    api project(":live")
+//    api project(path: ':translate')
     api project(path: ':protocols')
     api project(':resources')
-    api project(':framework')
-    api project(path: ':agora-rtc')
+//    api project(':framework')
+//    api project(path: ':agora-rtc')
     kapt "androidx.room:room-compiler:${rootProject.ext.room_version}"
 }
 

@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.salton123.app.BaseApplication
-import com.salton123.base.BaseActivity
+import sg.partying.lcb.base.BaseActivity
 import sg.partying.lcb.android.R
 
 

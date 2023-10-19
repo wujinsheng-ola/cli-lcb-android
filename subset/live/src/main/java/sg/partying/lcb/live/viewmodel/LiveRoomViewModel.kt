@@ -1,4 +1,4 @@
-package sg.partying.lcb.android.viewmodel
+package sg.partying.lcb.live.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.salton123.rtc.agora.AgoraFacade

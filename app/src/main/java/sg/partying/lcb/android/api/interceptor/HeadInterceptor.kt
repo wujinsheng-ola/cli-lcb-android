@@ -1,14 +1,11 @@
 package sg.partying.lcb.android.api.interceptor
 
 import android.os.Build
-import android.provider.Settings
 import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.LanguageUtils
-import com.salton123.app.BaseApplication
 import okhttp3.Interceptor
 import okhttp3.Response
 import sg.partying.lcb.android.Session
-import sg.partying.lcb.android.util.PackageUtils
 import java.io.IOException
 
 /**

@@ -1,11 +1,12 @@
-package com.salton123.base
+package sg.partying.lcb.base
 
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.salton123.base.DelegateActivity
 import com.salton123.base.feature.ImmersionFeature
-import sg.partying.lcb.android.R
+import com.salton123.common.R
 
 /**
  * Time:2022/2/2 5:29 下午

@@ -2,8 +2,7 @@ package sg.partying.lcb.android
 
 import android.os.Environment
 import androidx.lifecycle.MutableLiveData
-import sg.partying.lcb.android.api.resp.LiveRecommendRoomInfo
-import sg.partying.lcb.android.api.resp.RoomInfo
+import sg.partying.lcb.model.RoomInfo
 import java.io.File
 
 /**

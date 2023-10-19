@@ -1,6 +1,5 @@
-package sg.partying.lcb.android.ui.fragment
+package sg.partying.lcb.live.ui.fragment
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.SurfaceView
 import android.view.ViewGroup
@@ -8,14 +7,14 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import com.salton123.base.BaseFragment
+import com.salton123.live.R
 import com.salton123.rtc.agora.AgoraFacade
 import com.salton123.utils.ScreenUtils
 import io.agora.rtc2.video.VideoCanvas
 import sg.partying.lcb.android.Prop
-import sg.partying.lcb.android.R
 import sg.partying.lcb.android.Session
-import sg.partying.lcb.android.api.resp.RoomInfo
-import sg.partying.lcb.android.viewmodel.LiveRoomViewModel
+import sg.partying.lcb.model.RoomInfo
+import sg.partying.lcb.live.viewmodel.LiveRoomViewModel
 
 /**
  * Time:2023/10/18 11:35

@@ -3,6 +3,9 @@ project(":resources").projectDir = new File("subset/resources")
 project(":common").projectDir = new File("subset/common")
 project(":translate").projectDir = new File("subset/translate")
 
+include ':live'
+project(":live").projectDir = new File("subset/live")
+
 include ':protocols'
 project(":protocols").projectDir = new File("subset/protocols")
 //project(":lcb-network").projectDir = new File("subset/lcb-network")
