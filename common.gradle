@@ -1,0 +1,67 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        flavorDimensions versionName
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+        manifestPlaceholders = rootProject.ext.manifestPlaceholders
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86"
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        AROUTER_MODULE_NAME    : project.getName(),
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"
+                ]
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    packagingOptions {//加上这写代码
+        pickFirst 'lib/x86/libsqlite.so'
+        pickFirst 'lib/x86_64/libsqlite.so'
+        pickFirst 'lib/armeabi-v7a/libsqlite.so'
+        pickFirst 'lib/arm64-v8a/libsqlite.so'
+        pickFirst 'lib/x86/libhyphenate.so'
+        pickFirst 'lib/x86_64/libhyphenate.so'
+        pickFirst 'lib/armeabi-v7a/libhyphenate.so'
+        pickFirst 'lib/arm64-v8a/libhyphenate.so'
+    }
+
+    //必须要保证所有的flavor 都属于同一个维度
+    flavorDimensions "default"
+    println("projectName:" + project.getName())
+}
+dependencies {
+    // 依赖 libs 目录下所有 jar 包
+    api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    api project(':common')
+    api rootProject.ext.supportLibs
+    api rootProject.ext.otherDependenciesLibs
+    kapt rootProject.ext.compilerDependenciesLibs
+}
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}

@@ -183,4 +183,8 @@ uploadPgyParams {
     buildInstallType = 1
     buildPassword = ""
 }
-
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
