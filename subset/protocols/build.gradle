@@ -40,7 +40,7 @@ wire {
 //    kotlin {}
     java{}
     sourcePath {
-        srcDir 'src/main/proto'
+        srcDir 'src/main/protos'
 //        srcDir 'src/psl-be-protocol/partystar'
     }
 }

@@ -1,19 +1,20 @@
-package sg.partying.lcb.android.api
+package sg.partying.lcb.api
 
 import pb.ReqFeedRecommendRoom
 import pb.ReqFeedRoom
+import pb.RspActionEnterV2
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
-import sg.partying.lcb.android.api.resp.BannerItem
-import sg.partying.lcb.android.api.resp.LoginOption
-import sg.partying.lcb.android.api.resp.LoginRet
-import sg.partying.lcb.android.api.resp.PbResp
-import sg.partying.lcb.android.api.resp.LiveRecommendModel
-import sg.partying.lcb.android.api.resp.Resp
+import sg.partying.lcb.api.resp.BannerItem
+import sg.partying.lcb.api.resp.LoginOption
+import sg.partying.lcb.api.resp.LoginRet
+import sg.partying.lcb.api.resp.PbResp
+import sg.partying.lcb.api.resp.LiveRecommendModel
+import sg.partying.lcb.api.resp.Resp
 
 interface ApiService {
     @GET("go/ps/account/loginOptions")
@@ -51,10 +52,13 @@ interface ApiService {
         @Field("latitude") latitude: String,
     ): Resp<LiveRecommendModel>
 
-
-
-    @Headers("Content-Type:text/json; charset=utf-8")
+    @FormUrlEncoded
     @POST("go/room/action/enter/(PB)")
-    suspend fun joinRoom(@Body req: ReqFeedRoom): PbResp<ReqFeedRecommendRoom>
+    suspend fun joinRoom(
+        @Field("rid") rid: String,
+        @Field("password") password: String,
+        @Field("inviter_uid") inviterUid: String,
+        @Field("user_memory") userMemory: String,
+    ): PbResp<RspActionEnterV2>
 
 }

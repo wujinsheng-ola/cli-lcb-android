@@ -1,0 +1,406 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "entity_xs_gift.proto";
+import "entity_xs_chatroom.proto";
+import "app.proto";
+import "api_game_center.proto";
+import "common.proto";
+import "link_mic_switch.proto";
+import "link_mic.proto";
+import "redpacket.proto";
+import "api_lucky_wheel.proto";
+import "pk.proto";
+import "fall_treasure.proto";
+import "boom_rocket.proto";
+import "room_manage.proto";
+import "skin.proto";
+
+message EnterData {
+    uint32 uid = 1; //用户ID
+    string purview = 2; //用户角色
+}
+
+message ResActionEnter {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    EnterData data = 3; //返回的数据结果
+}
+
+message RspActionEnterDataConfig {
+    uint32 rid = 1;
+    int32 app_id = 2;
+    uint32 uid = 3;
+    string prefix = 4;
+    string name = 5;
+    string icon = 6;
+    string type = 7;
+    string property = 8;
+    string types = 9;
+    string description = 10;
+    uint32 display_message = 11;
+    uint32 online_num = 12;
+    uint32 online_admin = 13;
+    uint32 version = 14;
+    int32 deleted = 15;
+    uint32 boss = 16;
+    int32 reception = 17;
+    int32 paier = 18;
+    string theme = 19;
+    string background = 20;
+    uint32 counter = 21;
+    string mode = 22;
+    uint32 package = 23;
+    uint32 o_total = 24;
+    uint32 o_num = 25;
+    uint32 o_duration = 26;
+    uint32 nine = 27;
+    uint32 dateline = 28;
+    int32 weight = 29;
+    uint32 display_rank = 30;
+    string bicon = 31;
+    uint32 sex = 32;
+    uint32 close_box = 33;
+    string game = 34;
+    uint32 state = 35;
+    int32 auction = 36;
+    string area = 37;
+    string language = 38;
+    string room_factory_type = 39;
+    uint32 fixed_tag_id = 40;
+    uint32 room_module_id = 41;
+    string settlement_channel = 42;
+    string type_label = 43;
+    uint32 inflexion = 44;
+    repeated string themeSwitchBackground = 45;
+    uint32 themeRedPackageEmpty = 46;
+    uint32 real = 47;
+    string description_text = 48;
+    uint32 auto_mic = 49;
+    uint32 display_chat = 50;
+    bool option_enable = 51;
+    uint32 level = 52;
+    string background_url = 53;
+    bool enable_wheel = 54;
+    uint32 have_task = 55;
+    repeated string have_task_types = 56;
+    uint32 have_room_charm = 57;
+    uint32 gift_wish = 58; // 心愿礼物功能，0-关闭，1-开启 
+}
+
+message Createor {
+    string name = 1;
+    string icon = 2;
+    uint32 role = 3;
+    uint32 uid = 4;
+    uint32 sex = 5;
+    uint32 age = 6;
+}
+
+message List {
+    uint32 position = 1;
+    uint32 uid = 2;
+    uint32 lock = 3;
+    uint32 forbidden = 4;
+    uint32 package = 5;
+    uint32 counter = 6;
+    uint32 mic_status = 7;
+    string frame = 8;
+    string name = 9;
+    uint32 sex = 10;
+    uint32 age = 11;
+    string icon = 12;
+    uint32 role = 13;
+    string ring = 14;
+}
+
+message RspActionEnterDataRtcMatch {
+    uint32 status = 1;
+}
+
+message MatchConfigV2 {
+    uint32 match = 1;
+    repeated string roles = 2;
+    uint32 on_mic = 3;
+    uint32 online_num = 4;
+    uint32 hot_num = 5;
+}
+
+message HitNumConfigDetail {
+    optional string url = 1;
+    optional string flower_url = 2;
+}
+
+message HitNumConfigV2 {
+    HitNumConfigDetail hit_99 = 1; // 99连击
+    HitNumConfigDetail hit_188 = 2; // 188连击
+    HitNumConfigDetail hit_520 = 3; // 520连击
+    HitNumConfigDetail hit_999 = 4; // 999连击
+    HitNumConfigDetail hit_1314 = 5; // 1314连击
+}
+
+message HitConfigV2 {
+    HitNumConfigV2 hit_num_config = 1;
+    repeated uint32 hit_level_config = 2;
+}
+
+message RspActionEnterDataOffMicList {
+    uint32 uid = 1;
+    string icon = 2;
+    string name = 3;
+}
+
+message RspActionEnterDataRtcTheme {
+    string background_url = 1;
+    string background_mp4 = 2;
+    string music_url = 3;
+}
+
+message RspActionEnterData {
+    uint32 uid = 1;
+    string purview = 2;
+    RspActionEnterDataConfig config = 3;
+    Createor createor = 4;
+    repeated uint32 admins = 5;
+    repeated List list = 6;
+    repeated uint32 wait = 7;
+    repeated uint32 waitForBoss = 8;
+    repeated uint32 waitForAuction = 9;
+    uint32 now = 10;
+    bool inviteHot = 11;
+    bool follow = 12;
+    uint32 senderId = 13;
+    RspActionEnterDataRtcMatch match = 14;
+    MatchConfigV2 match_config = 15;
+    string socket = 16;
+    uint32 need_verify = 17;
+    uint32 luck_bag = 18;
+    bool is_super = 19;
+    bool open_window = 20;
+    bool is_baba = 21;
+    HitConfigV2 hit_config = 22;
+    uint32 show_room_data_tab = 23;
+    uint32 mic_refresh_version = 24;
+    uint32 auto_mic = 25;
+    uint32 hot_num = 26;
+    uint32 option_setting_type = 27;
+    bool show_gpk = 28;
+    bool gpk_enable = 29;
+    repeated RspActionEnterDataOffMicList offMicList = 30;
+    bool show_risk_wheel = 31;
+    bool show_risk_wheel_entrance = 32;
+    bool show_gift_battle = 33;
+    string finger_guess_gift_create_time = 34;
+    bool show_gift_battle_enter = 35;
+    bool show_topic = 36;
+    string rtc_stream_id = 37;
+    uint32 rtc_type = 38;
+    RspActionEnterDataRtcExtra rtc_extra = 39;
+    uint32 owner_follow = 40;
+    string greedy_url = 41;
+    repeated RspActionEnterDataRtcRoomTags personal_tag = 42;
+    repeated RspActionEnterDataRtcRoomTags interest_tag = 43;
+    RspActionEnterDataRtcTheme theme = 44;
+    uint32 heartbeat_exp_time = 45;
+    uint32 can_send_gift_self = 46;
+    EntityXsGift hit = 47; // 连击礼物
+    uint32 need_verify_new = 48;
+}
+
+message RspActionEnterDataRtcRoomTags {
+    string name = 1;
+}
+
+message RtcExtraList {
+    uint32 rid = 1;
+    uint32 uid = 2;
+    string stream_id = 3;
+    uint32 mic = 4;
+    string zego_link_type = 5;
+}
+
+message RspActionEnterDataRtcExtra {
+    repeated RtcExtraList extra_list = 1;
+}
+
+message ReqActionEnter {
+    uint32 rid = 1; // 房间id
+    uint32 init = 2; // 是否初始化
+    uint32 version = 3; // api 版本
+    string password = 4; // 密码
+    uint32 inviter_uid = 5; // 邀请人uid
+    string unity_version = 6; // unity版本
+    uint32 search_string = 7; // 搜索的房间号
+    string source = 8; // 进房渠道
+    string forward_params = 9; // 进房渠道参数
+    uint32 from_match = 10; // 是否来自比赛
+    uint32 magicGiftVersion = 11; // 魔法礼物版本
+}
+
+message RspActionEnter {
+    bool success = 1;
+    string msg = 2;
+    RspActionEnterData data = 3;
+    uint32 _audioProfile = 4;
+    uint32 _audioScenario = 5;
+    uint32 use_rtc = 6;
+    string error = 7; // 错误信息, 密码输入错误时使用
+    string reason = 8; // 错误原因, 密码输入错误时使用
+}
+
+// ReqActionEnterV2 视频直播房间进房接口请求体
+message ReqActionEnterV2 {
+    uint32 rid = 1; // 房间 ID
+    string password = 2; // 密码, 可为空
+    uint32 inviter_uid = 3; // 邀请人uid
+    UserMemory user_memory = 4; // 用户手机内存配置
+    bool is_robot = 5;
+}
+
+enum RtcType {
+    RTC_TYPE_AGORA = 0; // 声网
+    RTC_TYPE_BANBAN = 1; // 自研
+    RTC_TYPE_ZEGO = 2; // 即构
+}
+
+message RtcAudioConfig {
+    int32 profile = 1; // 音频编码配置
+    int32 scenario = 2; // 音频编码场景
+}
+
+message RtcVideoConfig {
+    int32 width = 1; // 视频编码宽度
+    int32 height = 2; // 视频编码高度
+    int32 frame = 3; // 视频编码帧率
+    int32 bitrate = 4; // 视频编码码率 0: 标准模式 -1: 兼容模式
+}
+
+message RtcInfo {
+    uint32 type = 1; // rtc 类型, 参见 RtcType
+    string app_id = 2; // 应用id
+    string token = 3; // rtc token
+    RtcAudioConfig audio = 4; // 音频配置
+    RtcVideoConfig video = 5; // 视频配置
+    RtcVideoConfig collect_video = 6; // 视频采集配置
+}
+
+message RtcBaseInfo {
+    uint32 type = 1; // rtc 类型, 参见 RtcType
+    string app_id = 2; // 应用id
+}
+
+enum UserRoomRole {
+    USER_ROOM_ROLE_NORMAL = 0; // 普通观众
+    USER_ROOM_ROLE_ADMIN = 1; // 管理员
+    USER_ROOM_ROLE_CREATOR = 2; // 房主/主播
+}
+
+message WebSocketInfo  {
+    string url = 1; // websocket url
+}
+
+message AnchorInfo {
+    uint32 uid = 1; // 主播 ID
+    string name = 2; // 主播昵称
+    string icon = 3; // 主播头像
+    string frame = 4; // 主播头像框
+    string pretty_uid = 5; // 主播靓号
+}
+
+//大区Pk开关
+message BigAreaPkSwitch {
+    int32 total = 1; //总开关  0关，1开
+    int32 invite = 2; //邀请Pk  0关，1开
+    int32 randomMatch = 3; //随机匹配  0关，1开
+    int32 linkmicToPk = 4; //连麦转Pk  0关，1开
+}
+
+message ActionEnterV2Data {
+    EntityXsChatroom base_info = 1; // 房间基础信息, 主要来自表 xs_cahtroom
+    RtcInfo rtc_info = 2; // rtc 配置信息
+    WebSocketInfo ws_info = 3; // websocket 配置信息
+    bool is_followed = 4; // 是否关注了该主播
+    uint32 role = 5; // 角色, 参见 UserRoomRole
+    AnchorInfo anchor_info = 6; // 主播/房主信息
+    bool is_fobidden_comment = 7; // 是否禁止发送公屏消息
+    optional int32 video_live_beauty_switch = 8; // 视频直播美颜开关配置, 参见 VideoLiveBeauty(定义在 partystar/app.proto 中)
+    int64 video_pk_duration = 9; // 当前用户设置的默认视频直播 pk 时长
+    BigAreaPkSwitch big_area_pk_switch = 10; // 视频直播pk大区开关
+    BigAreaLinkMicSwitch big_area_linkmic_switch = 11; // 视频直播连麦大区开关
+    uint32 video_broker_mic_status = 12; // 视频直播主播是否闭麦 0关1开
+    uint32 auto_focus_face = 13; // 是否开启人脸对焦，0-关闭，1-开启，默认打开
+    repeated string private_parameters = 14; // 客户端透传给声网，固定结构
+    uint32 praise_effect_type = 15;
+    int32 landmark_quality = 16;  // 人脸识别精度参数
+}
+
+// RspActionEnterV2 视频直播房间进房接口响应体
+message RspActionEnterV2 {
+    bool success = 1; // 是否成功
+    string msg = 2; // 错误信息
+    ActionEnterV2Data data = 3;
+    int32 code = 4; // 错误码, 0 成功, 其他值表示失败, 详见 RoomErrorCode
+}
+
+message ReqRoomExtraData {
+    uint32 uid = 1;
+    uint32 rid = 2;
+    string language = 3;
+}
+
+message RoomExtraPkInfo {
+    PkInfoData pk_data = 1;
+    LinkmicLinkInfoData link_mic_data = 2;
+    PkInfoDataRtcToken rtc_token = 3; // token, 只有连麦状态或者 PK 状态下才会有
+    int64 now = 4; // 服务器当前时间戳
+}
+
+enum RTC_VIDEO_CONFIG_TYPE {
+    RTC_VIDEO_CONFIG_TYPE_UNKNKOWN = 0;  // 缺省
+    RTC_VIDEO_CONFIG_TYPE_PK       = 1;  // pk
+    RTC_VIDEO_CONFIG_TYPE_VIEWERS  = 2;  // 观众
+}
+
+message RoomExtraRtcVideoConfig {
+    RtcVideoConfig video_config = 1;
+    RTC_VIDEO_CONFIG_TYPE type = 2; // 视频采集类型
+}
+
+message LuckyGiftBigPrizeNotifyBannerData {
+	string count_down_banner = 1; // 幸运大奖池开始和结束倒计时预告横幅
+	string win_banner = 2; // 中幸运大奖通知横幅
+}
+
+
+message ResRoomExtraData {
+    CommonData result = 1;
+    repeated GameCenterInfo infos = 2;
+    RedPacketConfig redPacketConfig = 3; // 钻石红包的配置
+    LuckyWheelInfo luckyWheelInfo = 4;
+    repeated RoomExtraRtcVideoConfig video_cfg = 5;
+    RoomExtraPkInfo pk_info = 6;
+    repeated FallTreasureNotify fall_treasure_notify_list = 7; // 天降红包列表
+    LuckyGiftBigPrizeNotifyBannerData lucky_gift_notify_banner = 8; // 幸运礼物大奖通知横幅配置
+    BoomRocketSwitchConfig boom_rocket_config = 9; // 爆火箭列表
+    ScreenLimitInfo screen_limit_info = 10; // 公屏限制
+    repeated RoomOption room_option = 11; // 操作图标
+    ExtraCodeRedpacketConfig code_redpacket_config = 12; // 口令红包配置
+    uint32 customize_bg_switch = 13;// 定制房间背景开关 0 关闭，1 开启
+    RoomSkinData  room_skin_data = 14; // 房间皮肤数据
+}
+
+message ExtraCodeRedpacketConfig {
+    uint32 code_min_count = 1; //口令最小长度
+    uint32 code_max_count = 2; //口令最大长度
+    CodeRedpacketConfig cfg = 3; // 口令红包配置
+}
+
+message RoomOption {
+    string name = 1;
+    string icon = 2;
+    string type = 3;
+}

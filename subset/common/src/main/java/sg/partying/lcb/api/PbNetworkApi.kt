@@ -1,4 +1,4 @@
-package sg.partying.lcb.android.api
+package sg.partying.lcb.api
 
 import com.google.gson.GsonBuilder
 import com.salton123.app.BaseApplication
@@ -11,9 +11,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.wire.WireConverterFactory
-import sg.partying.lcb.android.api.interceptor.ErrorInterceptor
-import sg.partying.lcb.android.api.interceptor.HeadInterceptor
-import sg.partying.lcb.android.api.interceptor.SignInterceptor
+import sg.partying.lcb.api.interceptor.ErrorInterceptor
+import sg.partying.lcb.api.interceptor.HeadInterceptor
+import sg.partying.lcb.api.interceptor.SignInterceptor
 import java.io.File
 import java.util.concurrent.TimeUnit
 

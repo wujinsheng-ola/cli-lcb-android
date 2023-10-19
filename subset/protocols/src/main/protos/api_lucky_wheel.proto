@@ -1,0 +1,96 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+import "common.proto";
+import "entity_xs_lucky_wheel.proto";
+import "rpc_user_profile.proto";
+
+enum LuckyWheelStatus {
+    PREPARE = 0; // 准备阶段
+    PROCESSING = 1; // 进行中阶段
+    FINISH = 2;  // 结束完成结算阶段
+    CLOSE = 3; // 关闭退款阶段
+    TIMEOUT_CLOSE = 4; // 超时未开启游戏退款阶段
+}
+
+enum LuckyWheelUserStatus {
+    USER_PREPARE = 0; // 准备阶段
+    USER_LOSE = 1; // 输
+    USER_WIN = 2;  // 赢
+    USER_CLOSE = 3; // 关闭退款
+}
+
+message ReqLuckyWheelInfo {
+    uint32 rid = 1;  // rid
+}
+
+message RespLuckyWheelInfo {
+    CommonData common = 1;
+    LuckyWheelInfo data = 2;
+}
+
+message RespLuckyWheelCreate {
+    CommonData common = 1;
+    LuckyWheelCreate data = 2;
+}
+
+message LuckyWheelCreate {
+    uint32 id = 1;
+}
+
+message LuckyWheelInfo {
+    uint32 exist_flag =1; // lucky wheel是否存在的标记，服务端内部用到
+    EntityXsLuckyWheel luckyWheelInfo = 2; // lucky wheel
+    repeated UserInfoExtend joined_user_list = 3; // 参与lucky_wheel的用户，按参与时间排序
+    uint32 now_round = 4; // 当前是第几回合
+    uint32 now_round_time = 5; // 当前回合已经跑了多少毫秒
+    uint32 round_turn_time = 6; // 回合转多少毫秒
+    uint32 round_show_time = 7; // 回合结果展示多少毫秒
+    repeated uint32 join_nums_gear = 8; // 参与人数档位
+    repeated uint32 tickets_price_gear = 9; // 门票价格档位
+    uint32  winner_gain = 10; // 奖金
+    uint32  winner_gain_percentage = 11; // 奖金百分比
+}
+
+message ReqLuckyWheelCreate {
+    uint32 uid = 1; // uid
+    uint32 rid = 2;  // rid
+    uint32 tickets_price = 3; // 门票价格
+    uint32 max_join_nums = 4; // 参与人数上限
+    uint32 join = 5; // 发起者是否参与，0-不参与，1-参与
+    uint32 tickets_type = 6; // 0:平台档位门票 1:自定义任意门票
+}
+
+message ReqLuckyWheelJoin {
+    uint32 rid = 1;  // rid
+    uint32 lucky_wheel_id = 2; // lucky_wheel_id
+}
+
+message ReqLuckyWheelClose {
+    uint32 rid = 1;  // rid
+    uint32 lucky_wheel_id = 2; // lucky_wheel_id
+}
+
+message ReqLuckyWheelStart {
+    uint32 rid = 1;  // rid
+    uint32 lucky_wheel_id = 2; // lucky_wheel_id
+}
+
+message LuckyWheelSwitch {
+    // @inject_tag: json:"switch"
+    int32 switch = 1; // 0 关，1 开
+}
+
+service LuckyWheelService {
+    // /go/ps/luckyWheel/info 查询lucky wheel信息
+    rpc Info (ReqLuckyWheelInfo) returns (RespLuckyWheelInfo);
+    // /go/ps/luckyWheel/create 发起lucky wheel
+    rpc Create (ReqLuckyWheelCreate) returns (RespLuckyWheelCreate);
+    // /go/ps/luckyWheel/join 加入lucky wheel
+    rpc Join(ReqLuckyWheelJoin) returns (RspCommon);
+    // /go/ps/luckyWheel/close 关闭lucky wheel
+    rpc Close(ReqLuckyWheelClose) returns (RspCommon);
+    // /go/ps/luckyWheel/start 开始lucky wheel
+    rpc Start(ReqLuckyWheelStart) returns (RspCommon);
+}

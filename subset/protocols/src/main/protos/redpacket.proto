@@ -1,0 +1,143 @@
+syntax = "proto3";
+package pb;
+
+// 表示目标文件生成的路径, go的包名就是最后的目录名
+// 目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "common.proto";
+
+enum RedPacketType {
+    TYPE_UNKNOWN = 0; // 未知类型, 占位用
+    TYPE_DIAMOND = 1; // 钻石红包
+    TYPE_CODE = 2; // 口令红包
+
+    TYPE_END = 3; // 红包类型结束标志, 占位用
+}
+
+enum RedPacketState {
+    STATE_NORMAL = 0; // 正常
+    STATE_EMPTY = 1; // 已抢光
+    STATE_EXPIRED = 2; // 已过期
+}
+
+message RedPacketAmountConfig {
+    int64 amount = 1; // 红包金额
+    repeated int32 count = 2; // 当前金额可以发的红包个数配置
+}
+
+enum CodeRedpacketCodeRule {
+    CODE_REDPACKET_CODE_RULE_DEFAULT = 0; // 默认限制（仅限制敏感词和不可见空白字符）
+    CODE_REDPACKET_CODE_RULE_ONLY_INTEGER = 1; // 仅支持整数数字
+}
+
+message CodeRedpacketConfig {
+    int32 switch = 1; // 口令红包大区开关
+    int32 copy_switch = 2; // 口令红包复制口令的大区开关
+    repeated RedPacketAmountConfig detail = 3; // 详细配置
+    int32 code_rule = 4; // 口令输入限制规则, 参见 CodeRedpacketCodeRule
+}
+
+message RedPacketConfig {
+    int32 switch = 1; // 开关, 0 关闭, 1 开启, 2 白名单开启
+    repeated RedPacketAmountConfig diamond = 2; // 钻石红包的配置
+}
+
+message ReqRedPacketSend {
+    // @gotags: v:"required"
+    uint32 type = 1; // 红包类型, 参见 RedPacketType
+    // @gotags: v:"required"
+    uint32 rid = 2; // 要发红包的房间 ID
+    // @gotags: v:"required|min:1"
+    int64 amount = 3; // 要发红包的总金额
+    // @gotags: v:"required|min:1"
+    uint32 count = 4; // 要发红包的总个数
+    uint32 expire_time = 5; // 过期时间，单位分钟
+    uint32 check_in_room = 6; // 是否要校验在房
+    uint32 check_red_packet_num = 7; // 校验已经发的红包数目
+    string code = 8; // 口令红包的口令
+}
+
+message RspRedPacketSend {
+    CommonData common = 1;
+    string pid = 2; // 红包ID
+}
+
+message ReqRedPacketGrab {
+    // @gotags: v:"required"
+    string pid = 1; // 红包ID
+    string code = 2; // 口令红包的口令
+}
+
+message RspRedPacketGrab {
+    CommonData common = 1;
+    RedPacketDetailData data = 2;
+}
+
+message ReqRedPacketDetail {
+    // @gotags: v:"required"
+    string pid = 1; // 红包ID
+}
+
+message RedPacketRecipient {
+    uint32 uid = 1; // 用户ID
+    string name = 2; // 用户昵称
+    string icon = 3; // 用户头像
+    int64 amount = 4; // 收到的红包余额
+}
+
+message RedPacketBaseData {
+    string pid = 1; // 红包ID
+    uint32 uid = 2; // 发送红包的用户ID
+    string name = 3; // 发送红包的用户昵称
+    string icon = 4; // 发送红包的用户头像
+    int64 total_amount = 5; // 红包总金额
+    int64 left_amount = 6; // 红包剩余金额
+    uint32 total_count = 7; // 红包总个数
+    uint32 left_count = 8; // 剩余红包个数
+    uint32 type = 9; // 红包类型, 参见 RedPacketType
+    uint32 state = 10; // 红包状态, 参见 RedPacketState
+    int64  send_time = 11; // 红包发送时间
+    uint32 is_get = 12; // 是否已领取，0否，1是
+    int64 amount = 13; // 收到的红包余额
+    string code = 14; // 口令红包的口令
+}
+
+message RedPacketDetailData {
+    RedPacketBaseData base_info = 1;
+    repeated RedPacketRecipient recipients = 2; // 收红包的用户列表
+}
+
+message RspRedPacketDetail {
+    CommonData common = 1;
+    RedPacketDetailData data = 2;
+}
+
+message ReqRedPacketList {
+    // @gotags: v:"required"
+    uint32 rid = 1; // 房间 ID
+}
+
+message RspRedPacketList {
+    CommonData common = 1;
+    repeated RedPacketBaseData list = 2;
+}
+
+message RpcReqGetRoomRedPacketPostTime {
+    repeated uint32 rids = 1; // 房间 ID 
+}
+
+message RpcRspGetRoomRedPacketPostTime {
+    map<uint32, int64> room_red_packet_post_time_map = 1;
+}
+
+service RedPacketService {
+    // go/ps/redpacket/send 发红包
+    rpc Send (ReqRedPacketSend) returns (RspRedPacketSend);
+    // go/ps/redpacket/grab 抢红包
+    rpc Grab (ReqRedPacketGrab) returns (RspRedPacketGrab);
+    // go/ps/redpacket/detail 查询单个红包详情
+    rpc Detail (ReqRedPacketDetail) returns (RspRedPacketDetail);
+    // go/ps/redpacket/list 查询房间红包列表
+    rpc List (ReqRedPacketList) returns (RspRedPacketList);
+}

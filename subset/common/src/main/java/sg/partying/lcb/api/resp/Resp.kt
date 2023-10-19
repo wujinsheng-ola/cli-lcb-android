@@ -1,4 +1,4 @@
-package sg.partying.lcb.android.api.resp
+package sg.partying.lcb.api.resp
 
 import com.google.gson.annotations.SerializedName
 

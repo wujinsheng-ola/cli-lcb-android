@@ -1,6 +1,8 @@
 package sg.partying.lcb.live.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.salton123.base.DelegateActivity
 import com.salton123.base.feature.ImmersionFeature

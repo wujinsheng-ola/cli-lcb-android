@@ -1,7 +1,7 @@
 package sg.partying.lcb.android.model
 
 import sg.partying.lcb.android.R
-import sg.partying.lcb.android.api.resp.LiveRecommendRoomInfo
+import sg.partying.lcb.api.resp.LiveRecommendRoomInfo
 
 /**
  * Time:2022/1/27 11:23

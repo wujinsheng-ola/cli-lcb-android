@@ -1,0 +1,145 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "entity_xs_user_task_reward_config.proto";
+
+message TaskConfigDetailsConditionReward {
+    optional uint32 condition = 1;
+    optional string reward = 2;
+}
+
+enum TaskConfigDetailsLimitType {
+    TASK_CONFIG_DETAILS_LIMIT_TYPE_NONE = 0; // 占位
+    TASK_CONFIG_DETAILS_LIMIT_TYPE_DAY = 1; // 每天限制
+    TASK_CONFIG_DETAILS_LIMIT_TYPE_WEEK = 2; // 每周限制
+    TASK_CONFIG_DETAILS_LIMIT_TYPE_MONTH = 3; // 每月限制
+    TASK_CONFIG_DETAILS_LIMIT_TYPE_YEAR = 4; // 每年限制
+}
+
+message TaskConfigDetailsLimit {
+    optional uint32 type = 1; // TaskConfigDetailsLimitType
+    optional uint32 count = 2;
+}
+
+// 任务配置表 details 字段结构
+message TaskConfigDetails {
+    repeated TaskConfigDetailsConditionReward condition_reward = 1;
+    repeated TaskConfigDetailsLimit limit = 2;
+}
+
+enum TaskRewardConfigDetailsRewardType {
+    TASK_REWARD_CONFIG_DETAILS_REWARD_TYPE_ACTIVITY = 0; // 活跃度
+    TASK_REWARD_CONFIG_DETAILS_REWARD_TYPE_COIN = 1; // 金币
+    TASK_REWARD_CONFIG_DETAILS_REWARD_TYPE_DIAMOND = 2; // 钻石
+    TASK_REWARD_CONFIG_DETAILS_REWARD_TYPE_CHIP = 3; // 筹码
+    TASK_REWARD_CONFIG_DETAILS_REWARD_TYPE_GIFT = 4; // 礼物
+    TASK_REWARD_CONFIG_DETAILS_REWARD_TYPE_GAME_PROPS = 5; // 游戏道具
+    TASK_REWARD_CONFIG_DETAILS_REWARD_TYPE_COUPONS = 6; // 优惠券
+    TASK_REWARD_CONFIG_DETAILS_REWARD_TYPE_ITEM = 7; // 物品
+    TASK_REWARD_CONFIG_DETAILS_REWARD_TYPE_TREASURE_CHESTS = 8; // 宝箱
+}
+
+// 任务奖励配置表 details 字段（JSON 数组字符串）的元素结构
+message TaskRewardConfigDetailsReward {
+    optional uint32 type = 1; // TaskRewardConfigDetailsRewardType
+    optional uint32 id = 2; // 奖励物品 ID
+    optional uint32 amount = 3; // 奖励的数量
+    optional float weight = 4; // 奖励的权重
+    optional string icon = 5; // 奖励的图标
+    optional string name = 6; // 奖励的名称, 多语言
+}
+
+message UserTaskProgressDetailsDetails {
+    optional string action = 1; // 用户行为
+    optional int64 time = 2; // 时间
+    optional uint32 amount = 3; // 用户的行为产生的进度值
+}
+
+// 用户任务进度表 details 字段结构
+message UserTaskProgressDetails {
+    optional uint32 cur = 1; // 当前进度
+    repeated UserTaskProgressDetailsDetails details = 2; // 进度详情
+}
+
+// -------------------------------------------------- 下面是接口的协议定义 --------------------------------------------------
+enum SignInTaskStatus {
+    SIGN_IN_TASK_STATUS_UNCOMPLETED = 0; // 未完成
+    SIGN_IN_TASK_STATUS_COMPLETED = 1; // 已完成
+    SIGN_IN_TASK_STATUS_CLAIMED = 2; // 已领取
+}
+
+message SignInTaskDetail {
+    optional uint32 id = 1; // 任务 ID
+    optional uint32 day = 2; // 签到任务的第几天，调用签到接口时需要将这个字段的值设置为请求参数 stage 的值
+    optional uint32 status = 3; // 任务状态 SignInTaskStatus
+    optional string icon = 4; // 奖励图标的 URL
+    repeated TaskRewardConfigDetailsReward reward = 5; // 任务奖励
+    optional string text = 6; // 签到弹窗每天的文本描述
+}
+
+message SignInDetailData {
+    optional bool need_notify = 1; // 是否需要通知用户
+    optional bool signed = 2; // 今天是否已经签到
+    optional bool task_available = 3; // 任务是否可用
+    repeated SignInTaskDetail signin_task = 4;
+}
+
+// 接口 /go/ps/task/signInDetail 响应体
+message RspSignInDetail {
+    bool success = 1; // 是否成功
+    string msg = 2; // 错误消息
+    optional SignInDetailData data = 3;
+}
+
+// 接口 /go/ps/task/setNotifySignIn 请求体
+message ReqSetNotifySignIn {
+    optional bool need_notify = 1; // 是否通知用户
+}
+
+// 接口 /go/ps/task/setNotifySignIn 响应体
+message RspSetNotifySignIn {
+    bool success = 1; // 是否成功
+    string msg = 2; // 错误消息
+}
+
+// 接口 /go/ps/task/signIn 请求体
+message ReqSignIn {
+    optional uint32 stage = 1; // 签到的第几天，从 1 开始, 1 - 7 对应连续签到的天数
+    optional uint32 tid = 2; // 任务 ID
+}
+
+// 接口 /go/ps/task/signIn 响应体
+message RspSignIn {
+    bool success = 1; // 是否成功
+    string msg = 2; // 错误消息
+    repeated TaskRewardConfigDetailsReward rewards = 3; // 签到获得的奖励列表
+}
+
+// 接口 /go/ps/tool/setSignInStatus 请求体
+message ReqSetSignInStatus {
+    optional uint32 uid = 1; // 用户 ID
+    optional uint32 sign_days = 2; // 已经连续签到的天数
+    optional string sign_date = 3; // 最近的签到日期
+}
+
+// 接口 /go/ps/tool/setSignInStatus 响应体
+message RspSetSignInStatus {
+    bool success = 1; // 是否成功
+    string msg = 2; // 错误消息
+}
+
+// 接口 /go/internal/cms/setTaskReward 请求体
+message ReqSetTaskReward {
+    EntityXsUserTaskRewardConfig meta = 1; // 任务奖励配置表的元素结构
+    repeated TaskRewardConfigDetailsReward details = 2; // 奖励详情
+}
+
+// 接口 /go/internal/cms/setTaskReward 响应体
+message RspSetTaskReward {
+    bool success = 1; // 是否成功
+    string msg = 2; // 错误消息
+}

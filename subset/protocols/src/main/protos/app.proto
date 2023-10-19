@@ -1,0 +1,255 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "task.proto";
+import "api_vip.proto";
+import "family.proto";
+import "certification_sign.proto";
+import "common.proto";
+
+/* ------------------------ /go/ps/app/home  APP 首页大杂烩接口 ------------------------ */
+message VersionUpdateConfig {
+    optional string version = 1; // 需要更新的版本号，等同于最新的版本号
+    optional bool force = 2; // 是否强制升级
+    optional string message = 3; // 更新提示信息
+    optional string platform = 4; // ios, android
+    optional string title = 5; // 更新弹窗标题
+}
+
+message UserBalanceInfo {
+    optional uint32 diomand = 1; // 钻石
+    optional uint32 gold = 2; // 金币
+    optional uint32 bean = 3; // 金豆
+    optional uint32 chip = 4; // 筹码
+}
+
+message UserGameStatusInfo {
+    optional bool is_in_game = 1; // 是否在游戏中
+    optional int32 gid = 2; // 游戏id
+    optional int32 rid = 3; // 游戏房间id
+    int32  game_mode = 4;
+}
+
+message GameEntranceInfo {
+    optional string game_version = 1; // 游戏版本号
+    optional string login_url = 2; // 登录地址
+    optional string oss_url = 3; // oss地址
+    optional string register_url = 4; // 注册地址
+    optional string shenhe_state = 5; // 审核状态
+    optional string tcp_host = 6; // tcp服务器地址
+    optional int32 tcp_port = 7; // tcp服务器端口
+    optional bool white_user = 8; // 是否白名单用户
+}
+
+enum HomeFirstPage {
+    HOME_RIRST_PAGE_NONE = 0; // 空配置, 仅占位用
+    HOME_RIRST_PAGE_PARTY_CHAT = 1; // party-语言房页面
+    HOME_RIRST_PAGE_PARTY_VIDEO = 2; // party-视频房页面
+}
+
+enum ChatRoomAdminType {
+    CHATROOM_ADMIN_TYPE_NONE = 0; // 不是超管
+    CHATROOM_ADMIN_TYPE_NOT_OPEN = 1; // 未开启超管功能
+    CHATROOM_ADMIN_TYPE_OPEN = 2; // 已开启超管功能
+}
+
+// 配置的值详见需求： 【【新增】视频直播美颜工具服务端开关】https://www.tapd.cn/68144673/prong/stories/view/1168144673001004806
+enum VideoLiveBeauty {
+    VIDEO_LIVE_BEAUTY_NONE = 0; // 空配置, 仅占位用
+    VIDEO_LIVE_BEAUTY_OFF = 1; // 不开美颜
+    VIDEO_LIVE_BEAUTY_AGROA_BASE = 2; // 仅开启声网自带基础美颜
+    VIDEO_LIVE_BEAUTY_XIANGXIN_SIMPLE = 3; // 仅开启相芯的磨皮、美白、滤镜的简化美颜
+    VIDEO_LIVE_BEAUTY_XIANGXIN_STANDARD = 4; // 仅开启相芯的标准美颜
+    VIDEO_LIVE_BEAUTY_XIANGXIN_FULL = 5; // 相芯的全开美颜
+    VIDEO_LIVE_BEAUTY_ADAPTIVE = 6; // 自适应
+    VIDEO_LIVE_BEAUTY_USER_CHOOSE = 7; // 自由选择：主播在客户端自由选择开启哪种类型的美颜工具，开启后展示对应美颜工具的面板，并自行设置开关/参数
+}
+
+// 开关信息, 全部为 int32 类型
+message SwitchInfo {
+    optional int32 game_manor_entrance_game = 1; // 庄园游戏入口开关--游戏页
+    optional int32 game_manor_entrance_profile = 2; // 庄园游戏入口开关--个人页
+    optional int32 voice_room_switch = 3; // 语音房开关，0-关，1-开
+    optional int32 video_room_switch = 4; // 视频直播房开关，0-关，1-开
+    optional int32 home_first_page = 5; // 首页打开的第一个页面配置, 参见 HomeFirstPage
+    optional int32 video_live_beauty = 6; // 视频直播美颜开关配置, 参见 VideoLiveBeauty
+}
+
+// 自适应策略: 连续 20s 低于 15 帧超过 50%, 前面的 20s, 15 50% 依次对应结构体中的 duration, frame, percent
+message VideoLiveBeautyAdaptiveConfig {
+    uint32 duration = 1;
+    uint32 frame = 2;
+    uint32 percent = 3; // 50 代表 50%
+}
+
+message RspAppHomeData {
+    VersionUpdateConfig version_update_config = 1; // APP 强更配置信息
+    UserBalanceInfo user_balance_info = 2; // 用户余额信息
+    UserGameStatusInfo user_game_status = 3; // 用户游戏状态信息，用于是否需要弹出游戏断线重连提示
+    GameEntranceInfo game_entrance_info = 4; // 游戏入口信息
+    repeated string models = 5; // 机型列表，列表内机型设置启动模式为singTask
+    SignInDetailData sign_in_task = 6; // 签到任务信息
+    BrokerInfo broker_info = 7; // 公会信息
+    SwitchInfo switch = 8; // 开关信息
+    UserBigAreaInfo user_big_area_info = 9; // 用户大区信息
+    optional uint32 rid = 10; // 是否有正在开播的房间，rid>0就是有
+    VideoLiveBeautyAdaptiveConfig video_live_beauty_adaptive_config = 11; // 视频直播美颜自适应相关配置
+    string log_url = 12; //日志上传地址
+    repeated LayaConfig laya_config = 13;
+    string game_platform = 14;
+    FamilyInfo family_info = 16; // 家族信息，如果是 nil 则代表没有加入家族
+    uint32 min_create_family_lv = 17; // 允许创建家族的最小财富等级，根据用户大区 ID 不同而不同
+    VIPProfile vip_profile = 18; // VIP 信息
+    RtcNodeInfo rtc_info = 19; // 推流节点信息
+    repeated AheadEffect ahead_effect_list = 20; // 预加载特效资源
+    UserCertificationSign certification_sign = 21; //认证
+    bool show_sms_checkbox = 22; //是否显示同意接受短信的勾选框
+    bool is_new_user = 23; //是否为新用户 注册72小时内
+    repeated BigAreaPrivateMsgPermissionLevelConfig big_area_private_msg_permission_level_config_list = 24; // 私信等级限制
+    RiskControlData risk_ctrl = 25; // 风控数据
+    OpenScreenshot open_screenshot = 26; //是否开启直播Screenshot
+    repeated GuestRelationJumpSwitch guest_relation_jump_switch = 27; // 个人主页客态情况下点击粉丝、关注、好友、可跳转查看到被查看用户的对应列表开关
+    uint32 show_origin_uid_switch = 28; // 个人主页展示原始ID开关，0-关，1-开
+    bool is_super_admin = 29; //是否是 超管
+    string lcb_entry_url = 30; // unity 游戏数据请求链接
+    uint32 is_chatroom_admin = 31; // 是否是 巡管
+    bool is_game_compatible_mode_whitelist = 32; // 是否在游戏兼容模式白名单
+    bool is_support_rich = 33; //是否支持展示rich标签
+    bool use_new_feed = 34; // 使用新的feed接口
+}
+
+message GuestRelationJumpSwitch {
+    uint32 bigarea_id = 1;
+    uint32 switch = 2; // 0-关，1-开
+}
+
+message OpenScreenshot {
+    bool switch = 1; // 是否开启直播截图
+    uint32 interval = 2; // 截图间隔，单位：秒
+}
+
+message RiskControlData {
+    bool risk = 1;  // 是否为风控用户
+    repeated string risk_control_api = 2;  // 风控接口
+}
+
+message AheadEffect {
+    uint32 effect_id = 1; // 特效id
+    uint32 effect_size = 2; // 特效大小
+}
+
+message LayaConfigParse {
+    repeated LayaConfig laya_config = 1;
+    repeated uint32 robots = 2;
+}
+
+message LayaConfig {
+    string game_type = 1;
+    int32 max_exp = 2;
+    repeated Mode modes = 3;
+    int32 round_max_exp = 4;
+}
+message Mode {
+    int32 bet = 1;
+    int32 game_mode = 2;
+    string mode_name = 3;
+    repeated Reward rewards = 4;
+}
+
+message Reward {
+    int32 rank = 1;
+    int32 reward_coin = 2;
+    string reward_text = 3;
+    int32 reward_exp = 4;
+}
+
+message BrokerInfo {
+    optional bool is_broker = 1; // 是否是主播
+    optional bool is_creater = 2; // 是否是会长
+    optional bool is_voice_broker = 3; // 是否是语音房主播
+    optional bool is_video_broker = 4; // 是否是视频房主播
+}
+
+message UserBigAreaInfo {
+    optional int32 big_area_id = 1; // 大区id
+}
+
+// APP 首页大杂烩接口响应体
+message RspAppHome {
+    optional bool success = 1;
+    optional string msg = 2;
+    RspAppHomeData data = 3;
+}
+/* ------------------------ /go/ps/app/home  APP 首页大杂烩接口 ------------------------ */
+
+/* 第三方请求身份id定义 */
+
+enum INTERNAL_REQUEST_IDENTITY_ID {
+    INTERNAL_REQUEST_IDENTITY_IDUNKNOWN = 0;
+    INTERNAL_REQUEST_IDENTITY_BACKEND = 1;  // 后台
+}
+
+/* 第三方请求身份id定义 */
+
+message AppLanguage {
+    string label = 1; // 语言标签
+    string value = 2; // 语言值
+}
+
+message RspGetLanguageList {
+    bool success = 1;
+    string msg = 2;
+    repeated AppLanguage languages = 3;
+}
+
+message UserMemory {
+    int32 app_mem = 1; // 当前应用程序占用的内存, 单位为 M
+    float total_mem = 2; // 总内存, 单位为 M
+    float free_mem = 3; // 空闲内存, 单位为 M
+    bool low_memory = 4; // 是否处于低内存状态
+}
+
+message ReqAppHome {
+    UserMemory user_memory = 1; // 用户手机内存配置
+}
+
+message RtcNodeInfo {
+    string signaling = 1;
+    string rtconfig = 2;
+    string log = 3;
+    string quic = 4;
+    string report = 5;
+    string app_id = 6;
+}
+
+message ReqRiskCtrlAuth {
+    string sign = 1;
+    string session_id = 2;
+    string token = 3;
+    string ip = 4;
+    string scene = 5;
+}
+
+message ResRiskCtrlAuth {
+    CommonData common = 1;
+    int32 token_num = 2;
+    RiskControlData risk_ctrl_data = 3;
+}
+
+service RiskControlService {
+    // go/ps/app/riskCtrlAuth 风控认证
+    rpc RiskCtrlAuth (ReqRiskCtrlAuth) returns (ResRiskCtrlAuth);
+}
+
+message BigAreaPrivateMsgPermissionLevelConfig {
+    uint32 bigarea_id = 1;
+    PrivateMsgPermissionLevelConfig private_msg_permission_level_config = 2;
+}
+
+message PrivateMsgPermissionLevelConfig {
+    uint32 text_level = 1; // 文本等级
+    uint32 voice_level = 2; // 语音等级
+    uint32 img_level = 3; // 图片等级
+}

@@ -21,4 +21,5 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     api project(':resources')
     api project(':framework')
+    api project(':protocols')
 }

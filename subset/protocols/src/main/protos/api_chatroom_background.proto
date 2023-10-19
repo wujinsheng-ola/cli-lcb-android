@@ -1,0 +1,164 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "common.proto";
+
+message ReqBackgroundAvailableList {
+    // @gotags: v:"required"
+    uint32 rid = 1;
+    PaginationParams my_bg_list = 2;
+    PaginationParams free_list = 3;
+}
+
+message PaginationParams {
+    int32 limit = 1; // 每页拉取的数量
+    string cursor = 2; // 游标
+    bool has_more = 3; // 是否还有更多,服务端返回rsp使用
+}
+
+message RspBackgroundAvailableList {
+    CommonData common = 1;
+    BackgroundList my_bg_list = 2; // 已拥有的背景列表
+    BackgroundList free_bg_list = 3; // 免费的背景列表
+}
+
+message BackgroundList {
+    repeated UserBackground list = 1; // 数据
+    PaginationParams page_info = 2; // 分页信息
+}
+
+message BackgroundItem {
+    int64 bg_id = 1; // 房间背景ID
+    string bg_name = 2; // 房间背景名称
+    string bg_cover = 3; // 房间背景封面
+    string bg_img = 4; // 房间背景图片，即使用该背景时真实使用的图片
+}
+
+message UserBackground {
+    BackgroundItem background_item = 1; // 背包资源
+    bool is_in_use = 2; // 是否在使用中
+    int64 expired_at = 3; // 过期时间戳，单位为秒；0 代表永不过期
+    int64 price = 4; // 单价，单位为钻石
+    int64 duration = 5; // 单次购买可获得的有效期时长 单位/天
+}
+
+message ReqBackgroundMall {
+    PaginationParams page_info = 1;
+}
+
+message RspBackgroundMall {
+    CommonData common = 1;
+    repeated BackgroundMallItem list = 2;
+    PaginationParams page_info = 3; // 分页信息 
+}
+
+message BackgroundMallItem {
+    BackgroundItem background_item = 1;
+    int64 price = 2; // 单价，单位为钻石
+    int64 duration = 3; // 单次购买可获得的有效期时长 单位为天
+    bool has = 4; // 是否已经拥有该背景
+    int64 expired_at = 5; // has为ture使用，用户拥有的背景过期时间
+}
+
+message ReqBackgroundBuy {
+    int64 bg_id = 1; // 要购买的背景ID
+}
+
+message RspBackgroundBuy {
+
+    CommonData common = 1;
+    int64 expired_at = 2; // 购买的房间背景的过期时间戳，单位为秒；
+    bool is_in_use = 3; // 购买的这个背景是不是在使用中
+}
+
+message ReqBackgroundUse {
+    uint32 rid = 1; // 房间 ID
+    int64 bg_id = 2; // 要使用的房间背景 ID ，传0值默认穿戴免费的第一个背景（兼容移除功能）
+}
+
+message ReqQueryCardList {
+    PaginationParams page_info = 1;
+}
+
+message RspQueryCardList {
+    CommonData common                = 1;
+    repeated CardInfo card_list      = 2; // 卡片列表
+    PaginationParams page_info       = 3; // 分页信息
+    bool           has_custom_bg_img = 4; // 是否已有自定义背景图片
+}
+
+// 背景卡片信息
+message CardInfo {
+    uint32  card_id      = 1; // 卡片id
+    uint32 duration     = 2; // 生效期限，单位：天
+    uint32 state        = 3; // 状态 0 未使用， 1 已使用且在审核中， 2 已使用但审核不通过， 3 已使用且审核通过
+    uint32 expired_at   = 4; // 过期时间的时间戳
+    string bg_img_url   = 5; // 背景图片地址
+}
+
+message ReqQueryCustomBgImgList {
+}
+
+message RspQueryCustomBgImgList {
+    CommonData common = 1;
+    repeated UserBackground list = 2; // 数据
+}
+
+message ReqBackgroundCustomize {
+    uint32 card_id = 1; // 要使用的定制卡的 ID
+    string img = 2; // 要定制的房间背景图片 path, 不需要域名部分
+}
+
+message ReqBackgroundRenewCustomization {
+    uint32 card_id = 1; // 要使用的定制卡的 ID
+    int64 bg_id = 2; // 要续期的房间背景 ID
+}
+
+message RspBackgroundRenewCustomization {
+    CommonData common = 1;
+    int64 expired_at = 2; // 续期的房间背景的过期时间戳，单位为秒
+}
+
+enum CardState {
+    StateUnUse        = 0;  // 未使用
+    StateReviewing    = 1;  // 已使用且在审核中
+    StateReviewFailed = 2;  // 已使用但审核不通过
+    StateOnUse        = 3;  // 审核通过，生效使用中
+    StateExpired      = 4;  // 过期失效
+}
+
+enum BackgroundSource {
+    ManagementBackground = 0; // 管理后台
+    Customize = 1;            // 自定义房间背景
+}
+
+enum BackgroundState {
+    OFF = 0;                // 下架
+    ON  = 1;                 // 上架
+}
+
+
+
+service ChatroomBackgroundService {
+    // go/room/chatroom-background/availableList 房间背景可用列表（包含已拥有和免费的）
+    rpc AvailableList (ReqBackgroundAvailableList) returns (RspBackgroundAvailableList);
+    // go/room/chatroom-background/mall 房间背景商城
+    rpc Mall (ReqBackgroundMall) returns (RspBackgroundMall);
+    // go/room/chatroom-background/buy 购买房间背景
+    rpc Buy (ReqBackgroundBuy) returns (RspBackgroundBuy);
+    // go/room/chatroom-background/use 使用房间背景
+    rpc Use (ReqBackgroundUse) returns (RspCommon);
+
+    // go/room/chatroom-background/queryCardList 查询拥有的背景卡片列表
+    rpc QueryCardList(ReqQueryCardList) returns(RspQueryCardList);
+    // go/room/chatroom-background/queryCustomBgImgList 查询自定义的背景图片列表
+    rpc QueryCustomBgImgList(ReqQueryCustomBgImgList) returns(RspQueryCustomBgImgList);
+    // go/room/chatroom-background/customize 自定义房间背景
+    rpc Customize (ReqBackgroundCustomize) returns (RspCommon);
+    // go/room/chatroom-background/renewCustomization 续期自定义房间背景
+    rpc RenewCustomization (ReqBackgroundRenewCustomization) returns (RspBackgroundRenewCustomization);
+}

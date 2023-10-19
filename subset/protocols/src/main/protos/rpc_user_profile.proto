@@ -1,0 +1,154 @@
+syntax = "proto3";
+package pb;
+/*
+user_profile rpc 协议
+*/
+
+option go_package = "../app/pb";
+
+import "entity_xs_user_profile.proto";
+import "entity_xs_user_profile_extend.proto";
+import "entity_xs_user_settings.proto";
+import "entity_xs_user_money.proto";
+import "entity_xs_user_pretty.proto";
+import "medal.proto";
+import "user_exp.proto";
+import "api_vip.proto";
+import "rpc_family.proto";
+import "certification_sign.proto";
+import "api_user.proto";
+
+//获取单个请求请求
+message ReqUserProfile {
+	//需要查询的用户UID
+	uint32	uid 		= 1; 
+	//需要返回哪些字段，为空的话，表示所有字段名
+	repeated string fields = 2; 
+}
+
+//获取批量请求
+message ReqUserProfiles {
+	//批量请求用户UID集合
+	repeated uint32	uids = 1; 
+	//需要返回哪些字段，为空的话，表示所有字段名
+	repeated string fields = 2; 
+}
+
+//验证用户登录令牌合法性
+message ReqUserAuth {
+	//当前登录用户令牌
+	string token = 1; 
+}
+
+//返回验证用户信息
+message RepUserAuth {
+	uint32	uid		= 1;
+	uint32	time		= 2;
+	uint32	app_id	= 3;
+	string 	salt		= 4;
+	string	platform	= 5;
+	string	channel	= 6;
+}
+
+//申请令牌
+message ReqUserToken {
+	uint32 uid = 1; 
+	uint32 app_id = 2;
+	string platform = 3; // app or web
+	string channel = 4; // 可选
+}
+
+//返回令牌
+message RepUserToken {
+	string token = 1;
+	string salt = 2;
+}
+
+//返回多个用户信息
+message RepUserProfiles {
+	repeated pb.EntityXsUserProfile data = 1;
+}
+
+//返回多人设置信息
+message RepUserSettings {
+	repeated pb.EntityXsUserSettings data = 1;
+}
+
+//返回多人money信息
+message RepUserMoneys {
+	repeated pb.EntityXsUserMoney data = 1;
+}
+
+message ReqPrettyUid {
+	repeated uint32 uid_list = 1;
+}
+
+message RepPrettyUid {
+	map<uint32, pb.EntityXsUserPretty> Data = 1;
+}
+
+message UserBaseReq {
+	bool fill = 1;
+	repeated string field = 2;
+}
+
+message UserExtendReq {
+	bool fill = 1;
+	repeated string field = 2;
+}
+
+message FillFamily {
+	bool fill = 1;
+	bool fill_contribution = 2;
+}
+
+message RpcReqUserInfoExtend {
+	repeated uint32 uid_list = 1;
+	UserBaseReq fill_base = 2;
+	bool fill_exp = 3;
+	bool fill_is_new_user = 4; // 该字段废弃，使用fill_base获取，会将is_new_user填充
+	bool fill_wear_medal = 5;
+	bool fill_vip = 6;
+	bool fill_big_area_id = 7;
+	FillFamily fill_family = 8;
+	bool fill_is_first_recharge = 9; // 该字段废弃，使用fill_extend的first_recharge扩展获取
+	bool fill_certification_sign = 10;
+	UserExtendReq fill_extend = 11;
+	bool fill_is_rich = 12; // 是否是rich渠道下载的用户
+	bool fill_mount = 13; // 是否展示当前佩戴的座驾
+}
+
+message UserInfoExtend {
+	UserExpData exp = 1;
+	bool is_new_user = 2;
+	WearMedals wear_medal_list = 3; 
+	pb.EntityXsUserProfile profile = 4;
+	VIPInfo vip_info = 5;
+	uint32 big_area_id = 6;
+	FamilyInfoAndContribution family = 7;
+	bool is_first_recharge = 8;
+	UserCertificationSign certification_sign = 9;
+	pb.EntityXsUserProfileExtend profile_extend = 10;
+	bool is_rich = 11; // 是否是rich用户
+	UserMountIcon user_mount = 12; // 用户的座驾
+}
+
+message RpcRspUserInfoExtend {
+	map<uint32, UserInfoExtend> data = 1;
+}
+
+message RpcReqUserBigAreaId {
+	uint32 uid = 1;
+}
+
+message RpcRspUserBigAreaId {
+	uint32 big_area_id = 1;
+}
+
+message RpcReqUserRichMap {
+	repeated uint32 uid_list = 1;
+}
+
+message RpcRspUserRichMap {
+	map<uint32, bool> data = 1;
+}

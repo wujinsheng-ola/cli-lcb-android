@@ -1,0 +1,13 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+message UserCertificationSign {
+    uint32 cer_id = 1; // 认证id
+    string icon = 2; // 认证图标
+    string lable = 3; // 认证标识
+    string font_color = 4; // 文字颜色
+    string content = 5; // 显示文案
+    int64 expire_time = 6; // 过期时间
+}

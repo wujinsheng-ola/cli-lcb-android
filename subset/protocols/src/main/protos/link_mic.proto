@@ -1,0 +1,256 @@
+syntax = "proto3";
+package pb;
+
+// 表示目标文件生成的路径, go的包名就是最后的目录名
+// 目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ReqLinkmicInvite {
+    uint32 uid = 1; // 被邀请的用户 id
+    int32 link_type = 2; // 连麦方式, 详见 LinkMicLinkType，主播向主播邀请连麦时，只能选择视频连麦
+}
+
+// RspLinkmicCommon 通用的响应体
+message RspLinkmicCommon {
+    optional int32 err_code = 1; // 0 成功，其他失败
+    optional string msg = 2;
+}
+
+message ReqLinkmicAccept {
+    uint32 inviter = 1; // 发起邀请的人的 UID
+}
+
+message ReqLinkmicReject {
+    uint32 inviter = 1; // 发起邀请的人的 UID
+}
+
+message ReqLinkmicConfirm {
+    uint32 uid = 1; // 对方的 uid
+    bool link = 2; // true 确认连接, false 确认拒绝
+}
+
+message ReqLinkmicAcceptAndConfirm {
+    uint32 inviter = 1; // 发起邀请的人的 UID
+    int32 link_type = 2; // 连麦方式, 详见 LinkMicLinkType
+}
+
+message ReqLinkmicApply {
+    uint32 rid = 1; // 房间 ID
+    uint32 uid = 2; // 主播 ID
+    int32 link_type = 3; // 连麦方式, 详见 LinkMicLinkType
+}
+
+message ReqLinkmicCancel {
+    uint32 rid = 1; // 操作人所在的房间 ID
+    uint32 uid = 2; // 被邀请的主播 ID
+}
+
+message ReqLinkmicHangup {
+    uint32 uid = 1; // 对方的 uid
+}
+
+enum StartMatchFrom {
+    START_MATCH_FROM_NONE = 0; // 占位用
+    START_MATCH_FROM_INVIT_PROMPT = 1; // 从邀请连麦匹配的弹窗中发起的
+    START_MATCH_FROM_BY_SELF = 2; // 主动发起的连麦匹配
+}
+
+message ReqLinkmicStartMatch {
+    int32 from = 1; // 从哪个位置发起的匹配, 参见 StartMatchFrom
+    uint32 inviter = 2; // 邀请匹配的人的 uid, 没有传 0 即可
+}
+
+message ReqLinkmicCancelMatch {
+}
+
+message ReqLinkmicHeartbeat {
+    uint32 uid = 1; // 对方的 UID
+    int64 ts = 2; // 时间戳
+}
+
+// 申请 等待列表
+enum ApplyListFrom {
+    NONE = 0; 
+    ANCHOR = 1; // 主播端 主播邀请列表
+    AUDIENCE = 2; // 主播端 用户邀请列表
+    AUDIENCE_WAIT = 3; // 观众端 等待列表
+}
+
+message ReqLinkMicApplyList {
+    uint32 rid = 1; // 房间id
+    uint32 from = 2; // ApplyListFrom 1 主播端邀请列表-主播 2 主播端邀请列表-观众 3 观众端等待列表
+    uint32 page = 3; // 页数
+}
+
+enum LinkMicLinkType {
+    LINKMIC_LINK_TYPE_NONE = 0; // 无，占位用
+    LINKMIC_LINK_TYPE_AUDIO = 1; // 音频连麦
+    LINKMIC_LINK_TYPE_VIDEO = 2; // 视频连麦
+}
+
+message LinkMicAudienceApplyInfo {
+    uint32 uid = 1;
+    int32  link_type = 2; // 连麦类型
+    int64  applyTime = 3; // 申请连麦的时间
+}
+
+message LinkMicApplyList {
+    uint32 uid = 1; // 用户 uid
+    string name = 2; // 用户名字
+    uint32 sex = 3; // 用户性别 0 未知 1男 2 女 3 不透露
+    uint32 age = 4; // 用户年龄
+    uint32 lv = 5; // 用户等级
+    int32  link_type = 6; // 连麦类型
+    string icon = 7; // 头像
+}
+
+message LinkMicApplyListData {
+    repeated LinkMicApplyList list = 1;
+    uint32 total = 2; // 等待列表的总人数
+    optional int32 rank = 3; // 在等待列表中的排名
+}
+
+message RspLinkMicApplyList {
+    bool success = 1;
+    string msg = 2;
+    LinkMicApplyListData data =3;
+}
+
+// 好友直播列表
+message ReqLiveRoomFriendList {
+    uint32 page = 1; // 页数
+}
+
+enum LinkMicInviteStatus {
+    INVITE_NONE = 0; //没有邀请状态
+    INVITE_DONE = 1; // 已邀请
+    LINK_ING = 2; // 连麦中
+}
+
+message LiveRoomFriendList {
+    uint32 uid = 1; // 用户uid
+    string name = 2; // 用户名称
+    uint32 sex = 3; // 用户性别
+    uint32 age = 4; // 用户年龄
+    uint32 lv = 5; // 用户等级
+    uint32 invite_status = 6; // 邀请状态 LinkMicInviteStatus
+    string icon = 7; // 头像
+    uint32 online_num = 8; // 在线人数
+}
+
+message LiveRoomFriendListData {
+    repeated LiveRoomFriendList list = 1;
+    uint32 total = 2; // 总人数
+}
+
+message RspLiveRoomFriendList {
+    bool success = 1;
+    string msg = 2;
+    LiveRoomFriendListData data =3;
+}
+
+
+// 搜索用户直播列表
+message ReqSearchLiveRoomUser {
+    string k = 1;
+}
+
+message RspSearchLiveRoomUser {
+    bool success = 1;
+    string msg = 2;
+    LiveRoomFriendListData data =3;
+}
+
+message ReqLinkmicClearApplyList {
+    uint32 rid = 1; // 房间 ID
+    string session_id = 2; // 直播场次 ID
+    uint32 type = 3; // 要清空的列表类型, 1 主播列表, 2 观众列表
+}
+
+message ReqLinkmicOpMic {
+    uint32 rid = 1; // 操作人所在的房间 ID
+    uint32 uid = 2; // 要关闭/打开麦克风的用户
+    uint32 op = 3; // 0 关闭麦克风, 1 打开麦克风
+}
+
+message ReqLinkmicSetLinkType {
+    int32 link_type = 1; // 连麦方式, 详见 LinkMicLinkType
+}
+
+message ReqLinkmicLinkInfo {
+    uint32 rid = 1; // 房间 ID
+}
+
+message LinkmicParticipant {
+    uint32 uid = 1; // uid
+    string name = 2; // 昵称
+    string icon = 3; // 头像
+    uint32 role = 4; // 角色, 0 观众, 1 视频主播
+    uint32 rid = 5; // 房间 ID
+    int64 live_session_id = 6; // 直播场次 ID
+    int32 mic_state = 7; // 麦克风状态, 0 关闭, 1 开启
+    int64 diamond = 8; // 收礼数
+}
+
+message LinkmicLinkInfoData {
+    optional bool is_linking = 1; // 是否在连麦中
+    repeated LinkmicParticipant participants = 2; // 连麦的用户信息
+    optional int32 link_type = 3; // 连麦方式, 详见 LinkMicLinkType
+    optional int32 link_role_type = 4; // 连麦双方的角色类型, 1 主播和主播连麦, 2 主播和观众连麦
+}
+
+message RspLinkmicLinkInfo {
+    optional int32 err_code = 1; // 0 成功，其他失败
+    optional string msg = 2;
+    LinkmicLinkInfoData data = 3;
+}
+
+message RspLinkmicInvite {
+    optional int32 err_code = 1; // 0 成功，其他失败
+    optional string msg = 2;
+    optional string invite_id = 3; // 邀请 ID, 用于打点上报
+}
+
+message ReqLinkmicRejectMatch {
+}
+
+service LinkmicService {
+    // go/room/linkmic/invite 邀请连麦
+    rpc LinkmicInvite (ReqLinkmicInvite) returns (RspLinkmicInvite);
+    // go/room/linkmic/accept 同意连麦
+    rpc LinkmicAccept (ReqLinkmicAccept) returns (RspLinkmicInvite);
+    // go/room/linkmic/reject 拒绝连麦
+    rpc LinkmicReject (ReqLinkmicReject) returns (RspLinkmicInvite);
+    // go/room/linkmic/confirm 二次确认连麦
+    rpc LinkmicConfirm (ReqLinkmicConfirm) returns (RspLinkmicCommon);
+    // go/room/linkmic/acceptAndConfirm 接受并确认连麦
+    rpc LinkmicAcceptAndConfirm (ReqLinkmicAcceptAndConfirm) returns (RspLinkmicInvite);
+    // go/room/linkmic/apply 观众申请连麦
+    rpc LinkmicApply (ReqLinkmicApply) returns (RspLinkmicInvite);
+    // go/room/linkmic/cancel 取消连麦邀请/申请
+    rpc LinkmicCancel (ReqLinkmicCancel) returns (RspLinkmicCommon);
+    // go/room/linkmic/hangup 挂断连麦
+    rpc LinkmicHangup (ReqLinkmicHangup) returns (RspLinkmicCommon);
+    // go/room/linkmic/startMatch 开始匹配连麦
+    rpc LinkmicStartMatch (ReqLinkmicStartMatch) returns (RspLinkmicCommon);
+    // go/room/linkmic/cancelMatch 取消匹配连麦
+    rpc LinkmicCancelMatch (ReqLinkmicCancelMatch) returns (RspLinkmicCommon);
+    // go/room/linkmic/applyList 邀请列表/等待列表/排麦列表
+    rpc LinkmicApplyList (ReqLinkMicApplyList) returns (RspLinkMicApplyList);
+    // go/room/linkmic/friendList 正在开播的好友列表
+    rpc LinkmicFriendList (ReqLiveRoomFriendList) returns (RspLiveRoomFriendList);
+    // go/room/linkmic/searchUser 搜索视频连麦的用户
+    rpc LinkmicSearchUser (ReqSearchLiveRoomUser) returns (RspSearchLiveRoomUser);
+    // go/room/linkmic/heartbeat 连麦心跳
+    rpc LinkmicHeartbeat (ReqLinkmicHeartbeat) returns (RspLinkmicCommon);
+    // go/room/linkmic/clearApplyList 一键清空申请列表
+    rpc LinkmicClearApplyList (ReqLinkmicClearApplyList) returns (RspLinkmicCommon);
+    // go/room/linkmic/opMic 开麦/禁麦接口
+    rpc LinkmicOpMic (ReqLinkmicOpMic) returns (RspLinkmicCommon);
+    // go/room/linkmic/setLinkType 切换连麦方式（视频连麦/音频连麦）
+    rpc LinkmicSetLinkType (ReqLinkmicSetLinkType) returns (RspLinkmicCommon);
+    // go/room/linkmic/linkInfo 查询当前房间的连麦信息
+    rpc LinkmicLinkInfo (ReqLinkmicLinkInfo) returns (RspLinkmicLinkInfo);
+    // go/room/linkmic/rejectMatch 拒绝匹配的邀请
+    rpc LinkmicRejectMatch (ReqLinkmicRejectMatch) returns (RspLinkmicCommon);
+}

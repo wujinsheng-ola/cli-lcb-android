@@ -1,0 +1,112 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+
+message TreasureInfo {
+    uint32 id = 1;
+    uint32 score = 2;           // 点击加分数，默认1分
+    string icon = 3;            // 红包icon
+    string click_icon = 4;      // 点击icon
+}
+
+message TreasurePackge {
+    uint32 count = 1;
+    uint32 id = 2; // 天降红包id
+    TreasureInfo treasure_info = 3;
+}
+
+// 红包雨上报
+message ReportTreasurePackge {
+    uint32 count = 1;
+    uint32 id = 2; // 天降红包id
+}
+
+message TreasureItem  {
+    uint32 id = 1;
+    uint32 num = 2;
+}
+
+// 弹窗类型
+enum FrameStyleType {
+    FRAME_STYLE_TYPE_UNKNOWN = 0;
+    FRAME_STYLE_TYPE_DEFAULT = 1;   // 默认客户端
+    FRAME_STYLE_TYPE_H5 = 2;        // h5
+}
+
+// 弹窗类型
+message FrameStyle {
+    uint32 id = 1;
+    uint32 type = 2;                    // 详见 FrameStyleType
+    string icon = 3;                    // 弹窗 icon
+    string title = 4;                   // 弹窗标题
+    string content = 5;                 // 弹窗内容
+    string jump_url = 6;                // 跳转jump，客户端为按钮的跳转链接，H5为页面的链接
+}
+
+enum TriggerType {
+    TRIGGER_TYPE_UNKNOWN = 0;
+    TRIGGER_TYPE_POINT = 1;             // 时间点触发一次
+    TRIGGER_TYPE_DURATION = 2;          // 时间段内都可触发
+}
+
+
+message FallTreasureNotify {
+    string act_id = 1;                  // 红包雨id
+    string round_id = 2;                 // 轮次id
+    int64 rain_id = 3;                  // 红包雨 id
+    uint32 trigger_type = 4;            // 详见 TriggerType
+    uint32 priority = 5;                // 优先级
+    uint32 total_count = 6;             // 红包总数
+    repeated TreasurePackge list = 7;   // 红包种类列表
+    FrameStyle frame_style = 8;         // 弹框风格 详见 FrameStyle
+    int64 trigger_ddl = 9;              // 可触发红包雨播放的截止时间
+    int64 valid_ddl = 10;               // 可触上报统计发红包雨截止时间
+    string starting_effect = 11;        // 开播动效
+    uint32 max_fall_interval = 12;      // 红包间的最大间隔时长，单位为毫秒
+    repeated uint32 speed_list = 13;    // 掉落速度列表
+    ContributorInfo contributor_info = 14;     // 最大贡献者信息
+}
+
+message ContributorInfo{
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    string contributor_effect = 4;
+}
+
+message ReqFallTreasureReprot {
+    string act_id = 1;                          // 红包雨id
+    string round_id = 2;                         // 轮次id
+    int64 rain_id = 3;                          // 红包雨 id
+    uint32 rid = 4;                             // 房间id
+    string list = 5;                            // 上报红包list, 使用 JSON 序列化 ReportTreasurePackge 数组
+}
+
+message RspFallTreasureReprot {
+    CommonData common = 1;
+    string act_id = 2;                          // 红包雨id
+    string round_id = 3;                         // 轮次id
+    int64 rain_id = 4;                          // 红包雨 id
+    repeated TreasurePackge list = 5;           //上报红包点击
+}
+
+message ReqFallTreasureReportInfo {
+    string act_id = 1;                          // 红包雨id
+    string round_id = 2;                         // 轮次id
+}
+
+message RspFallTreasureReportInfo {
+    CommonData common = 1;
+    repeated TreasurePackge list = 2;           //上报红包点击
+}
+
+// 前端使用
+service FallTreasureService {
+    // go/room/fall_treasure/report 上报
+    rpc Report (ReqFallTreasureReprot) returns (RspFallTreasureReprot);
+    // go/room/fall_treasure/reportInfo 查询上报的信息
+    rpc ReportInfo (ReqFallTreasureReportInfo) returns (RspFallTreasureReportInfo);
+}

@@ -1,4 +1,4 @@
-package sg.partying.lcb.android.api.interceptor
+package sg.partying.lcb.api.interceptor
 
 import android.os.Build
 import com.blankj.utilcode.util.DeviceUtils

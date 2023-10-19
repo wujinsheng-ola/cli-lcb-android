@@ -1,0 +1,44 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+
+message UserMount {
+	string icon = 1;
+	string dynamic_effect_icon = 2;
+	int64 period_end = 3;
+	uint32 group_id = 4;
+}
+
+message UserMountIcon {
+    string icon = 1;
+	string dynamic_effect_icon = 2;
+}
+
+message UserInUseCommodity {
+	uint32 uid = 1;
+	uint32 group_id = 2;
+	uint32 cid = 3;
+	int64 ext_id = 4;
+	int64 period_end = 5;
+}
+
+message ReqUserMountWall {
+    uint32 uid = 1;
+}
+
+message RspUserMountWall {
+    CommonData common = 1;
+    repeated UserMountIcon data = 2;
+}
+
+message UserMountWallCache {
+    repeated UserMount data = 2;
+}
+
+service UserService {
+    // go/ps/user/mountWall
+    rpc MountWall (ReqUserMountWall) returns (RspUserMountWall);
+}

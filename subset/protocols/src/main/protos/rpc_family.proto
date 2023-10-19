@@ -1,0 +1,121 @@
+syntax = "proto3";
+package pb;
+
+/*
+family rpc 家族相关rpc接口
+*/
+
+option go_package = "../app/pb";
+
+import "common.proto";
+import "family.proto";
+
+message RpcUserFamilyReq {
+    uint32 uid = 1;
+}
+
+message RpcUserFamilyRes {
+    CommonData common = 1;
+    FamilyInfo info = 2;
+}
+
+message RpcFamilyInfoReq {
+    uint32 fid = 1;
+}
+
+message RpcFamilyInfoRes {
+    CommonData common = 1;
+    FamilyInfo info = 2;
+}
+
+message RpcFamilyApplyListReq {
+    uint32 fid = 1;
+}
+
+message FamilyApplyListUser {
+    uint32 uid = 1;
+    int64 ts = 2;
+}
+
+message RpcFamilyApplyListRes {
+    CommonData common = 1;
+    repeated FamilyApplyListUser apply_list = 2;
+}
+
+message RpcFamilyMemberReq {
+    uint32 fid = 1;
+}
+
+message MemberContribution {
+    uint32 member = 1;
+    uint32 contribution = 2;
+}
+
+message MemberContributionData {
+    uint32 member = 1;
+    uint32 contribution = 2;
+    string name = 3;
+    string icon = 4;
+}
+
+message FamilyInfoAndContribution {
+    FamilyInfo info = 1;
+    FamilyMemberStatus member_status = 2;
+    repeated MemberContributionData member_contributions = 3;
+}
+
+message RpcFamilyMemberRes {
+    CommonData common = 1;
+    repeated uint32 member_list = 2;
+}
+
+message RpcMGetFamilyInfoReq {
+    repeated uint32 fid = 1;
+}
+
+message RpcMGetFamilyInfoRes {
+    CommonData common = 1;
+    map<uint32, FamilyInfo> info = 2;
+}
+
+message SearchFamilyCursor {
+    uint32 contribution = 1;
+    uint32 fid = 2;
+}
+
+message RpcSearchFamilyListReq {
+    uint32 big_area_id = 1;
+    uint32 fid = 2;
+    uint32 limit = 3;
+    string cursor = 4;
+}
+
+message RpcSearchFamilyListRes {
+    CommonData common = 1;
+    repeated SearchFamilyInfo data = 2;
+    string cursor = 3;
+    bool more = 4;
+}
+
+message RpcFamilyInfoCheckCallbackReq {
+    string choice = 1; // family_name, family_announcement, family_badge
+    int32 status = 2; // 1 通过 2 拒绝
+    string reason = 3;
+    string pk_value = 4; // call_back id
+    uint32 uid = 5;
+    int32 review = 6; // 1 先审后发 2 先发后审 --- ps 统一使用2
+    int32 danger = 7;
+    message value {
+        string field = 1;
+        string type = 2;
+        repeated string value = 3;
+    }
+}
+
+message RpcFamilyInfoCheckCallbackRes {
+    // @inject_tag: json:"state"
+    int32 state = 1; // 必返回字段 ：1成功  2失败
+    // @inject_tag: json:"message"
+    string message = 2; // 必返回字段 ：消息
+    int32 retry = 3; // 'retry' => (int)1|2 可选字段：1重试2不重试（仅在state = 2时使用）
+}

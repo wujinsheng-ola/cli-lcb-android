@@ -1,0 +1,27 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+enum GameType {
+    GAME_TYPE_UNKNOWN = 0;
+    GAME_TYPE_H5 = 1; // h5 游戏, 直接通过 webview 打开 url 访问即可
+    GAME_TYPE_LAYA = 2; // laya 游戏, 通过 url 下载离线包, 然后通过 webview 打开
+    GAME_TYPE_CLIENT = 3; // 客户端内部游戏
+}
+
+message GameCenterInfo {
+	uint32 gameId = 1;
+    string name = 2;
+	string access = 3; // 入口
+	bool opening = 4;
+    string icon = 5;
+    int32 type = 6; // 游戏类型，参见 GameType
+}
+
+// go/room/option/gameCenterList
+message ResGameCenterList {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    repeated GameCenterInfo infos = 3;
+}

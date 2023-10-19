@@ -1,0 +1,131 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+import "common.proto";
+
+// /go/internal/cms/operateUserVip
+message ReqOperateUserVip {
+    uint32 uid = 1; // uid
+    uint32 vip_level = 2;  // VIP等级
+    int32 validity_value = 3;  // 增加、回收的有效期，单位为天，传负数就是回收
+    string remark = 4; // 操作备注
+    string operator = 5; // 操作人
+}
+
+message OperateUserVip {
+    uint32 uid = 1; // uid
+    uint32 vip_level = 2;  // VIP等级
+    int32 validity_value = 3;  // 增加、回收的有效期，单位为天，传负数就是回收
+    string remark = 4; // 操作备注
+}
+
+/*  /go/ps/vip/buy 购买续费VIP    */
+message ReqVipBuy {
+    uint32 level = 1; // 购买续费哪一个等级的VIP
+    uint32 price = 2; // 客户端展示的VIP价格
+}
+
+enum VIPLevel {
+    VIP_LEVEL_0 = 0;
+    VIP_LEVEL_1 = 1;
+    VIP_LEVEL_2 = 2;
+    VIP_LEVEL_3 = 3;
+    VIP_LEVEL_4 = 4;
+}
+
+message PrivilegeRewardConfig {
+    uint32 reward_id = 1;
+}
+
+message PrivilegeRewardConfigList {
+    repeated uint32 reward_ids = 1;
+}
+
+message PrivilegeConfig {
+    string key = 1;
+    string icon = 2;
+    uint32 min_level = 3;
+    PrivilegeRewardConfigList reward_config = 4;
+}
+
+message PrivilegeTomlConfig {
+    string icon = 1;
+    uint32 min_level = 2;
+    repeated uint32 reward_ids = 3;
+}
+
+message Privilege {
+    string key = 1;
+    string icon = 2;
+    string name = 3;
+    string title = 4;
+    string describe = 5;
+    string image = 6;
+    uint32 min_level = 7;
+    PrivilegeRewardConfig reward_config = 8;
+}
+
+message ReqVIPPrivilege {
+    uint32 level = 1;
+    uint32 uid = 2;
+}
+
+message VIPPrivilege {
+    uint32 money = 1; // vip售价钻石
+    uint32 return_diamond_ratio = 2; // 返钻比例
+    string name_color = 3; // 昵称变色色号
+    repeated Privilege privilege = 4;
+    VIPProfile vip_info = 5;
+}
+
+message RspVIPPrivilege {
+    CommonData common = 1;
+    VIPPrivilege data = 2;
+}
+
+message VIPProfile {
+    uint32 level = 1;
+    uint64 expire_time = 2;
+    optional string name_color = 3;
+}
+
+message VIPRebateCache {
+    int64 rebate_expire_time = 1; // 最大返钻到期时间
+    string last_record_date = 2;  // 上一次返钻的时间
+}
+
+message VIPCache {
+    VIPProfile vip_profile = 1;
+    VIPRebateCache  vip_rebate = 2;
+}
+
+message VIPInfo {
+    VIPProfile vip_profile = 1;
+    int32 can_rebate = 2;
+}
+
+message RspVIPRebate {
+    CommonData common = 1;
+    VIPRebate data = 2;
+}
+
+message VIPRebate {
+    uint32 money = 1; // 返钻钻石
+    uint32 level = 2; // 返钻VIP等级
+}
+
+message ReqBatchAddVIP {
+    uint64 order_id = 1; // 任务ID
+    repeated OperateUserVip operate_user_vip = 2;
+    string operator = 3; // 操作人
+}
+
+service VIPService {
+    // /go/ps/vip/buy 购买续费VIP
+    rpc Buy (ReqVipBuy) returns (RspCommon);
+    // /go/ps/vip/privilege
+    rpc Privilege (ReqVIPPrivilege) returns (RspVIPPrivilege);
+    // /go/ps/vip/rebate
+    rpc Rebate(Empty) returns (RspVIPRebate);
+}

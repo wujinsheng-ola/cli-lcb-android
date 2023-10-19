@@ -19,7 +19,7 @@ import kt.singleClick
 import kt.toast
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.Session
-import sg.partying.lcb.android.api.apiService
+import sg.partying.lcb.api.apiService
 
 /**
  * Time:2023/9/26 11:54

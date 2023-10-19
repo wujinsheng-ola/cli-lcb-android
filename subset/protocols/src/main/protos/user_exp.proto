@@ -1,0 +1,72 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+/* /go/ps/user/exp    批量获取用户等级/经验信息  */
+// 请求体
+message ReqUserExp {
+    // @gotags: v:"required"
+    repeated uint32 uid = 1;  // 用户ID
+    // @gotags: v:"required"
+    uint32 app_id = 2;        // 应用ID，Party Star 为 9
+}
+
+message UserExpData {
+    optional uint32 uid = 1;       // 用户id
+    optional uint32 app_id = 2;    // 应用id
+    optional uint64 exp = 3;       // 经验
+    optional uint32 lv = 4;        // 等级
+    optional uint64 next_lv_exp = 5; // 下一等级最低经验
+    optional uint64 cur_lv_exp = 6;  // 当前等级最低经验
+    optional uint32 process = 7;  // 进度, 计算公式:( (next_lv_exp - exp) / (next_lv_exp - cur_lv_exp) ) * 100
+}
+
+// 响应体
+message RspUserExp {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    repeated UserExpData data = 3;        //用户经验
+}
+/* /go/ps/user/exp    批量获取用户等级/经验信息  */
+
+/* /go/ps/user/todayExp 获取指定用户今天获得的经验值 */
+message ReqUserTodayExp {
+    // @gotags: v:"required|min:1"
+    uint32 uid = 1;      // 用户ID
+    // @gotags: v:"required|min:1"
+    uint32 app_id = 2;   // 应用ID，Party Star 为 9
+}
+
+enum ExpDailyTaskType {
+    EXP_DAILY_TASK_TYPE_UNKNOWN = 0; // 未知，用来占位
+    EXP_DAILY_TASK_TYPE_SIGNIN = 1; // 每日签到任务
+    EXP_DAILY_TASK_TYPE_ROOM_JOIN = 2; // 每日语聊房停留时长任务
+    EXP_DAILY_TASK_TYPE_ROOM_COMMENT = 3; // 每日语聊房评论任务
+    EXP_DAILY_TASK_TYPE_ROOM_MIC = 4; // 每日语聊房上麦任务
+    EXP_DAILY_TASK_TYPE_FOLLOW = 5; // 每日关注任务
+    EXP_DAILY_TASK_TYPE_ADD_FRIENDS = 6; // 每日添加好友任务
+    EXP_DAILY_TASK_TYPE_SEND_MSG = 7; // 每日发消息任务
+}
+
+message UserTodayExpTaskData {
+    ExpDailyTaskType task_type = 1; // 任务类型
+    uint64 max_exp = 2; // 任务最大经验值(上限)
+    uint64 cur_exp = 3; // 任务当前已经完成的经验值
+    uint64 per_exp = 4; // 任务每次增加的经验值
+}
+
+message UserTodayExpRespData {
+    UserExpData user_exp = 1; // 用户经验
+    repeated UserTodayExpTaskData task_data = 2; // 任务数据
+    uint64 cur_exp = 3; // 今天已经获得的经验值总额
+    uint64 max_exp = 4; // 今天最大可获得的经验值总额
+}
+
+message RspUserTodayExp {
+    bool success = 1;                    // 成功true，失败false
+    string msg = 2;                      // 失败message
+    UserTodayExpRespData data = 3;        // 用户经验和任务数据
+}
+
+/* /go/ps/user/todayExp 获取指定用户今天获得的经验值 */

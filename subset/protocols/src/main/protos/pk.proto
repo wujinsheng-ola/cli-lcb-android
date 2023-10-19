@@ -1,0 +1,287 @@
+syntax = "proto3";
+package pb;
+
+// 表示目标文件生成的路径, go的包名就是最后的目录名
+// 目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "common.proto";
+import "link_mic.proto";
+import "medal.proto";
+import "api_vip.proto";
+import "certification_sign.proto";
+
+message ReqPkInvite {
+    uint32 uid = 1; // 被邀请用户的 ID
+    int64 duration = 2; // PK 时长, 单位为秒
+}
+
+message RspPkInvite {
+    CommonData common = 1;
+    // @inject_tag: json:"invite_id"
+    string invite_id = 2;
+}
+
+message ReqPkAccept {
+    uint32 inviter = 1; // 邀请人的 UID
+}
+
+message RspPkAccept {
+    CommonData common = 1;
+    optional string pk_id = 2;
+}
+
+message ReqPkReject {
+    uint32 inviter = 1; // 发起邀请的人的 UID
+}
+
+message ReqPkCancel {
+    uint32 rid = 1; // 操作人所在的房间 ID
+    uint32 uid = 2; // 被邀请的主播 ID
+}
+
+message ReqPkClose {
+    string pk_id = 1; // PK ID
+}
+
+message ReqPkInterrupt {
+    string pk_id = 1; // pk id
+}
+
+message ReqPkHeartbeat {
+    string pk_id = 1;
+}
+
+// 搜索用户直播列表
+message ReqPkSearchLiveRoomUser {
+    string k = 1;
+}
+
+message RspPkSearchLiveRoomUser {
+    CommonData common = 1;
+    LiveRoomFriendListData data = 2;
+}
+
+// 好友在玩列表
+message ReqPkLiveRoomFriendList {
+    uint32 page = 1; // 页数
+}
+
+message RspPkLiveRoomFriendList {
+    CommonData common = 1;
+    LiveRoomFriendListData data = 2;
+}
+
+message ReqPkInfo {
+    uint32 rid = 1; // 房间 ID
+}
+
+enum PkResult {
+    PK_RESULT_NONE = 0; // 未出结果
+    PK_RESULT_WIN = 1;  // 胜利 
+    PK_RESULT_FAIL = 2; // 失败
+    PK_RESULT_DRAW = 3; // 平局
+}
+
+message PkContributor {
+    uint32 uid = 1; // uid
+    string name = 2; // 昵称
+    string icon = 3; // 头像
+    string frame = 4; // 头像框
+    uint32 sex = 5; // 性别
+    uint32 lv = 6; // 财富等级
+    uint32 age = 7; // 年龄
+    int64 diamond = 8; // 送礼钻石数
+    repeated WearMedal wear_medal_list = 9; // 勋章详情
+    VIPProfile vip_info = 10; // VIP 信息
+    UserCertificationSign certification_sign = 11; // 认证
+}
+
+message PkParticipant {
+    uint32 uid = 1; // uid
+    string name = 2; // 昵称
+    string icon = 3; // 头像
+    uint32 rid = 4; // 房间 ID
+    int64 live_session_id = 5; // 直播场次 ID
+    int32 mic_state = 6; // 麦克风状态, 0 关闭, 1 开启
+    int64 diamond = 7; // 收礼数
+    uint32 result = 8; // PK 结果, 参见 PkResult
+    repeated PkContributor contributor_top_n = 9; // 送礼的 top3
+}
+
+enum PkState {
+    PK_STATE_NONE = 0; // 未在 PK 中
+    PK_STATE_IS_PK = 1; // PK 中
+    PK_STATE_SHOW_PK_RESULT = 2; // PK 结果展示中
+}
+
+enum PkInviteState {
+    PK_NOT_INVITE_STATE = 0; // 没有邀请过pk
+    PK_IN_PK = 1; // 在pk中
+    PK_IS_INVITE_STATE = 2; // 已经邀请过pk
+    PK_IS_NOT_OPEN = 3; // 未开通pk功能
+    PK_IN_LINK_MIC_NOT_INVITE = 4; // 在连麦中 未邀请
+    PK_IN_LINK_MIC_INVITE = 5; // 在连麦中 已邀请
+    PK_IN_LINK_MIC_NOT_OPEN = 6; // 在连麦中 未开通
+}
+
+message PkInfoData {
+    optional uint32 pk_state = 1; // 参见 PkState
+    repeated PkParticipant participants = 2; // pk的房间信息
+    optional int64 start_time = 3; // 开始时间戳, 根据 pk_state 的值具备不同的含义, 在 PK 中时, 代表 PK 的开始时间戳; 在展示 PK 结果时, 代表结果展示的开始时间戳
+    optional int64 end_time = 4;   // 结束时间戳, 根据 pk_state 的值具备不同的含义, 在 PK 中时, 代表 PK 的结束时间戳; 在展示 PK 结果时, 代表结果展示的结束时间戳
+    optional string pk_id = 5; // PK ID
+    optional int64 left_time = 6; // 当前阶段剩余时间, 单位秒
+}
+
+message PkInfoDataRtcToken {
+    string anchor_src_token = 1;
+    string audience_src_token = 2;
+    string dst_token = 3;
+}
+
+message RspPkInfo {
+    CommonData common = 1;
+    optional PkInfoData pk_data = 2;
+    optional LinkmicLinkInfoData link_mic_data = 3;
+    optional PkInfoDataRtcToken rtc_token = 4; // token, 只有连麦状态或者 PK 状态下才会有
+    int64 now = 5; // 服务器当前时间戳
+}
+
+enum PkStartMatchFrom {
+    PK_START_MATCH_FROM_NONE = 0; // 占位用
+    PK_START_MATCH_FROM_INVIT_PROMPT = 1; // 从邀请PK匹配的弹窗中发起的
+    PK_START_MATCH_FROM_BY_SELF = 2; // 主动发起的PK匹配
+}
+
+message ReqPkStartMatch {
+    int32 from = 1; // 从哪个位置发起的匹配, 参见 PkStartMatchFrom
+    uint32 inviter = 2; // 邀请匹配的人的 uid, 没有传 0 即可
+}
+
+message ReqPkCancelMatch {
+}
+
+message ReqPkRecord {
+    uint32 page = 1;
+    uint32 page_size = 2;
+}
+
+message RspPkRecord {
+    CommonData common = 1;
+    PkRecordData data = 2;
+}
+
+message PkRecordData {
+    uint32 total = 1;
+    repeated PkRecord data = 2;
+}
+
+message PkRecord {
+    uint32 start_time = 1;
+    PkUser user = 2;
+    PkUser pk_user = 3; 
+    uint32 result = 4;
+}
+
+message PkUser {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    uint32 score = 4;
+    uint32 result = 5;
+}
+
+enum PkSettings {
+    PK_SETTINGS_CLOSE = 0;
+    PK_SETTINGS_OPEN = 1;
+}
+
+message PkSettingInfo {
+	uint32 friendAnchor = 1; //接受好友主播  0关，1开
+    uint32 strangeAnchor = 2; //接受陌生主播  0关，1开
+    uint32 pkDurtion = 3; //pk时长 单位秒
+}
+
+// /go/room/pk/getRoomPkSettings
+message ReqGetRoomPkSettings {
+	uint32 roomId = 1;
+}
+
+message RspGetRoomPkSettings {
+	CommonData common = 1;
+    PkSettingInfo data = 2;
+}
+
+// /go/room/pk/setRoomPkSettings
+message ReqSetRoomPkSettings {
+	uint32 roomId = 1;
+    PkSettingInfo data = 2;
+}
+
+message ReqPkContributionRank {
+    string pk_id = 1; // pk id
+    uint32 uid = 2; // 主播 UID
+}
+
+message RspPkContributionRank {
+    CommonData common = 1;
+    repeated PkContributor contributors = 2;
+}
+
+message ReqRpcPkState {
+    repeated uint32 uids = 1;
+}
+
+message RspRpcPkState {
+    map<uint32, uint32> pkStateMap = 1;
+}
+
+message ReqPkDurationList {
+}
+
+message RspPkDurationList {
+    CommonData common = 1;
+    repeated uint32 duration_list = 2; // 可选的时长列表, 时长单位为秒
+}
+
+message ReqPkRejectMatch {}
+
+service PkService {
+    // go/room/pk/invite 邀请 PK
+    rpc PkInvite (ReqPkInvite) returns (RspPkInvite);
+    // go/room/pk/accept 接受 PK
+    rpc PkAccept (ReqPkAccept) returns (RspPkAccept);
+    // go/room/pk/reject 拒绝 PK
+    rpc PkReject (ReqPkReject) returns (RspCommon);
+    // go/room/pk/cancel 取消 PK 邀请
+    rpc PkCancel (ReqPkCancel) returns (RspCommon);
+    // go/room/pk/close 在 PK 结果展示期关闭 PK
+    rpc PkClose (ReqPkClose) returns (RspCommon);
+    // go/room/pk/interrupt 在 PK 进行中中断 PK
+    rpc PkInterrupt (ReqPkInterrupt) returns (RspCommon);
+    // go/room/pk/heartbeat pk 心跳
+    rpc PkHeartbeat (ReqPkHeartbeat) returns (RspCommon);
+    // go/room/pk/searchUser 搜索用户
+    rpc PkSearchUser (ReqPkSearchLiveRoomUser) returns (RspPkSearchLiveRoomUser);
+    // go/room/pk/friendList 正在开播的好友列表
+    rpc PkFriendList (ReqPkLiveRoomFriendList) returns (RspPkLiveRoomFriendList);
+    // go/room/pk/info 查询当前房间的 PK 和连麦信息
+    rpc PkInfo (ReqPkInfo) returns (RspPkInfo);
+    // go/room/pk/record 查看pk记录
+    rpc PkRecord (ReqPkRecord) returns (RspPkRecord);
+    // go/room/pk/getRoomPkSettings 获取PK设置
+    rpc GetRoomPkSettings (ReqGetRoomPkSettings) returns (RspGetRoomPkSettings);
+    // go/room/pk/setRoomPkSettings 设置PK设置
+    rpc SetRoomPkSettings (ReqSetRoomPkSettings) returns (RspCommon);
+    // go/room/pk/contributionRank 单场 PK 贡献榜
+    rpc ContributionRank (ReqPkContributionRank) returns (RspPkContributionRank);
+    // go/room/pk/durationList 获取PK可以选择的时长列表
+    rpc DurationList (ReqPkDurationList) returns (RspPkDurationList);
+    // go/room/pk/startMatch 开始匹配连麦
+     rpc PkStartMatch (ReqPkStartMatch) returns (RspCommon);
+    // go/room/pk/cancelMatch 取消匹配连麦
+     rpc PkCancelMatch (ReqPkCancelMatch) returns (RspCommon);
+    // go/room/pk/rejectMatch 拒绝匹配的邀请
+    rpc PkRejectMatch (ReqPkRejectMatch) returns (RspCommon);
+}

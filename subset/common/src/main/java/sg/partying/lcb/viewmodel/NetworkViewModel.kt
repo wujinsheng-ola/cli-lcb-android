@@ -1,4 +1,4 @@
-package sg.partying.lcb.android.viewmodel
+package sg.partying.lcb.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.GsonUtils
@@ -22,16 +22,16 @@ import okhttp3.logging.HttpLoggingInterceptor
 import pb.ReqFeedRecommendRoom
 import pb.ReqFeedRoom
 import pb.ResFeedRecommendRoom
-import sg.partying.lcb.android.api.apiService
-import sg.partying.lcb.android.api.interceptor.ErrorInterceptor
-import sg.partying.lcb.android.api.interceptor.HeadInterceptor
-import sg.partying.lcb.android.api.interceptor.SignInterceptor
-import sg.partying.lcb.android.api.resp.BannerItem
-import sg.partying.lcb.android.api.resp.LoginOption
-import sg.partying.lcb.android.api.resp.PbResp
-import sg.partying.lcb.android.api.resp.LiveRecommendModel
-import sg.partying.lcb.android.api.resp.Resp
-import sg.partying.lcb.android.config.NetworkConfigProvider
+import sg.partying.lcb.api.apiService
+import sg.partying.lcb.api.interceptor.ErrorInterceptor
+import sg.partying.lcb.api.interceptor.HeadInterceptor
+import sg.partying.lcb.api.interceptor.SignInterceptor
+import sg.partying.lcb.api.resp.BannerItem
+import sg.partying.lcb.api.resp.LoginOption
+import sg.partying.lcb.api.resp.PbResp
+import sg.partying.lcb.api.resp.LiveRecommendModel
+import sg.partying.lcb.api.resp.Resp
+import sg.partying.lcb.config.NetworkConfigProvider
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit

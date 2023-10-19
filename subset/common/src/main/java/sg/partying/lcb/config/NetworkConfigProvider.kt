@@ -1,4 +1,4 @@
-package sg.partying.lcb.android.config
+package sg.partying.lcb.config
 
 import com.salton123.config.IConfigProvider
 

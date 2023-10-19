@@ -1,0 +1,51 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+enum FamilyContributionReason {
+    FAMILY_CONTRIBUTION_REASON_UNKNOWN = 0; // 未知, 仅占位用
+    FAMILY_CONTRIBUTION_REASON_LOGIN = 1; // 登录
+    FAMILY_CONTRIBUTION_REASON_STAY_IN_ROOM = 2; // 在语音房或直播间停留10分钟
+    FAMILY_CONTRIBUTION_REASON_STAY_ON_MIC = 3; // 在语音房上麦10分钟
+    FAMILY_CONTRIBUTION_REASON_SEND_GIFT = 4; // 送礼
+    FAMILY_CONTRIBUTION_REASON_QUIT_FAMILY = 5; // 因离开家族清零
+}
+
+enum FamilyRoleType {
+    FAMILY_ROLE_TYPE_UNKNOWN = 0;
+    FAMILY_ROLE_TYPE_PATRIARCH = 1; // 族长
+    FAMILY_ROLE_TYPE_MGR = 2; // 管理员
+    FAMILY_ROLE_TYPE_MEMBER = 3; // 普通成员
+}
+
+enum FamilyAdminCmd {
+    FAMILY_ADMIN_CMD_UNKNOWN = 0;
+    FAMILY_ADMIN_CMD_AGREE = 1;
+    FAMILY_ADMIN_CMD_REFUSE = 2;
+    FAMILY_ADMIN_CMD_SET_MGR = 3;
+    FAMILY_ADMIN_CMD_KICK_OUT = 4;
+    FAMILY_ADMIN_CMD_APPLY = 5;
+}
+
+message FamilyInfo {
+    string name = 1;
+    string badge = 2;  // 沿用之前处理逻辑可能有资源泄露的风险
+    string announcement = 3;
+    uint32 contribution = 4;
+    uint32 patriarch = 5; // 族长ID
+    repeated uint32 mgr_list = 6; // 管理员列表,，最多五个
+    uint32 join_lv_limit = 7; // 加入限制等级
+    uint32 big_area_id = 8; // 家族所属的大区 ID
+    uint32 fid = 9; // 家族 ID
+}
+
+message FamilyMemberStatus {
+    uint32 member_num = 1;
+    uint32 member_max_num = 2;
+}
+
+message SearchFamilyInfo {
+    FamilyInfo info = 1;
+    FamilyMemberStatus member_status = 2;
+}

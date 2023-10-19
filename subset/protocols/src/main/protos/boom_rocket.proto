@@ -1,0 +1,119 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+import "api_chatroom_background.proto";
+
+message ReqBoomRocketReceiveAward {
+    uint32 rid = 1; // 房间 ID
+}
+
+message RspBoomRocketReceiveAward {
+    CommonData common = 1;
+    repeated AwardInfo awards = 2; // 领取到的奖励列表
+}
+
+message ReqBoomRocketDetail {
+    uint32 rid = 1; // 房间 ID
+}
+
+message BoomRocketContributor {
+    uint32 uid = 1; // 用户 UID
+    string icon = 2; // 用户头像
+    string name = 3; // 用户昵称
+}
+
+message   BoomRocketAwardInfo {
+    uint32 target_type = 1; // 奖励的目标类型, 1 所有人都可获得, 2 仅高贡献用户可领取, 3 仅top1用户可获得
+    uint32 count = 2; // 奖池总个数
+    AwardInfo awards = 3; // 当前等级的奖励
+    uint64 award_config_id = 4; // 对应xs_boom_rocket_award_config的id字段
+    uint32 left_num = 5; // 剩余数量
+}
+message BoomRocketDetailLvInfo {
+    uint32 lv = 1; // 等级
+    uint32 total = 2; // 当前等级的总上限
+    uint32 current = 3; // 当前等级的当前分值
+    repeated BoomRocketAwardInfo awards = 4; // 当前等级的奖励列表
+    repeated BoomRocketContributor topn_users = 5; // 本场次本等级的TopN贡献者
+}
+
+
+message BoomRocketDetailData {
+    uint32 round_id = 1; // 轮次ID
+    uint32 lv = 2; // 当前等级
+    uint32 score = 3; // 当前总积分
+    uint32 total = 4; // 当前等级的总上限
+    repeated BoomRocketDetailLvInfo lv_info = 5; // 各等级详情
+    uint32 time_zone = 6; // 用户时区
+}
+
+message RspBoomRocketDetail {
+    CommonData common = 1;
+    BoomRocketDetailData data = 2;
+}
+
+message ReqBoomRocketMyAwardList {
+    PaginationParams page_info = 1; // 分页信息
+}
+
+message BoomRocketMyAwardListItem {
+    AwardInfo award = 1;
+    int64 dateline = 2; // 用户领取奖品的时间戳， 秒级
+}
+
+message RspBoomRocketMyAwardList {
+    CommonData common = 1;
+    repeated BoomRocketMyAwardListItem items = 2;
+    PaginationParams page_info = 3; // 分页信息
+}
+
+message BoomRocketInfo {
+    uint32 rid = 1; // 房间ID
+    int64 round_id = 2; // 轮次ID
+    uint32 lv = 3; // 火箭等级
+    uint32 uid = 4; // 本次升级的贡献 top 1 的用户ID
+    string uname = 5; // 本次升级的贡献 top 1 的用户昵称
+    string uicon = 6; // 本次升级的贡献 top 1 的用户头像
+    string effect_url = 7; // 动效链接
+    string banner_url = 8; // 世界横幅 URL
+    int64 ts_to_award_start = 9;  // 距离开始领奖的剩余时间, 单位为秒
+    int64 ts_to_award_end = 10; // 距离结束领奖的剩余时间, 单位为秒
+    string pop_up_box_url = 11; // 弹窗宝箱 URL
+    bool show_world_banner = 12; // 是否展示世界横幅
+    uint32 room_uid = 13; // 房主 uid
+    string room_uname = 14; // 房主昵称
+    string room_uicon = 15; // 房主头像
+}
+
+message BoomRocketProgressData {
+    uint32 rid = 1;
+    uint32 round_id = 2;
+    uint32 lv = 3;
+    uint32 score = 4;
+    uint32 score_limit = 5;
+}
+
+message BoomRocketSwitchConfig {
+    int32 switch = 1; // 开关, 0 关闭, 1 开启
+    BoomRocketInfo boom_rocket_info = 2;
+    BoomRocketProgressData boom_rocket_progress = 3; //进度 
+    bool play_effect = 4; // 是否播放爆火箭动效
+    bool show_box = 5; // 是否展示宝箱
+}
+
+message BoomRocketScreenAwardMessage {
+    repeated AwardInfo award_list  = 1;  // 奖励列表
+}
+
+service BoomRocketService {
+    // go/ps/boom_rocket/receiveAward 领取奖励接口
+    rpc ReceiveAward (ReqBoomRocketReceiveAward) returns (RspBoomRocketReceiveAward);
+    // go/ps/boom_rocket/detail 详情页接口
+    rpc Detail (ReqBoomRocketDetail) returns (RspBoomRocketDetail);
+    // go/ps/boom_rocket/myAwardList 我的领奖记录列表接口
+    rpc MyAwardList (ReqBoomRocketMyAwardList) returns (RspBoomRocketMyAwardList);
+}
+

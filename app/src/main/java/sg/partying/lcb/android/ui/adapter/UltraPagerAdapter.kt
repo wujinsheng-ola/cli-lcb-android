@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
 import sg.partying.lcb.android.R
-import sg.partying.lcb.android.api.resp.BannerItem
+import sg.partying.lcb.api.resp.BannerItem
 import sg.partying.lcb.android.util.ImageLoader
 
 /**

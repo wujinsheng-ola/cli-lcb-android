@@ -1,0 +1,53 @@
+syntax = "proto3";
+package pb;
+
+import "common.proto";
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+
+message RoomDescription {
+    string description = 1;
+}
+
+message ResRoomManageDescription {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2;  //返回给客户端的必须有
+    RoomDescription data = 3;
+}
+
+message ReqActionCloseInternal {
+    // @gotags: v:"required"
+    optional uint32 rid = 1;
+    // @gotags: v:"required"
+    optional uint32 uid = 2;
+    // @gotags: v:"required"
+    optional string reason = 3;
+}
+
+enum SCREEN_LIMIT_ROLE {
+    SCREEN_USER_ROOM_ROLE_NORMAL = 0; // 普通观众
+    SCREEN_USER_ROOM_ROLE_ADMIN = 1; // 管理员
+    SCREEN_USER_ROOM_ROLE_CREATOR = 2; // 房主/主播
+    SCREEN_USER_ROOM_ROLE_FANS = 3;
+}
+
+message ScreenLimitInfo {
+    uint32 role_limit = 1; // 该角色才能发言 详见 SCREEN_LIMIT_ROLE
+    uint32 level_limit = 2; // 该等级以上能发言
+}
+
+message ReqUpdateScreenLimit {
+    uint32 rid = 1;
+    ScreenLimitInfo screen_limit_info = 2;
+}
+message RspUpdateScreenLimit {
+    CommonData common = 1;
+}
+
+service RoomManageService {
+    // /go/room/room_manage/updateScreenLimit 更新公屏限制
+    rpc UpdateScreenLimit (ReqUpdateScreenLimit) returns (RspUpdateScreenLimit);
+}
