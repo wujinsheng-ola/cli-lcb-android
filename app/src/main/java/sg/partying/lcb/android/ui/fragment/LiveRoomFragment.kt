@@ -1,13 +1,15 @@
 package sg.partying.lcb.android.ui.fragment
 
-import android.opengl.GLSurfaceView
+import android.graphics.Color
 import android.os.Bundle
 import android.view.SurfaceView
+import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import com.salton123.base.BaseFragment
 import com.salton123.rtc.agora.AgoraFacade
-import io.agora.rtc2.RtcEngine
+import com.salton123.utils.ScreenUtils
 import io.agora.rtc2.video.VideoCanvas
 import sg.partying.lcb.android.Prop
 import sg.partying.lcb.android.R
@@ -22,8 +24,7 @@ import sg.partying.lcb.android.viewmodel.LiveRoomViewModel
  */
 class LiveRoomFragment : BaseFragment() {
     private val viewModel by viewModels<LiveRoomViewModel>()
-    private lateinit var liveHoleFirst: FrameLayout
-    private lateinit var liveHoleSecond: FrameLayout
+    private lateinit var liveViewHolder: FrameLayout
     override fun getLayout(): Int = R.layout.fragment_live_room
 
     override fun initVariable(savedInstanceState: Bundle?) {
@@ -31,25 +32,63 @@ class LiveRoomFragment : BaseFragment() {
 
     private var roomInfo: RoomInfo? = null
     override fun initViewAndData() {
-        liveHoleFirst = f(R.id.liveHoleFirst)
-        liveHoleSecond = f(R.id.liveHoleSecond)
+        liveViewHolder = f(R.id.liveViewHolder)
         roomInfo = Prop.currentRoomInfo
         roomInfo?.apply {
             viewModel.joinChannel(rtcToken, rid, Session.uid)
         }
-        viewModel.firstRemoteVideoDecodedRet.observe(this) { dataSet ->
-            dataSet.forEachIndexed { index, uid ->
-                if (index == 0) {
-                    val surfaceView = SurfaceView(activity())
-                    AgoraFacade.rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid))
-                    liveHoleFirst.removeAllViews()
-                    liveHoleFirst.addView(surfaceView)
-                } else if (index == 1) {
-                    val surfaceView = SurfaceView(activity())
-                    AgoraFacade.rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid))
-                    liveHoleSecond.removeAllViews()
-                    liveHoleSecond.addView(surfaceView)
-                }
+        viewModel.seatInfoRet.observe(this) { dataSet ->
+            setupLiveView(dataSet)
+//            dataSet.forEachIndexed { index, uid ->
+//                if (index == 0) {
+//                    val surfaceView = SurfaceView(activity())
+//                    AgoraFacade.rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid))
+//                    liveHoleFirst.removeAllViews()
+//                    liveHoleFirst.addView(surfaceView)
+//                } else if (index == 1) {
+//                    val surfaceView = SurfaceView(activity())
+//                    AgoraFacade.rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid))
+//                    liveHoleSecond.removeAllViews()
+//                    liveHoleSecond.addView(surfaceView)
+//                }
+//            }
+        }
+    }
+
+    private fun setupLiveView(dataSet: HashSet<Int>) {
+        liveViewHolder.removeAllViews()
+        when (dataSet.size) {
+            1 -> {
+                val surfaceView = SurfaceView(activity())
+                AgoraFacade.rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, dataSet.first()))
+                liveViewHolder.removeAllViews()
+                liveViewHolder.addView(surfaceView)
+            }
+
+            2 -> {
+                val linearLayout = LinearLayout(activity())
+                linearLayout.orientation = LinearLayout.HORIZONTAL
+                val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ScreenUtils.dp2px(350f))
+                layoutParams.topMargin = ScreenUtils.dp2px(150f)
+                linearLayout.layoutParams = layoutParams
+
+                val surfaceView = SurfaceView(activity())
+                val surfaceViewParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT)
+                surfaceViewParams.weight = 1f
+                surfaceView.layoutParams = surfaceViewParams
+                AgoraFacade.rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, dataSet.first()))
+                linearLayout.addView(surfaceView)
+
+                val surfaceView2 = SurfaceView(activity())
+                val surfaceView2Params = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT)
+                surfaceView2Params.weight = 1f
+                surfaceView2.layoutParams = surfaceView2Params
+                AgoraFacade.rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView2, VideoCanvas.RENDER_MODE_HIDDEN, dataSet.last()))
+                linearLayout.addView(surfaceView2)
+                linearLayout.id = R.id.salton_id_title_layout
+                linearLayout.tag = "hello"
+                liveViewHolder.removeAllViews()
+                liveViewHolder.addView(linearLayout)
             }
         }
     }

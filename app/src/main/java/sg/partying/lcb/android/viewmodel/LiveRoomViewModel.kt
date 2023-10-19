@@ -1,17 +1,11 @@
 package sg.partying.lcb.android.viewmodel
 
-import android.view.SurfaceView
 import androidx.lifecycle.MutableLiveData
-import com.blankj.utilcode.util.ThreadUtils.runOnUiThread
 import com.salton123.rtc.agora.AgoraFacade
 import io.agora.rtc2.Constants.REMOTE_VIDEO_STATE_STARTING
 import io.agora.rtc2.Constants.REMOTE_VIDEO_STATE_STOPPED
 import io.agora.rtc2.IRtcEngineEventHandler
-import io.agora.rtc2.video.VideoCanvas
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
-import me.hgj.jetpackmvvm.state.ResultState
-import sg.partying.lcb.android.api.resp.LoginOption
-import sg.partying.lcb.android.api.resp.Resp
 
 /**
  * Time:2023/10/18 11:58
@@ -19,7 +13,7 @@ import sg.partying.lcb.android.api.resp.Resp
  * Description:
  */
 class LiveRoomViewModel : BaseViewModel() {
-    val firstRemoteVideoDecodedRet by lazy { MutableLiveData<HashSet<Int>>() }
+    val seatInfoRet by lazy { MutableLiveData<HashSet<Int>>() }
     val onlineLiveSet = hashSetOf<Int>()
     private val rtcEngineEventHandler = object : IRtcEngineEventHandler() {
         override fun onFirstRemoteVideoDecoded(uid: Int, width: Int, height: Int, elapsed: Int) {
@@ -40,10 +34,10 @@ class LiveRoomViewModel : BaseViewModel() {
             super.onRemoteVideoStateChanged(uid, state, reason, elapsed)
             if (state == REMOTE_VIDEO_STATE_STARTING) {
                 onlineLiveSet.add(uid)
-                firstRemoteVideoDecodedRet.postValue(onlineLiveSet)
+                seatInfoRet.postValue(onlineLiveSet)
             } else if (state == REMOTE_VIDEO_STATE_STOPPED) {
                 onlineLiveSet.remove(uid)
-                firstRemoteVideoDecodedRet.postValue(onlineLiveSet)
+                seatInfoRet.postValue(onlineLiveSet)
             }
         }
 
