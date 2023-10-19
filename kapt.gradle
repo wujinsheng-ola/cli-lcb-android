@@ -1,0 +1,25 @@
+apply plugin: 'kotlin-kapt'
+android {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        AROUTER_MODULE_NAME    : project.getName(),
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"
+                ]
+            }
+        }
+    }
+    println("projectName:" + project.getName())
+}
+dependencies {
+    kapt rootProject.ext.compilerDependenciesLibs
+}
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}

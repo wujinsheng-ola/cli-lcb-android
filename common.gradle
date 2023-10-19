@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+apply from: "../../kapt.gradle"
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
 
@@ -16,16 +16,6 @@ android {
 
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86"
-        }
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [
-                        AROUTER_MODULE_NAME    : project.getName(),
-                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
-                        "room.incremental"     : "true",
-                        "room.expandProjection": "true"
-                ]
-            }
         }
     }
     compileOptions {
@@ -57,11 +47,4 @@ dependencies {
     api project(':common')
     api rootProject.ext.supportLibs
     api rootProject.ext.otherDependenciesLibs
-    kapt rootProject.ext.compilerDependenciesLibs
-}
-
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
-    }
 }

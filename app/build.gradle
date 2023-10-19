@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
-apply plugin: 'kotlin-kapt'
+apply from: "../kapt.gradle"
 apply plugin: 'center.uploadpgy.plugin'
 def gitHash = "git rev-parse HEAD".execute().text.trim()
 def buildTime = new Date().format("yyyy-MM-dd-HH-mm-ss")
@@ -172,7 +172,6 @@ dependencies {
     api project(":live")
     api project(path: ':protocols')
     api project(':resources')
-    kapt rootProject.ext.compilerDependenciesLibs
 }
 
 
@@ -182,9 +181,4 @@ uploadPgyParams {
     appName = "release"//暂时无用 buildTypeName = "Release"
     buildInstallType = 1
     buildPassword = ""
-}
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
-    }
 }
