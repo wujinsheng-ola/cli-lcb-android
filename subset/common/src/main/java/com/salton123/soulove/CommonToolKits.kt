@@ -8,7 +8,6 @@ import com.salton123.common.R
 
 import com.tencent.bugly.Bugly
 import com.tencent.bugly.beta.Beta
-import me.yokeyword.fragmentation.Fragmentation
 
 /**
  * Time:2021/6/24 17:32
@@ -44,15 +43,6 @@ object CommonToolKits {
             ARouter.openDebug()
         }
         ARouter.init(BaseApplication.sInstance)
-        return this
-    }
-
-    fun fragmentation(): CommonToolKits {
-        // 建议在Application里初始化
-        Fragmentation.builder() // 显示悬浮球 ; 其他Mode:SHAKE: 摇一摇唤出   NONE：隐藏
-            .stackViewMode(Fragmentation.BUBBLE)
-            .debug(IS_DEBUG)
-            .install()
         return this
     }
 }

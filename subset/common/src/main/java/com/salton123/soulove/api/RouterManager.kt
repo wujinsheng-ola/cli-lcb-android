@@ -24,6 +24,6 @@ object RouterManager {
 
     //
     fun goLiveRoom(context: Context) {
-        Constants.Router.App.LIVE_ROOM.goPage(context)
+        Constants.Router.Live.LIVE_ROOM.goPage(context)
     }
 }

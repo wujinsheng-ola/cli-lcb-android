@@ -11,7 +11,7 @@ import kt.toast
 import sg.partying.lcb.android.Prop
 import sg.partying.lcb.live.ui.fragment.LiveRoomFragment
 
-@Route(path = Constants.Router.App.LIVE_ROOM)
+@Route(path = Constants.Router.Live.LIVE_ROOM)
 class LiveRoomActivity : DelegateActivity() {
 
     override fun getLayout(): Int = R.layout.activity_video_live

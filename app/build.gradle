@@ -28,6 +28,12 @@ android {
         buildConfigField "String", "GOOGLE_REWARD_ID", "\"${rootProject.ext.dependVersion.googleRewardId}\""
         buildConfigField "String", "GOOGLE_BANNER_ID", "\"${rootProject.ext.dependVersion.googleBannerId}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     buildFeatures {
@@ -162,17 +168,11 @@ def releaseTime() {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation platform('com.google.firebase:firebase-bom:29.1.0')
-    implementation 'com.google.firebase:firebase-crashlytics'
-    implementation 'com.google.firebase:firebase-analytics'
     api project(':common')
     api project(":live")
-//    api project(path: ':translate')
     api project(path: ':protocols')
     api project(':resources')
-//    api project(':framework')
-//    api project(path: ':agora-rtc')
-    kapt "androidx.room:room-compiler:${rootProject.ext.room_version}"
+    kapt rootProject.ext.compilerDependenciesLibs
 }
 
 

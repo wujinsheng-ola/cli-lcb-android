@@ -33,6 +33,7 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     api project(':resources')
     api project(':framework')
+    kapt rootProject.ext.compilerDependenciesLibs
 }
 
 kapt {

@@ -9,9 +9,8 @@ package com.salton123.soulove;
 public interface Constants {
     interface Router {
 
-        interface App {
-            String LIVE_ROOM = "/app/aty/live_room";
-            String LOGIN_GUIDE = "/ease/aty/guide";
+        interface Live {
+            String LIVE_ROOM = "/live/aty/live_room";
         }
     }
 
