@@ -36,10 +36,9 @@ interface ApiService {
     suspend fun recommendedRoomList(): Resp<MutableList<BannerItem>>
 
     @Headers("Content-Type:text/json; charset=utf-8")
-    @POST("go/ps/feed/recommendLiveChatRoom")
+    @POST("go/ps/feed/recommendLiveChatRoom/(PB)")
     suspend fun recommendLiveChatRoom(@Body req: ReqFeedRoom): PbResp<ReqFeedRecommendRoom>
 
-    //    String url = '${System.domain}foryou/recommend?page=$page&version=3&nearby=$nearby&feed_type=${isVideoLive ? 'liveroom' : 'chat'}';
     @POST("foryou/recommend?page=1&version=3&limit=100&nearby=0&feed_type=liveroom")
     @FormUrlEncoded
     suspend fun getRecommend(
@@ -51,4 +50,11 @@ interface ApiService {
         @Field("longitude") longitude: String,
         @Field("latitude") latitude: String,
     ): Resp<LiveRecommendModel>
+
+
+
+    @Headers("Content-Type:text/json; charset=utf-8")
+    @POST("go/room/action/enter/(PB)")
+    suspend fun joinRoom(@Body req: ReqFeedRoom): PbResp<ReqFeedRecommendRoom>
+
 }

@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Build
 import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.EncryptUtils
+import com.salton123.app.BaseApplication
 import com.salton123.log.XLog
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -24,14 +25,19 @@ class SignInterceptor : Interceptor {
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val url = chain.request().url().toString()
-        val builder = chain.request().newBuilder().url(generateSignUrl(url, null, false))
+        var url = chain.request().url().toString()
+        var isPb = false
+        if (url.contains("/(PB)")) {
+            url = url.replace("/(PB)", "")
+            isPb = true
+        }
+        val builder = chain.request().newBuilder().url(generateSignUrl(url, null, isPb))
         return chain.proceed(builder.build())
     }
 
     fun generateSignUrl(url: String, params: Map<String, Any>?, isPb: Boolean): String {
         val args = hashMapOf<String, String>(
-            "package" to "sg.partying.lcb.android",
+            "package" to BaseApplication.sInstance.packageName,
             "_ipv" to if (isVerify) "1" else "0",
             "_platform" to "android",
             "_index" to "${++queryIndex}",
