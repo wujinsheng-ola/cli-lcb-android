@@ -37,7 +37,7 @@ class SignInterceptor : Interceptor {
 
     fun generateSignUrl(url: String, params: Map<String, Any>?, isPb: Boolean): String {
         val args = hashMapOf<String, String>(
-            "package" to BaseApplication.sInstance.packageName,
+            "package" to "sg.partying.lcb.android",
             "_ipv" to if (isVerify) "1" else "0",
             "_platform" to "android",
             "_index" to "${++queryIndex}",

@@ -70,6 +70,7 @@ class PhoneLoginDialog(context: Context) : CenterPopupView(context) {
                 toast("请填写密码")
                 return@singleClick
             }
+//            3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
                     val encryptPassword = EncryptUtils.encryptSHA1ToString(EncodeUtils.urlDecode(password, "UTF-8")).lowercase()
