@@ -21,7 +21,7 @@ class SectionContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     var tvOnlineNum: TextView = itemView.findViewById(R.id.tvOnlineNum)
     fun updateUi(sectionItem: LiveRecommendContent) {
         log("[SectionContentViewHolder] updateUi")
-        ImageLoader.loadFitCenter(ivThumbnail, "https://xs-aws-proxy.starcloud.rocks/" + sectionItem.liveRecommendRoomInfo.icon)
+        ImageLoader.loadFitCenter(ivThumbnail, "https://xs-aws-proxy.starcloud.rocks/" + sectionItem.liveRecommendRoomInfo.icon + "!cover375")
         val info = sectionItem.liveRecommendRoomInfo
         if (info.pkState == 1) {
             ivBadgePk.visibility = View.VISIBLE
