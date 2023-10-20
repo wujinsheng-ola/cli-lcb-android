@@ -46,8 +46,10 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     override fun getLayout(): Int = R.layout.fragment_live_recommend
 
     override fun initVariable(savedInstanceState: Bundle?) {
+        type = arguments?.getString("type") ?: "liveroom"
     }
 
+    var type = "liveroom"
     override fun initViewAndData() {
         cardView = f(R.id.cardView)
         recyclerView = f(R.id.recyclerView)
@@ -109,7 +111,7 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     }
 
     private fun getData(refresh: Boolean = true) {
-        viewModel.getRecommend(page++, 100, "liveroom").observe(this) {
+        viewModel.getRecommend(page++, 100, type).observe(this) {
             if (it is ResultState.Success && it.data.data != null) {
                 val datas = it.data.data.liveRecommendRoomInfos.map { item ->
                     LiveRecommendContent(item)

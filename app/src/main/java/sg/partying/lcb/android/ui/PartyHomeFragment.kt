@@ -32,9 +32,18 @@ class PartyHomeFragment : BaseFragment() {
     }
 
     override fun initViewAndData() {
+
+        fragments.add(Pair(LiveRecommendFragment().apply {
+            arguments = Bundle().apply {
+                putString("type","liveroom")
+            }
+        }, getString(R.string.live)))
+        fragments.add(Pair(LiveRecommendFragment().apply {
+            arguments = Bundle().apply {
+                putString("type","chatroom")
+            }
+        }, getString(R.string.chat)))
         fragments.add(Pair(HelloFragment(), getString(R.string.relate)))
-        fragments.add(Pair(LiveRecommendFragment(), getString(R.string.live)))
-        fragments.add(Pair(HelloFragment(), getString(R.string.chat)))
         fragmentPagerIndicator = f(R.id.fragmentPagerIndicator)
         viewPager = f(R.id.viewPager)
         mIndexFragmentAdapter.setData(fragments)
