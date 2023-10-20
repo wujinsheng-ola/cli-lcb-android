@@ -43,10 +43,26 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-//    api 'io.agora.rtc:agora-special-full:3.5.0.2'
-//    api 'io.agora.rtc:full-sdk:2.8.+'
-//    api 'io.agora.rtc:full-sdk:3.7.2.1'
-    api "io.agora.rtc:full-sdk:4.2.2"
+    def agora_sdk_version = "4.2.2"
+    // case 1: full libs
+//    implementation "io.agora.rtc:full-sdk:${agora_sdk_version}"
+//    implementation "io.agora.rtc:full-screen-sharing:${agora_sdk_version}"
+    // case 2: partial libs
+     api "io.agora.rtc:full-rtc-basic:${agora_sdk_version}"
+//     api "io.agora.rtc:ains:${agora_sdk_version}"
+//     api "io.agora.rtc:full-content-inspect:${agora_sdk_version}"
+//     api "io.agora.rtc:full-virtual-background:${agora_sdk_version}"
+//     api "io.agora.rtc:full-super-resolution:${agora_sdk_version}"
+//     api "io.agora.rtc:spatial-audio:${agora_sdk_version}"
+//     api "io.agora.rtc:audio-beauty:${agora_sdk_version}"
+//     api "io.agora.rtc:clear-vision:${agora_sdk_version}"
+//     api "io.agora.rtc:pvc:${agora_sdk_version}"
+//     api "io.agora.rtc:screen-capture:${agora_sdk_version}"
+//     api "io.agora.rtc:aiaec:${agora_sdk_version}"
+//     api "io.agora.rtc:drm-loader:${agora_sdk_version}"
+//     api "io.agora.rtc:drm:${agora_sdk_version}"
+//     api "io.agora.rtc:full-vqa:${agora_sdk_version}"
+
     api project(":framework")
 //    full-sdk:3.5.1.1
 }
