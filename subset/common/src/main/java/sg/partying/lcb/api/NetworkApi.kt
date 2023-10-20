@@ -1,8 +1,10 @@
 package sg.partying.lcb.api
 
+import android.util.Log
 import com.blankj.utilcode.util.GsonUtils
 import com.google.gson.GsonBuilder
 import com.salton123.app.BaseApplication
+import com.salton123.log.XLog
 import me.hgj.jetpackmvvm.network.BaseNetworkApi
 import me.hgj.jetpackmvvm.network.interceptor.CacheInterceptor
 import okhttp3.Cache
@@ -34,7 +36,9 @@ open class NetworkApi : BaseNetworkApi() {
      * 在这里可以添加拦截器，可以对 OkHttpClient.Builder 做任意操作
      */
     override fun setHttpClientBuilder(builder: OkHttpClient.Builder): OkHttpClient.Builder {
-        val interceptor = HttpLoggingInterceptor()
+        val interceptor = HttpLoggingInterceptor {
+            Log.d("NetworkApi",it)
+        }
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         builder.apply {
             //设置缓存配置 缓存最大10M

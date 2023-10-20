@@ -9,6 +9,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 import sg.partying.lcb.api.resp.BannerItem
 import sg.partying.lcb.api.resp.LoginOption
 import sg.partying.lcb.api.resp.LoginRet
@@ -40,9 +41,15 @@ interface ApiService {
     @POST("go/ps/feed/recommendLiveChatRoom/(PB)")
     suspend fun recommendLiveChatRoom(@Body req: ReqFeedRoom): PbResp<ReqFeedRecommendRoom>
 
-    @POST("foryou/recommend?page=1&version=3&limit=100&nearby=0&feed_type=liveroom")
+//    @POST("foryou/recommend?page=1&version=3&limit=100&nearby=0&feed_type=liveroom")
+    @POST("foryou/recommend")
     @FormUrlEncoded
     suspend fun getRecommend(
+        @Query("page") page: Int,
+        @Query("version") version: Int,
+        @Query("limit") limit: Int,
+        @Query("nearby") nearby: Int,
+        @Query("feed_type") feedType: String,
         @Field("browseRids") browseRids: String,
         @Field("browseUids") browseUids: String,
         @Field("sex") sex: String,

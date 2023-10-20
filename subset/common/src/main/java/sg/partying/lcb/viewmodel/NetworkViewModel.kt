@@ -1,8 +1,10 @@
 package sg.partying.lcb.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.GsonUtils
 import com.salton123.app.BaseApplication
+import com.salton123.log.XLog
 import com.salton123.utils.DeviceUtils
 import com.squareup.wire.ProtoAdapter
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
@@ -20,6 +22,7 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Logger
 import pb.ReqFeedRecommendRoom
 import pb.ReqFeedRoom
 import pb.ResFeedRecommendRoom
@@ -84,9 +87,10 @@ class NetworkViewModel : BaseViewModel() {
         return recommendLiveChatRoom
     }
 
-    fun getRecommend(): MutableLiveData<ResultState<Resp<LiveRecommendModel>>> {
+    fun getRecommend(page: Int, limit: Int, feedType: String): MutableLiveData<ResultState<Resp<LiveRecommendModel>>> {
         requestNoCheck({
-            apiService.getRecommend("0", "0", "1", "0", "", "", "")
+            apiService.getRecommend(page, 3, limit, 0, feedType,
+                "0", "0", "1", "0", "", "", "")
         }, { apiResponse ->
             liveLiveRecommendModel.paresResult(apiResponse)
         }, {
@@ -102,7 +106,9 @@ class NetworkViewModel : BaseViewModel() {
         @Field("user_memory") userMemory: String,
     ) {
         val builder = OkHttpClient.Builder()
-        val interceptor = HttpLoggingInterceptor()
+        val interceptor = HttpLoggingInterceptor {
+            Log.d("NetworkApi", it)
+        }
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         builder.apply {
             //设置缓存配置 缓存最大10M
@@ -142,7 +148,7 @@ class NetworkViewModel : BaseViewModel() {
                         retStream?.let {
                             val adapter = ProtoAdapter.get(RspActionEnterV2::class.java)
                             val data = adapter.decode(retStream)
-                            println("testJoinRoom:"+GsonUtils.toJson(data))
+                            println("testJoinRoom:" + GsonUtils.toJson(data))
                         }
                     }
                 }

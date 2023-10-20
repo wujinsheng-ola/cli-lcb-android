@@ -65,7 +65,7 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
 
         refreshLayout = f(R.id.refreshLayout)
         refreshLayout.setEnableRefresh(true)
-        refreshLayout.setEnableLoadMore(false)
+        refreshLayout.setEnableLoadMore(true)
         refreshLayout.setOnRefreshLoadMoreListener(this)
         ultraViewPager = f(R.id.ultraViewPager)
         ultraPagerAdapter.apply {
@@ -108,14 +108,16 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
         getData()
     }
 
-    private fun getData() {
-//        viewModel.test()
-        viewModel.getRecommend().observe(this) {
+    private fun getData(refresh: Boolean = true) {
+        viewModel.getRecommend(page++, 100, "liveroom").observe(this) {
             if (it is ResultState.Success && it.data.data != null) {
                 val datas = it.data.data.liveRecommendRoomInfos.map { item ->
                     LiveRecommendContent(item)
                 }
-                dataList.clear()
+                if (refresh) {
+                    page = 1
+                    dataList.clear()
+                }
                 dataList.addAll(datas)
                 recommendInfoAdapter.notifyDataSetChanged()
             }
@@ -123,12 +125,13 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        refreshLayout.finishRefresh(1000)
+//        refreshLayout.finishRefresh(1000)
         getData()
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        refreshLayout.finishLoadMore(1000)
+//        refreshLayout.finishLoadMore(0)
+        getData(false)
     }
 
 
