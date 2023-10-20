@@ -38,19 +38,6 @@ class LiveRoomFragment : BaseFragment() {
         }
         viewModel.seatInfoRet.observe(this) { dataSet ->
             setupLiveView(dataSet)
-//            dataSet.forEachIndexed { index, uid ->
-//                if (index == 0) {
-//                    val surfaceView = SurfaceView(activity())
-//                    AgoraFacade.rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid))
-//                    liveHoleFirst.removeAllViews()
-//                    liveHoleFirst.addView(surfaceView)
-//                } else if (index == 1) {
-//                    val surfaceView = SurfaceView(activity())
-//                    AgoraFacade.rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid))
-//                    liveHoleSecond.removeAllViews()
-//                    liveHoleSecond.addView(surfaceView)
-//                }
-//            }
         }
     }
 

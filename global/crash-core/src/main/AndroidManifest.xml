@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.salton123.crash">
+
+    <application>
+        <activity
+            android:name="com.salton123.crash.TextViewerActivity"
+            android:launchMode="singleTask"
+            android:process=":leakcanary"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
+    </application>
+</manifest>

@@ -5,7 +5,13 @@ import com.salton123.rtc.agora.AgoraFacade
 import io.agora.rtc2.Constants.REMOTE_VIDEO_STATE_STARTING
 import io.agora.rtc2.Constants.REMOTE_VIDEO_STATE_STOPPED
 import io.agora.rtc2.IRtcEngineEventHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
+import sg.partying.lcb.api.apiService
+import sg.partying.lcb.viewmodel.NetworkViewModel
 
 /**
  * Time:2023/10/18 11:58
@@ -57,6 +63,13 @@ class LiveRoomViewModel : BaseViewModel() {
 
     fun joinChannel(rtcToken: String, rid: String, uid: Int) {
         AgoraFacade.joinChannel(rtcToken, rid, uid)
+//        GlobalScope.launch {
+//            withContext(Dispatchers.IO) {
+//                val ret = apiService.joinRoom(rid, "", "$uid", "1000")
+//                println(ret)
+//            }
+//        }
+        NetworkViewModel().testJoinRoom(rid, "", "$uid", "1000")
     }
 
     fun onDestroy() {

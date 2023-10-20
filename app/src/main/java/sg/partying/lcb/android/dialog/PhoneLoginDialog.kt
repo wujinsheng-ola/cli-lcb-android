@@ -117,7 +117,9 @@ class PhoneLoginDialog(context: Context) : CenterPopupView(context) {
                         PreferencesUtils.putInt("vip_new", ret.data.vipNew)
                         confirmListener?.invoke()
                     } else {
-                        toast(ret.msg)
+                        withContext(Dispatchers.Main) {
+                            toast(ret.msg)
+                        }
                     }
                 }
             }

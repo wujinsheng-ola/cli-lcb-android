@@ -172,6 +172,8 @@ dependencies {
     api project(":live")
     api project(path: ':protocols')
     api project(':resources')
+    debugImplementation project(path: ':crash-core')
+    releaseImplementation project(path: ':crash-core')
 }
 
 

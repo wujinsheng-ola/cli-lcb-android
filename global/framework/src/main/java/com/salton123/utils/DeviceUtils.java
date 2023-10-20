@@ -1,4 +1,4 @@
-package sg.olaparty.network.util;
+package com.salton123.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -162,13 +162,22 @@ public class DeviceUtils {
      * @param context
      * @return
      */
-    public static String getSystemAvailMemory(Context context) {
+    public static String getSystemAvailMemoryString(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context
                 .ACTIVITY_SERVICE);
         ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
         activityManager.getMemoryInfo(memoryInfo);
         // 内存大小规格化, Byte转换为KB或者MB
         return Formatter.formatFileSize(context, memoryInfo.availMem);
+    }
+
+    public static long getSystemAvailMemory(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context
+            .ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+        activityManager.getMemoryInfo(memoryInfo);
+        // 内存大小规格化, Byte转换为KB或者MB
+        return memoryInfo.availMem;
     }
 
     //版本名
