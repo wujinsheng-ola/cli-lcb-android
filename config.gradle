@@ -62,6 +62,7 @@ ext {
             "retrofit"                     : "com.squareup.retrofit2:retrofit:2.9.0",
             "converter-gson"               : "com.squareup.retrofit2:converter-gson:2.9.0",
             "converter-wire"               : "com.squareup.retrofit2:converter-wire:2.9.0",
+//            "converter-proto"               : "com.squareup.retrofit2:converter-protobuf:2.9.0",
             "ultraviewpager"               : "com.alibaba.android:ultraviewpager:1.0.7.8",
             "PickerView"                   : "com.contrarywind:Android-PickerView:4.1.8",
             "pictureselector"              : "io.github.lucksiege:pictureselector:v2.7.2",

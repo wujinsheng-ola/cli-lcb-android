@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.salton123.base.BaseFragment
 import sg.partying.lcb.viewmodel.NetworkViewModel
 import com.salton123.log.XLog
+import com.salton123.rtc.agora.AgoraFacade
 import com.salton123.soulove.api.RouterManager
 import com.salton123.utils.ScreenUtils
 import com.salton123.widget.itemdecoration.provider.GridItemDecoration
@@ -23,6 +24,7 @@ import me.hgj.jetpackmvvm.state.ResultState
 import pb.ReqFeedRoom
 import sg.partying.lcb.android.Prop
 import sg.partying.lcb.android.R
+import sg.partying.lcb.android.Session
 import sg.partying.lcb.android.model.IMultiType
 import sg.partying.lcb.android.model.LiveRecommendContent
 import sg.partying.lcb.android.ui.adapter.UltraPagerAdapter
@@ -104,7 +106,7 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
             if (type is LiveRecommendContent) {
                 val content = type.liveRecommendRoomInfo;
                 Prop.currentRoomInfo = RoomInfo("agora", content.agoraToken, content.rid, content.password, content.uid)
-//                AgoraFacade.joinChannel(content.agoraToken, content.rid, Session.uid)
+                AgoraFacade.joinChannel(content.agoraToken, content.rid, Session.uid)
                 RouterManager.goLiveRoom(activity())
             }
         }
@@ -112,13 +114,13 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     }
 
     private fun getData(refresh: Boolean = true) {
-//        viewModel.recommendLiveChatRoom(ReqFeedRoom(1, 20)).observe(this) {
-//            if (it is ResultState.Success) {
-//                println(it.data)
-//            } else {
-//                it.toString()
-//            }
-//        }
+        viewModel.recommendLiveChatRoom(ReqFeedRoom(1, 20)).observe(this) {
+            if (it is ResultState.Success) {
+                println(it.data)
+            } else {
+                it.toString()
+            }
+        }
         viewModel.test()
         viewModel.getRecommend(page++, 100, type).observe(this) {
             if (it is ResultState.Success && it.data.data != null) {

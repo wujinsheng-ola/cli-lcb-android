@@ -5,12 +5,7 @@ import com.salton123.rtc.agora.AgoraFacade
 import io.agora.rtc2.Constants.REMOTE_VIDEO_STATE_STARTING
 import io.agora.rtc2.Constants.REMOTE_VIDEO_STATE_STOPPED
 import io.agora.rtc2.IRtcEngineEventHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
-import sg.partying.lcb.api.apiService
 import sg.partying.lcb.viewmodel.NetworkViewModel
 
 /**
@@ -21,6 +16,9 @@ import sg.partying.lcb.viewmodel.NetworkViewModel
 class LiveRoomViewModel : BaseViewModel() {
     val seatInfoRet by lazy { MutableLiveData<HashSet<Int>>() }
     val onlineLiveSet = hashSetOf<Int>()
+    private var currentRid: String = ""
+    private var currentUid: Int = 0
+    var hasJoinChannel = false
     private val rtcEngineEventHandler = object : IRtcEngineEventHandler() {
         override fun onFirstRemoteVideoDecoded(uid: Int, width: Int, height: Int, elapsed: Int) {
             super.onFirstRemoteVideoDecoded(uid, width, height, elapsed)
@@ -30,6 +28,9 @@ class LiveRoomViewModel : BaseViewModel() {
 
         override fun onJoinChannelSuccess(channel: String?, uid: Int, elapsed: Int) {
             super.onJoinChannelSuccess(channel, uid, elapsed)
+            if (channel == currentRid && uid == currentUid) {
+                hasJoinChannel = true
+            }
         }
 
         override fun onError(err: Int) {
@@ -63,12 +64,8 @@ class LiveRoomViewModel : BaseViewModel() {
 
     fun joinChannel(rtcToken: String, rid: String, uid: Int) {
         AgoraFacade.joinChannel(rtcToken, rid, uid)
-//        GlobalScope.launch {
-//            withContext(Dispatchers.IO) {
-//                val ret = apiService.joinRoom(rid, "", "$uid", "1000")
-//                println(ret)
-//            }
-//        }
+        currentRid = rid
+        currentUid = uid
         NetworkViewModel().testJoinRoom(rid, "", "$uid", "1000")
     }
 

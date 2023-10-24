@@ -64,6 +64,7 @@ open class NetworkApi : BaseNetworkApi() {
     override fun setRetrofitBuilder(builder: Retrofit.Builder): Retrofit.Builder {
         return builder.apply {
             addConverterFactory(WireConverterFactory.create())
+//            addConverterFactory(ProtoConverterFactory.create())
             addConverterFactory(GsonConverterFactory.create(GsonUtils.getGson()))
         }
     }

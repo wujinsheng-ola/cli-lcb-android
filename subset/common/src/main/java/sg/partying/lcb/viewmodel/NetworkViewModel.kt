@@ -77,7 +77,6 @@ class NetworkViewModel : BaseViewModel() {
 
     fun recommendLiveChatRoom(req: ReqFeedRoom): MutableLiveData<ResultState<PbResp<ReqFeedRecommendRoom>>> {
         requestNoCheck({
-
             apiService.recommendLiveChatRoom(req)
         }, { apiResponse ->
             recommendLiveChatRoom.paresResult(apiResponse)
@@ -129,8 +128,7 @@ class NetworkViewModel : BaseViewModel() {
         client.newCall(
             Request.Builder()
                 .url(NetworkConfigProvider.API_BASE_URL + "go/room/action/enter/(PB)")
-
-                .post(RequestBody.create(MediaType.parse("text/json; charset=utf-8"), GsonUtils.toJson(params)))
+                .post(RequestBody.create(MediaType.parse("application/octet-stream"), params.toString()))
                 .build())
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
@@ -195,7 +193,7 @@ class NetworkViewModel : BaseViewModel() {
         client.newCall(
             Request.Builder()
                 .url(NetworkConfigProvider.API_BASE_URL + "go/ps/feed/recommendLiveChatRoom/(PB)")
-                .post(RequestBody.create(MediaType.parse("application/octet-stream"), req.toString()))
+                .post(RequestBody.create(MediaType.parse("application/x-protobuf"), req.encode()))
                 .build())
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {

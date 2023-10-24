@@ -37,6 +37,7 @@ interface ApiService {
     @POST("homepage/recommendedRoomList")
     suspend fun recommendedRoomList(): Resp<MutableList<BannerItem>>
 
+    @Headers("Content-Type: application/octet-stream")
     @POST("go/ps/feed/recommendLiveChatRoom/(PB)")
     suspend fun recommendLiveChatRoom(@Body req: ReqFeedRoom): PbResp<ReqFeedRecommendRoom>
 
@@ -60,6 +61,7 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("go/room/action/enter/(PB)")
+    @Headers("Content-Type: application/octet-stream")
     suspend fun joinRoom(
         @Field("rid") rid: String,
         @Field("password") password: String,
