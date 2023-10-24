@@ -2,16 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#80ff4400">
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableLoadMoreWhenContentNotFull="false"
-        app:srlEnableNestedScrolling="true"
-        app:srlFooterTriggerRate="0"
-        app:srlHeaderMaxDragRate="2.0">
+        app:srlEnableLoadMoreWhenContentNotFull="true"
+        app:srlEnableNestedScrolling="true">
 
         <com.salton123.widget.TRefreshHeader
             android:layout_width="match_parent"
@@ -45,10 +44,12 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:nestedScrollingEnabled="true"
-                android:overScrollMode="never"
-                />
+                android:background="#80ffcc00" />
         </LinearLayout>
+
+        <com.salton123.widget.TRefreshFooter
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 
