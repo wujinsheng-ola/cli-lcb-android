@@ -194,8 +194,8 @@ class NetworkViewModel : BaseViewModel() {
         val client = builder.build()
         client.newCall(
             Request.Builder()
-                .url(NetworkConfigProvider.API_BASE_URL + "go/ps/feed/recommendLiveChatRoom")
-                .post(RequestBody.create(MediaType.parse("text/json; charset=utf-8"), GsonUtils.toJson(req)))
+                .url(NetworkConfigProvider.API_BASE_URL + "go/ps/feed/recommendLiveChatRoom/(PB)")
+                .post(RequestBody.create(MediaType.parse("application/octet-stream"), req.toString()))
                 .build())
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
@@ -208,10 +208,10 @@ class NetworkViewModel : BaseViewModel() {
 //                    adapter.decode(response.body()!!.byteStream())
 //                    val data = ReqFeedRecommendRoom::class.java.newInstance().adapter.decode(response.body()!!.byteStream())
                     if (response.isSuccessful) {
-                        val retStream = response.body()?.string()
+                        val retStream = response.body()?.byteStream()
                         retStream?.let {
                             val adapter = ProtoAdapter.get(ResFeedRecommendRoom::class.java)
-                            val data = adapter.decode(retStream.toByteArray())
+                            val data = adapter.decode(retStream)
                             println(GsonUtils.toJson(data))
                         }
                     }

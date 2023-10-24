@@ -20,6 +20,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.tmall.ultraviewpager.UltraViewPager
 import me.hgj.jetpackmvvm.state.ResultState
+import pb.ReqFeedRoom
 import sg.partying.lcb.android.Prop
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.model.IMultiType
@@ -111,6 +112,14 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     }
 
     private fun getData(refresh: Boolean = true) {
+//        viewModel.recommendLiveChatRoom(ReqFeedRoom(1, 20)).observe(this) {
+//            if (it is ResultState.Success) {
+//                println(it.data)
+//            } else {
+//                it.toString()
+//            }
+//        }
+        viewModel.test()
         viewModel.getRecommend(page++, 100, type).observe(this) {
             if (it is ResultState.Success && it.data.data != null) {
                 val datas = it.data.data.liveRecommendRoomInfos.map { item ->
@@ -127,12 +136,12 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-//        refreshLayout.finishRefresh(1000)
+        refreshLayout.finishRefresh(1000)
         getData()
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-//        refreshLayout.finishLoadMore(0)
+        refreshLayout.finishLoadMore(0)
         getData(false)
     }
 

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.salton123.crash.core.R
 import kt.executeByIo
 import java.io.File
 

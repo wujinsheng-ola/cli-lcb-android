@@ -26,6 +26,42 @@ object Session {
             field = value
         }
 
+    var icon: String = ""
+        get() {
+            return PreferencesUtils.getString("icon", "")
+        }
+        set(value) {
+            PreferencesUtils.putString("icon", value)
+            field = value
+        }
+
+
+    var latitude: Int = 0
+        get() {
+            return PreferencesUtils.getInt("latitude", 0)
+        }
+        set(value) {
+            PreferencesUtils.putInt("latitude", value)
+            field = value
+        }
+
+    var longitude: Int = 0
+        get() {
+            return PreferencesUtils.getInt("longitude", 0)
+        }
+        set(value) {
+            PreferencesUtils.putInt("longitude", value)
+            field = value
+        }
+    var name: String = ""
+        get() {
+            return PreferencesUtils.getString("name", "")
+        }
+        set(value) {
+            PreferencesUtils.putString("name", value)
+            field = value
+        }
+
     var isLogined: Boolean = false
         get() {
             return uid > 0 && token.isNotEmpty()

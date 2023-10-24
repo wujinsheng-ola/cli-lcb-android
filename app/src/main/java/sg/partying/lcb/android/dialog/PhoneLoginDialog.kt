@@ -92,11 +92,16 @@ class PhoneLoginDialog(context: Context) : CenterPopupView(context) {
                         PreferencesUtils.putInt("friend", ret.data.friend)
                         PreferencesUtils.putString("game_login_token", ret.data.gameLoginToken)
                         PreferencesUtils.putInt("god_num", ret.data.godNum)
-                        PreferencesUtils.putString("icon", ret.data.icon)
+//                        PreferencesUtils.putString("icon", ret.data.icon)
+                        Session.icon = ret.data.icon
                         PreferencesUtils.putInt("job", ret.data.job)
-                        PreferencesUtils.putInt("latitude", ret.data.latitude)
-                        PreferencesUtils.putInt("longitude", ret.data.longitude)
-                        PreferencesUtils.putString("name", ret.data.name)
+//                        PreferencesUtils.putInt("latitude", ret.data.latitude)
+                        Session.latitude = ret.data.latitude
+//                        PreferencesUtils.putInt("longitude", ret.data.longitude)
+                        Session.longitude = ret.data.longitude
+//                        PreferencesUtils.putString("name", ret.data.name)
+                        Session.name = ret.data.name
+
                         PreferencesUtils.putInt("online_dateline", ret.data.onlineDateline)
                         PreferencesUtils.putInt("pay_money", ret.data.payMoney)
                         PreferencesUtils.putInt("pay_num", ret.data.payNum)
@@ -124,7 +129,6 @@ class PhoneLoginDialog(context: Context) : CenterPopupView(context) {
                     }
                 }
             }
-
         }
     }
 }

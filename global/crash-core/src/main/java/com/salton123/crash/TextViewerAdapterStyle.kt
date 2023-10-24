@@ -3,6 +3,7 @@ package com.salton123.crash
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.salton123.crash.core.R
 import kt.runOnUi
 
 /**
