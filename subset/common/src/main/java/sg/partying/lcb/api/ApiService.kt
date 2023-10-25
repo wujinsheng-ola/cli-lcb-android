@@ -1,8 +1,7 @@
 package sg.partying.lcb.api
 
-import pb.ReqFeedRecommendRoom
-import pb.ReqFeedRoom
-import pb.RspActionEnterV2
+import pb.ActionEnter
+import pb.ApiFeed
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -39,7 +38,7 @@ interface ApiService {
 
     @Headers("Content-Type: application/octet-stream")
     @POST("go/ps/feed/recommendLiveChatRoom/(PB)")
-    suspend fun recommendLiveChatRoom(@Body req: ReqFeedRoom): PbResp<ReqFeedRecommendRoom>
+    suspend fun recommendLiveChatRoom(@Body req: ApiFeed.ReqFeedRoom): PbResp<ApiFeed.ReqFeedRecommendRoom>
 
 //    @POST("foryou/recommend?page=1&version=3&limit=100&nearby=0&feed_type=liveroom")
     @POST("foryou/recommend")
@@ -67,6 +66,6 @@ interface ApiService {
         @Field("password") password: String,
         @Field("inviter_uid") inviterUid: String,
         @Field("user_memory") userMemory: String,
-    ): PbResp<RspActionEnterV2>
+    ): PbResp<ActionEnter.RspActionEnterV2>
 
 }

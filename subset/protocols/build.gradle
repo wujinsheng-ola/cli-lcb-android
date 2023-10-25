@@ -1,46 +1,64 @@
-apply plugin: 'java-library'
-apply plugin: 'java'
-apply plugin: 'kotlin'
-apply plugin: 'com.squareup.wire'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.google.protobuf'
+android {
+    namespace 'com.salton123.protocols'
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
 
-compileJava {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        flavorDimensions versionName
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+        manifestPlaceholders = rootProject.ext.manifestPlaceholders
 
-
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = 1.8
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86"
+        }
     }
-}
-
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "com.squareup.wire:wire-runtime:$wire_version"
-//    implementation "com.squareup.wire:wire-grpc-client:$wire_version"
-}
-
-//
-//java {
-//    withSourcesJar()
-//    withJavadocJar()
-//}
-
-sourceSets {
-    main {
-        java {
-            java.srcDirs += ['./build/generated/sources/wire']
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    sourceSets {
+        main {
+            proto {
+                srcDir 'src/main/protos'
+            }
         }
     }
 }
+dependencies {
+    // 依赖 libs 目录下所有 jar 包
+    api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    api rootProject.ext.supportLibs
+    api rootProject.ext.otherDependenciesLibs
+    api 'com.google.protobuf:protobuf-java:3.24.3'
+}
 
-wire {
-    protoLibrary = true
-//    kotlin {}
-    java{}
-    sourcePath {
-        srcDir 'src/main/protos'
-//        srcDir 'src/psl-be-protocol/partystar'
+
+protobuf {
+    //配置protoc编译器
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.24.3:osx-x86_64'
+    }
+    //这里配置生成目录，编译后会在build的目录下生成对应的java文件
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                remove java
+            }
+            task.builtins {
+                java {
+//                    option "lite"
+                }
+            }
+        }
     }
 }

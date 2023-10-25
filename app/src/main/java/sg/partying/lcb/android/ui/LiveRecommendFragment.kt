@@ -21,7 +21,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.tmall.ultraviewpager.UltraViewPager
 import me.hgj.jetpackmvvm.state.ResultState
-import pb.ReqFeedRoom
+import pb.ApiFeed
 import sg.partying.lcb.android.Prop
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.Session
@@ -114,14 +114,15 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     }
 
     private fun getData(refresh: Boolean = true) {
-        viewModel.recommendLiveChatRoom(ReqFeedRoom(1, 20)).observe(this) {
-            if (it is ResultState.Success) {
-                println(it.data)
-            } else {
-                it.toString()
-            }
-        }
-        viewModel.test()
+//        val req = ApiFeed.ReqFeedRoom.newBuilder().setPage(1).setPageSize(20).build()
+//        viewModel.recommendLiveChatRoom(req).observe(this) {
+//            if (it is ResultState.Success) {
+//                println(it.data)
+//            } else {
+//                it.toString()
+//            }
+//        }
+//        viewModel.test()
         viewModel.getRecommend(page++, 100, type).observe(this) {
             if (it is ResultState.Success && it.data.data != null) {
                 val datas = it.data.data.liveRecommendRoomInfos.map { item ->

@@ -13,7 +13,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.wire.WireConverterFactory
+import retrofit2.converter.protobuf.ProtoConverterFactory
 import sg.partying.lcb.api.interceptor.ErrorInterceptor
 import sg.partying.lcb.api.interceptor.HeadInterceptor
 import sg.partying.lcb.api.interceptor.SignInterceptor
@@ -63,9 +63,9 @@ open class NetworkApi : BaseNetworkApi() {
      */
     override fun setRetrofitBuilder(builder: Retrofit.Builder): Retrofit.Builder {
         return builder.apply {
-            addConverterFactory(WireConverterFactory.create())
-//            addConverterFactory(ProtoConverterFactory.create())
             addConverterFactory(GsonConverterFactory.create(GsonUtils.getGson()))
+//            addConverterFactory(WireConverterFactory.create())
+            addConverterFactory(ProtoConverterFactory.create())
         }
     }
 }
