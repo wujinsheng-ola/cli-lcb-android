@@ -61,7 +61,7 @@ ext {
             "logging-interceptor"          : "com.squareup.okhttp3:logging-interceptor:3.9.1",
             "retrofit"                     : "com.squareup.retrofit2:retrofit:2.9.0",
             "converter-gson"               : "com.squareup.retrofit2:converter-gson:2.9.0",
-            "converter-wire"               : "com.squareup.retrofit2:converter-wire:2.9.0",
+            "converter-wire"               : "com.squareup.retrofit2:converter-wire:+",
 //            "converter-proto"               : "com.squareup.retrofit2:converter-protobuf:2.9.0",
             "ultraviewpager"               : "com.alibaba.android:ultraviewpager:1.0.7.8",
             "PickerView"                   : "com.contrarywind:Android-PickerView:4.1.8",
@@ -73,6 +73,8 @@ ext {
             "google-play-services-auth"    : "com.google.android.gms:play-services-auth:20.2.0",
             "JetpackMvvm"                  : 'com.github.hegaojian:JetpackMvvm:1.2.7',
             "agentweb-core"                : "com.github.Justson.AgentWeb:agentweb-core:v5.0.6-androidx",
+            "wire"                         : "com.squareup.wire:wire-runtime:${ext.wire_version}"
+
 //            "bga-qrcode-zxing"        : "cn.bingoogolapple:bga-qrcode-zxing:1.3.6",
 //            "banner"                  : "com.youth.banner:banner:1.4.10",
 //            "MarqueeView"             : "com.sunfusheng:MarqueeView:1.4.1",
@@ -95,7 +97,7 @@ ext {
 
     compilerDependencies = [
 //            "glide-compiler"  : "com.github.bumptech.glide:compiler:4.11.0",
-            "arouter-compiler": "com.alibaba:arouter-compiler:${arouter_version}",
+"arouter-compiler": "com.alibaba:arouter-compiler:${arouter_version}",
 //            "room-compiler"   : "androidx.room:room-compiler:${room_version}"
     ]
     compilerDependenciesLibs = compilerDependencies.values()

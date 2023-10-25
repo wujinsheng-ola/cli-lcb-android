@@ -1,44 +1,51 @@
-apply plugin: 'java-library'
-apply plugin: 'java'
-apply plugin: 'kotlin'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.squareup.wire'
+android {
+    namespace 'com.salton123.protocols'
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
 
-compileJava {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-
-compileKotlin {
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     kotlinOptions {
-        jvmTarget = 1.8
+        jvmTarget = '1.8'
+    }
+    sourceSets {
+        main {
+            java {
+                java.srcDirs += ['./build/generated/sources/wire']
+            }
+        }
     }
 }
-
 dependencies {
+    // 依赖 libs 目录下所有 jar 包
+    api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    api rootProject.ext.supportLibs
+    api rootProject.ext.otherDependenciesLibs
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.squareup.wire:wire-runtime:$wire_version"
 //    implementation "com.squareup.wire:wire-grpc-client:$wire_version"
 }
 
-//
-//java {
-//    withSourcesJar()
-//    withJavadocJar()
-//}
-
-sourceSets {
-    main {
-        java {
-            java.srcDirs += ['./build/generated/sources/wire']
-        }
-    }
-}
-
 wire {
     protoLibrary = true
-//    kotlin {}
-    java{}
+    kotlin {
+        android = true
+        grpcServerCompatible = false
+        rpcRole = "server"
+        rpcCallStyle = "suspending"
+//        javaInterop = true
+    }
+//    java {}
     sourcePath {
         srcDir 'src/main/protos'
 //        srcDir 'src/psl-be-protocol/partystar'

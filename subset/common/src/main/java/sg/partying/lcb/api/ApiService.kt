@@ -61,12 +61,12 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("go/room/action/enter/(PB)")
-    @Headers("Content-Type: application/octet-stream")
+    @Headers("Content-Type: application/x-www-form-urlencoded; charset=utf-8")
     suspend fun joinRoom(
         @Field("rid") rid: String,
         @Field("password") password: String,
         @Field("inviter_uid") inviterUid: String,
         @Field("user_memory") userMemory: String,
-    ): PbResp<RspActionEnterV2>
+    ): RspActionEnterV2
 
 }

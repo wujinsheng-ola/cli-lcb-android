@@ -121,7 +121,6 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
                 it.toString()
             }
         }
-        viewModel.test()
         viewModel.getRecommend(page++, 100, type).observe(this) {
             if (it is ResultState.Success && it.data.data != null) {
                 val datas = it.data.data.liveRecommendRoomInfos.map { item ->

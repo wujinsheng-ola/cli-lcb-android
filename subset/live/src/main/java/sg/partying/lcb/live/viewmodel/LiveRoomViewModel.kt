@@ -66,7 +66,7 @@ class LiveRoomViewModel : BaseViewModel() {
         AgoraFacade.joinChannel(rtcToken, rid, uid)
         currentRid = rid
         currentUid = uid
-        NetworkViewModel().testJoinRoom(rid, "", "$uid", "1000")
+        NetworkViewModel().testJoinRoom(rid, "", "null", "1000")
     }
 
     fun onDestroy() {

@@ -30,6 +30,7 @@ allprojects {
 //        transitive = false
         resolutionStrategy {
             force rootProject.ext.otherDependenciesLibs
+
 //            exclude "androidx.recyclerview:recyclerview"
         }
 //        all*.exclude group: 'androidx.recyclerview'

@@ -319,6 +319,17 @@ message BigAreaPkSwitch {
     int32 linkmicToPk = 4; //连麦转Pk  0关，1开
 }
 
+// 禁止截图/录屏配置
+message BanScreenShotAndRecord {
+    bool ban_screen_shot = 1;
+    bool ban_record = 2;
+}
+
+message BanScreenShotAndRecordConfig {
+    bool switch = 1; // 开关是否开启
+    BanScreenShotAndRecord config = 2;
+}
+
 message ActionEnterV2Data {
     EntityXsChatroom base_info = 1; // 房间基础信息, 主要来自表 xs_cahtroom
     RtcInfo rtc_info = 2; // rtc 配置信息
@@ -336,6 +347,7 @@ message ActionEnterV2Data {
     repeated string private_parameters = 14; // 客户端透传给声网，固定结构
     uint32 praise_effect_type = 15;
     int32 landmark_quality = 16;  // 人脸识别精度参数
+    BanScreenShotAndRecordConfig ban_screen_shot_and_record_config = 17; // 直播间禁止截图录播配置
 }
 
 // RspActionEnterV2 视频直播房间进房接口响应体
