@@ -1,5 +1,6 @@
 package sg.partying.lcb.android
 
+import com.blankj.utilcode.util.LanguageUtils
 import com.salton123.utils.PreferencesUtils
 
 /**
@@ -76,4 +77,22 @@ object Session {
             field = value
         }
 
+    var language: String = LanguageUtils.getAppContextLanguage().language
+        get() {
+            return PreferencesUtils.getString("language", LanguageUtils.getAppContextLanguage().language)
+        }
+        set(value) {
+            PreferencesUtils.getString("language", value)
+            field = value
+        }
+
+
+    var userChannel: String = "gp_ps"
+        get() {
+            return PreferencesUtils.getString("user_channel", "gp_ps")
+        }
+        set(value) {
+            PreferencesUtils.getString("user_channel", value)
+            field = value
+        }
 }

@@ -12,15 +12,6 @@ data class Resp<T>(
     @SerializedName("msg") var msg: String = "",
     @SerializedName("data") var data: T)
 
-data class PbResp<T>(
-    @SerializedName("common") var common: PbCommon? = null,
-    @SerializedName("data") var data: T?)
-
-data class PbCommon(
-    @SerializedName("err_code") var errorCode: Int = -1,
-    @SerializedName("msg") var msg: String = "",
-)
-
 data class LoginOption(
     @SerializedName("main") var main: List<String> = mutableListOf(),
     @SerializedName("sub") var sub: List<String> = mutableListOf(),

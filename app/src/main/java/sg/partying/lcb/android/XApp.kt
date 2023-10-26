@@ -44,8 +44,7 @@ class XApp : BaseApplication() {
         val configProvider = ConfigProvider()
         AppConfig.init(configProvider)
         AgoraFacade.init(this)
-        val appMode = CommonClassPath.appMode
-        if (appMode == AppModeEnum.Product) {
+        if (CommonClassPath.isDebugAppMode) {
             ARouter.openLog()
             ARouter.openDebug()
         }

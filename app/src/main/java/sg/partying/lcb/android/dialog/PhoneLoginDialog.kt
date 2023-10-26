@@ -17,9 +17,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kt.singleClick
 import kt.toast
+import sg.olaparty.network.RequestCenter.loginService
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.Session
-import sg.partying.lcb.api.apiService
 
 /**
  * Time:2023/9/26 11:54
@@ -76,7 +76,7 @@ class PhoneLoginDialog(context: Context) : CenterPopupView(context) {
                     val encryptPassword = EncryptUtils.encryptSHA1ToString(EncodeUtils.urlDecode(password, "UTF-8")).lowercase()
                     XLog.i(TAG, "encryptPassword:$encryptPassword")
                     val cachedDToken = PreferencesUtils.getString("dtoken", "")
-                    val ret = apiService.passwordLogin(mobile, encryptPassword, area, cachedDToken, "")
+                    val ret = loginService.passwordLogin(mobile, encryptPassword, area, cachedDToken, "")
                     if (ret.success) {
                         XLog.i(TAG, "${ret.data}")
                         PreferencesUtils.putInt("age", ret.data.age)

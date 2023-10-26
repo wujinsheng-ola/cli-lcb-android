@@ -1,7 +1,7 @@
 package sg.partying.lcb.android
 
-import android.os.Environment
 import androidx.lifecycle.MutableLiveData
+import com.salton123.app.BaseApplication
 import sg.partying.lcb.model.RoomInfo
 import java.io.File
 
@@ -12,8 +12,9 @@ import java.io.File
  */
 object Prop {
     var currentRoomInfo: RoomInfo? = null
-    val toParentPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath + File.separator + "eleph" + File.separator
-    var qrCodeTempSavePath = toParentPath + "temp.jpg"
+    val parentPath = BaseApplication.sInstance.cacheDir.absolutePath + File.separator + "ola_party" + File.separator
+    val netCachePath = parentPath + "net_cache"
+    var qrCodeTempSavePath = parentPath + "temp.jpg"
     var changeTabLiveData: MutableLiveData<Int> = MutableLiveData()
 
 

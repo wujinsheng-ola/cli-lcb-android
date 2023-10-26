@@ -9,7 +9,9 @@ project(":live").projectDir = new File("subset/live")
 
 include ':protocols'
 project(":protocols").projectDir = new File("subset/protocols")
-//project(":lcb-network").projectDir = new File("subset/lcb-network")
+
+include ':network'
+project(":network").projectDir = new File("subset/network")
 
 include ':crash-core'
 include ':crash-core-no-op'

@@ -6,7 +6,6 @@ import io.agora.rtc2.Constants.REMOTE_VIDEO_STATE_STARTING
 import io.agora.rtc2.Constants.REMOTE_VIDEO_STATE_STOPPED
 import io.agora.rtc2.IRtcEngineEventHandler
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
-import sg.partying.lcb.viewmodel.NetworkViewModel
 
 /**
  * Time:2023/10/18 11:58
@@ -66,7 +65,6 @@ class LiveRoomViewModel : BaseViewModel() {
         AgoraFacade.joinChannel(rtcToken, rid, uid)
         currentRid = rid
         currentUid = uid
-        NetworkViewModel().testJoinRoom(rid, "", "null", "1000")
     }
 
     fun onDestroy() {

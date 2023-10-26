@@ -7,7 +7,8 @@ import com.salton123.rtc.agora.AgoraConfigProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-import sg.partying.lcb.config.NetworkConfigProvider;
+import sg.olaparty.network.base.NetworkConfigProvider;
+
 
 public class ConfigProvider implements IConfigProvider {
     private List<IConfigProvider> mProviderList = new ArrayList<>();

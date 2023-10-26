@@ -2,6 +2,7 @@ package com.salton123.soulove
 
 import com.salton123.config.AppModeEnum
 import com.salton123.utils.PreferencesUtils
+import com.squareup.wire.get
 
 
 /**
@@ -21,4 +22,6 @@ object CommonClassPath {
             PreferencesUtils.putInt("appMode", value)
             field = value
         }
+
+    val isDebugAppMode: Boolean get() = appMode == AppModeEnum.Debug
 }

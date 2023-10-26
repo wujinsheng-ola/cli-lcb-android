@@ -1,4 +1,4 @@
-package sg.partying.lcb.config
+package sg.olaparty.network.base
 
 import com.salton123.config.IConfigProvider
 

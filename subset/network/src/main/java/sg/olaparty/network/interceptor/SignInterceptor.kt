@@ -1,10 +1,9 @@
-package sg.partying.lcb.api.interceptor
+package sg.olaparty.network.interceptor
 
 import android.net.Uri
 import android.os.Build
 import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.EncryptUtils
-import com.salton123.app.BaseApplication
 import com.salton123.log.XLog
 import okhttp3.Interceptor
 import okhttp3.Response

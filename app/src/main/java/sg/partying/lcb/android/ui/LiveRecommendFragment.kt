@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.salton123.base.BaseFragment
-import sg.partying.lcb.viewmodel.NetworkViewModel
+import sg.olaparty.network.viewmodel.NetworkViewModel
 import com.salton123.log.XLog
 import com.salton123.rtc.agora.AgoraFacade
 import com.salton123.soulove.api.RouterManager

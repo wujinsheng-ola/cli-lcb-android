@@ -11,7 +11,7 @@ import com.salton123.app.BaseApplication
 import com.salton123.base.DelegateActivity
 import com.salton123.base.feature.ImmersionFeature
 import com.salton123.config.AppModeEnum
-import sg.partying.lcb.viewmodel.NetworkViewModel
+import sg.olaparty.network.viewmodel.NetworkViewModel
 import sg.partying.lcb.android.dialog.PhoneLoginDialog
 import com.salton123.soulove.CommonClassPath
 import kt.getString

@@ -8,7 +8,7 @@ import kt.singleClick
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.Session
 import sg.partying.lcb.android.util.ImageLoader
-import sg.partying.lcb.config.NetworkConfigProvider
+import sg.olaparty.network.base.NetworkConfigProvider
 
 class PartyMeFragment : BaseFragment() {
     private lateinit var ivAvatar: ImageView
