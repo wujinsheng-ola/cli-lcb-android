@@ -2,9 +2,7 @@ package sg.partying.lcb.api
 
 import android.util.Log
 import com.blankj.utilcode.util.GsonUtils
-import com.google.gson.GsonBuilder
 import com.salton123.app.BaseApplication
-import com.salton123.log.XLog
 import me.hgj.jetpackmvvm.network.BaseNetworkApi
 import me.hgj.jetpackmvvm.network.interceptor.CacheInterceptor
 import okhttp3.Cache
@@ -14,7 +12,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.wire.WireConverterFactory
-import sg.partying.lcb.api.interceptor.ErrorInterceptor
 import sg.partying.lcb.api.interceptor.HeadInterceptor
 import sg.partying.lcb.api.interceptor.SignInterceptor
 import java.io.File
@@ -45,7 +42,6 @@ open class NetworkApi : BaseNetworkApi() {
             cache(Cache(File(BaseApplication.sInstance.cacheDir, "cxk_cache"), 10 * 1024 * 1024))
             addInterceptor(HeadInterceptor())
             addInterceptor(SignInterceptor())
-            addInterceptor(ErrorInterceptor())
             addInterceptor(CacheInterceptor())
             builder.addInterceptor(interceptor)
             //超时时间 连接、读、写

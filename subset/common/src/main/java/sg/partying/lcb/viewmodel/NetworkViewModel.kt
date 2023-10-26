@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.GsonUtils
 import com.salton123.app.BaseApplication
-import com.salton123.log.XLog
-import com.salton123.utils.DeviceUtils
 import com.squareup.wire.ProtoAdapter
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -18,23 +16,18 @@ import okhttp3.Cache
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.ConnectionPool
-import okhttp3.FormBody
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.logging.HttpLoggingInterceptor.Logger
 import pb.ReqFeedRecommendRoom
 import pb.ReqFeedRoom
-import pb.ResFeedRecommendRoom
 import pb.RspActionEnterV2
-import pb.RspCommon
 import pb.UserMemory
 import retrofit2.http.Field
 import sg.partying.lcb.api.apiService
-import sg.partying.lcb.api.interceptor.ErrorInterceptor
 import sg.partying.lcb.api.interceptor.HeadInterceptor
 import sg.partying.lcb.api.interceptor.SignInterceptor
 import sg.partying.lcb.api.resp.BannerItem
@@ -46,9 +39,6 @@ import sg.partying.lcb.config.NetworkConfigProvider
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
-import java.lang.Exception
-import java.lang.IndexOutOfBoundsException
-import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
 /**
@@ -114,14 +104,14 @@ class NetworkViewModel : BaseViewModel() {
         @Field("user_memory") userMemory: String,
     ) {
         val memory = UserMemory(39, 7250.2188f, 2092.0898f, false)
-        GlobalScope.launch {
-            try {
-                val resp = apiService.joinRoom(rid, password, inviterUid, GsonUtils.toJson(memory))
-                println(resp)
-            } catch (e: Exception) {
-                e.toString()
-            }
-        }
+//        GlobalScope.launch {
+//            try {
+//                val resp = apiService.joinRoom(rid, password, inviterUid, GsonUtils.toJson(memory))
+//                println(resp)
+//            } catch (e: Exception) {
+//                e.toString()
+//            }
+//        }
         val builder = OkHttpClient.Builder()
         val interceptor = HttpLoggingInterceptor {
             Log.d("NetworkApi", it)
@@ -132,26 +122,16 @@ class NetworkViewModel : BaseViewModel() {
             cache(Cache(File(BaseApplication.sInstance.cacheDir, "cxk_cache"), 10 * 1024 * 1024))
             addInterceptor(HeadInterceptor())
             addInterceptor(SignInterceptor())
-            addInterceptor(ErrorInterceptor())
             addInterceptor(CacheInterceptor())
             builder.addInterceptor(interceptor)
             connectionPool(ConnectionPool(32, 5, TimeUnit.MINUTES))
         }
-//        val bodyBuilder = FormBody
-//            .Builder(Charset.forName("UTF-8"))
-//        bodyBuilder.add("rid", rid)
-//        bodyBuilder.add("password", password)
-//        bodyBuilder.add("inviter_uid", "null")
-//        bodyBuilder.add("user_memory", "{\"appMem\":39,\"totalMem\":7250.21875,\"freeMem\":2092.08984375,\"lowMemory\":false}")
+
         val stringBuilder = StringBuilder()
-
-
         stringBuilder.append("rid=$rid&password=$password&inviter_uid=&user_memory=$")
         stringBuilder.append("&inviter_uid=null")
         stringBuilder.append("&user_memory=${GsonUtils.toJson(memory)}")
         val requestBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"), stringBuilder.toString())
-
-
         val client = builder.build()
         client.newCall(
             Request.Builder()
@@ -167,8 +147,6 @@ class NetworkViewModel : BaseViewModel() {
                     println(response)
                     if (response.isSuccessful) {
                         val retStream = response.body()?.byteStream()
-                        val inputStreamReader = InputStreamReader(retStream, "UTF-8")
-
                         retStream?.let {
                             val adapter = ProtoAdapter.get(RspActionEnterV2::class.java)
                             val data = adapter.decode(retStream)
