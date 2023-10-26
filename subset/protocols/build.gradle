@@ -39,14 +39,14 @@ dependencies {
     api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     api rootProject.ext.supportLibs
     api rootProject.ext.otherDependenciesLibs
-    api 'com.google.protobuf:protobuf-java:3.24.3'
+//    api 'com.google.protobuf:protobuf-java:3.19.4'
 }
 
 
 protobuf {
     //配置protoc编译器
     protoc {
-        artifact = 'com.google.protobuf:protoc:3.24.3:osx-x86_64'
+        artifact = 'com.google.protobuf:protoc:3.19.4:osx-x86_64'
     }
     //这里配置生成目录，编译后会在build的目录下生成对应的java文件
     generateProtoTasks {

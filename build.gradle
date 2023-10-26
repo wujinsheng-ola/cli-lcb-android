@@ -15,7 +15,6 @@ buildscript {
         // Add the Crashlytics Gradle plugin
         classpath 'com.github.centerzx:UploadApkPlugin:v1.0.7'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
-        classpath 'com.squareup.wire:wire-gradle-plugin:4.9.0'
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.9.4' //as3.0以下的要0.8.0版本
     }
 }

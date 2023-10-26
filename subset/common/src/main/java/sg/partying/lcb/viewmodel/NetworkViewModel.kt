@@ -2,8 +2,12 @@ package sg.partying.lcb.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.blankj.utilcode.util.FileIOUtils
+import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.salton123.app.BaseApplication
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.requestNoCheck
 import me.hgj.jetpackmvvm.network.interceptor.CacheInterceptor
@@ -14,13 +18,17 @@ import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.ConnectionPool
 import okhttp3.FormBody
+import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import pb.ActionEnter
 import pb.ApiFeed
+import pb.App
 import retrofit2.http.Field
+import sg.partying.lcb.android.Prop
 import sg.partying.lcb.api.apiService
 import sg.partying.lcb.api.interceptor.ErrorInterceptor
 import sg.partying.lcb.api.interceptor.HeadInterceptor
@@ -31,9 +39,11 @@ import sg.partying.lcb.api.resp.LoginOption
 import sg.partying.lcb.api.resp.PbResp
 import sg.partying.lcb.api.resp.Resp
 import sg.partying.lcb.config.NetworkConfigProvider
+import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
+import java.lang.Exception
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
@@ -100,6 +110,17 @@ class NetworkViewModel : BaseViewModel() {
         @Field("inviter_uid") inviterUid: String,
         @Field("user_memory") userMemory: String,
     ) {
+        val memory = App.UserMemory.newBuilder().setAppMem(39).setFreeMem(2092.0898f).setTotalMem(7250.2188f).setLowMemory(false)
+
+//        (39, 7250.2188f, 2092.0898f, false)
+        GlobalScope.launch {
+            try {
+                val resp = apiService.joinRoom(rid, password, inviterUid, GsonUtils.toJson(memory))
+                println(resp)
+            } catch (e: Exception) {
+                e.toString()
+            }
+        }
         val builder = OkHttpClient.Builder()
         val interceptor = HttpLoggingInterceptor {
             Log.d("NetworkApi", it)
@@ -110,30 +131,21 @@ class NetworkViewModel : BaseViewModel() {
             cache(Cache(File(BaseApplication.sInstance.cacheDir, "cxk_cache"), 10 * 1024 * 1024))
             addInterceptor(HeadInterceptor())
             addInterceptor(SignInterceptor())
-            addInterceptor(ErrorInterceptor())
+//            addInterceptor(ErrorInterceptor())
             addInterceptor(CacheInterceptor())
             builder.addInterceptor(interceptor)
             connectionPool(ConnectionPool(32, 5, TimeUnit.MINUTES))
         }
-//        val params = HashMap<String, String>()
-//        params["rid"] = rid
-//        params["password"] = password
-//        params["inviter_uid"] = "null"
-//        params["user_memory"] = "{\"appMem\":39,\"totalMem\":7250.21875,\"freeMem\":2092.08984375,\"lowMemory\":false}"
-//        content-type	application/x-www-form-urlencoded; charset=utf-8
-
-        val bodyBuilder =  FormBody
-            .Builder(Charset.forName("UTF-8"))
-        bodyBuilder.add("rid", rid)
-        bodyBuilder.add("password", password)
-        bodyBuilder.add("inviter_uid", "null")
-        bodyBuilder.add("user_memory", "{\"appMem\":39,\"totalMem\":7250.21875,\"freeMem\":2092.08984375,\"lowMemory\":false}")
+        val stringBuilder = StringBuilder()
+        stringBuilder.append("rid=$rid&password=$password&inviter_uid=&user_memory=$")
+        stringBuilder.append("&inviter_uid=null")
+        stringBuilder.append("&user_memory=${GsonUtils.toJson(memory)}")
+        val requestBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"), stringBuilder.toString())
         val client = builder.build()
         client.newCall(
             Request.Builder()
                 .url(NetworkConfigProvider.API_BASE_URL + "go/room/action/enter/(PB)")
-//                .post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), params.toString()))
-                .post(bodyBuilder.build())
+                .post(requestBody)
                 .build())
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
@@ -141,21 +153,13 @@ class NetworkViewModel : BaseViewModel() {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    println(response)
-//                    val adapter = ProtoAdapter.get(ReqFeedRecommendRoom::class.java)
-//                    adapter.decode(response.body()!!.byteStream())
-//                    val data = ReqFeedRecommendRoom::class.java.newInstance().adapter.decode(response.body()!!.byteStream())
-//                    {\"appMem\":39,\"totalMem\":7250.21875,\"freeMem\":2092.08984375,\"lowMemory\":false}{\"appMem\":39,\"totalMem\":7250.21875,\"freeMem\":2092.08984375,\"lowMemory\":false}
                     if (response.isSuccessful) {
-                        val retStream = response.body()?.byteStream()
-
-                        retStream?.let {
-                            //                    println(response)
-                            val data = ActionEnter.RspActionEnterV2.parseFrom(retStream)
-                            println(GsonUtils.toJson(data))
-//                            val adapter = ProtoAdapter.get(ActionEnter.RspActionEnterV2::class.java)
-//                            val data = adapter.decode(retStream)
-//                            println("testJoinRoom:" + GsonUtils.toJson(data))
+                        try {
+                            val inputStream = response.body()?.byteStream()
+                            val data = ActionEnter.RspActionEnterV2.parseFrom(inputStream!!)
+                            println("testJoinRoom:" + GsonUtils.toJson(data))
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                         }
                     }
                 }
