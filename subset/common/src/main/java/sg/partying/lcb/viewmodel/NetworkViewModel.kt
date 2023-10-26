@@ -2,6 +2,7 @@ package sg.partying.lcb.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.blankj.utilcode.util.GsonUtils
 import com.salton123.app.BaseApplication
 import com.squareup.wire.ProtoAdapter
@@ -17,9 +18,11 @@ import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.ConnectionPool
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import pb.ReqFeedRecommendRoom
@@ -104,7 +107,7 @@ class NetworkViewModel : BaseViewModel() {
         @Field("user_memory") userMemory: String,
     ) {
         val memory = UserMemory(39, 7250.2188f, 2092.0898f, false)
-//        GlobalScope.launch {
+//        viewModelScope.launch {
 //            try {
 //                val resp = apiService.joinRoom(rid, password, inviterUid, GsonUtils.toJson(memory))
 //                println(resp)
@@ -131,7 +134,8 @@ class NetworkViewModel : BaseViewModel() {
         stringBuilder.append("rid=$rid&password=$password&inviter_uid=&user_memory=$")
         stringBuilder.append("&inviter_uid=null")
         stringBuilder.append("&user_memory=${GsonUtils.toJson(memory)}")
-        val requestBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"), stringBuilder.toString())
+//        val requestBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"), stringBuilder.toString())
+        val requestBody = stringBuilder.toString().toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaType())
         val client = builder.build()
         client.newCall(
             Request.Builder()
@@ -146,7 +150,7 @@ class NetworkViewModel : BaseViewModel() {
                 override fun onResponse(call: Call, response: Response) {
                     println(response)
                     if (response.isSuccessful) {
-                        val retStream = response.body()?.byteStream()
+                        val retStream = response.body?.byteStream()
                         retStream?.let {
                             val adapter = ProtoAdapter.get(RspActionEnterV2::class.java)
                             val data = adapter.decode(retStream)

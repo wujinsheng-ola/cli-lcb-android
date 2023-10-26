@@ -14,7 +14,7 @@ import java.io.IOException
 class HeadInterceptor : Interceptor {
 
     @Throws(IOException::class)
-    override fun intercept(chain: Interceptor.Chain): Response? {
+    override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         builder.addHeader("User-Agent", "Agent / Xs android V2.20.0.1 / Js V1.0.0.0 / Login V0")
         builder.addHeader("User-Tag", DeviceUtils.getUniqueDeviceId())

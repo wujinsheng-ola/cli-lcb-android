@@ -3,6 +3,7 @@ ext {
     room_version = '2.4.2'
     wire_version = '4.9.0'
     arouter_version = "1.5.2"
+    retrofit_version = "2.9.0"
     android = [
             compileSdkVersion: 33,
             buildToolsVersion: "33.0.0",
@@ -57,12 +58,11 @@ ext {
             "subsampling-scale-image-view" : "com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0",
             "MagicIndicator"               : "com.github.hackware1993:MagicIndicator:1.6.0",
             "roundedimageview"             : "com.makeramen:roundedimageview:2.3.0",
-            "okhttp"                       : "com.squareup.okhttp3:okhttp:3.14.7",
-            "logging-interceptor"          : "com.squareup.okhttp3:logging-interceptor:3.9.1",
-            "retrofit"                     : "com.squareup.retrofit2:retrofit:2.9.0",
-            "converter-gson"               : "com.squareup.retrofit2:converter-gson:2.9.0",
-            "converter-wire"               : "com.squareup.retrofit2:converter-wire:+",
-//            "converter-proto"               : "com.squareup.retrofit2:converter-protobuf:2.9.0",
+            "okhttp"                       : "com.squareup.okhttp3:okhttp:4.11.0",
+            "logging-interceptor"          : "com.squareup.okhttp3:logging-interceptor:4.11.0",
+            "retrofit"                     : "com.squareup.retrofit2:retrofit:${ext.retrofit_version}",
+            "converter-gson"               : "com.squareup.retrofit2:converter-gson:${ext.retrofit_version}",
+            "converter-wire"               : "com.squareup.retrofit2:converter-wire:${ext.retrofit_version}",
             "ultraviewpager"               : "com.alibaba.android:ultraviewpager:1.0.7.8",
             "PickerView"                   : "com.contrarywind:Android-PickerView:4.1.8",
             "pictureselector"              : "io.github.lucksiege:pictureselector:v2.7.2",

@@ -25,7 +25,7 @@ class SignInterceptor : Interceptor {
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        var url = chain.request().url().toString()
+        var url = chain.request().url.toString()
         var isPb = false
         if (url.contains("/(PB)")) {
             url = url.replace("/(PB)", "")
