@@ -4,6 +4,8 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 apply from: "../kapt.gradle"
 apply plugin: 'center.uploadpgy.plugin'
+apply plugin: 'io.gitlab.arturbosch.detekt'
+
 def gitHash = "git rev-parse HEAD".execute().text.trim()
 def buildTime = new Date().format("yyyy-MM-dd-HH-mm-ss")
 android {

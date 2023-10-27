@@ -29,4 +29,5 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(path: ':framework')
     api project(path: ':common')
+    api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:+'
 }
