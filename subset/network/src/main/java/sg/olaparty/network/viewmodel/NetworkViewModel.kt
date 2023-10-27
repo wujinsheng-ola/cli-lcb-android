@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.salton123.coroutine.Ret
 import com.salton123.log.XLog
-import pb.ReqFeedRecommendRoom
 import pb.ReqFeedRoom
 import pb.ResFeedRecommendRoom
 import sg.olaparty.network.RequestCenter.homePageService

@@ -2,7 +2,6 @@ package sg.olaparty.network.base
 
 import android.util.Log
 import com.blankj.utilcode.util.GsonUtils
-import com.salton123.log.XLog
 import com.salton123.soulove.CommonClassPath
 import okhttp3.Cache
 import okhttp3.ConnectionPool
@@ -11,6 +10,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.wire.WireConverterFactory
+import sg.olaparty.network.adapter.WireCallAdapterFactory
 import sg.olaparty.network.interceptor.HeaderInterceptor
 import sg.olaparty.network.interceptor.SignInterceptor
 import sg.partying.lcb.android.Prop
@@ -49,6 +49,7 @@ object ServiceCreator {
         return Retrofit.Builder().apply {
             baseUrl(baseUrl)
             client(okHttpClient)
+//            addCallAdapterFactory(WireCallAdapterFactory())
             addConverterFactory(GsonConverterFactory.create(GsonUtils.getGson()))
             addConverterFactory(WireConverterFactory.create())
         }.build().create(serviceClass)

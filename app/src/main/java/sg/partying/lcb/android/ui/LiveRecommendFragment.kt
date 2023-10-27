@@ -22,6 +22,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.tmall.ultraviewpager.UltraViewPager
 import pb.ReqFeedRoom
+import sg.olaparty.network.viewmodel.TempCode
 import sg.partying.lcb.android.Prop
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.Session
@@ -114,26 +115,26 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
     }
 
     private fun getData(refresh: Boolean = true) {
-        viewModel.recommendLiveChatRoom(ReqFeedRoom(1, 20)).observe(this) {
-            if (it is Ret.Success) {
-                println(it.value)
-            } else {
-                it.toString()
-            }
-        }
-//        viewModel.getRecommend(page++, 100, type).observe(this) {
-//            if (it is Ret.Success && it.value.data != null) {
-//                val datas = it.value.data.liveRecommendRoomInfos.map { item ->
-//                    LiveRecommendContent(item)
-//                }
-//                if (refresh) {
-//                    page = 1
-//                    dataList.clear()
-//                }
-//                dataList.addAll(datas)
-//                recommendInfoAdapter.notifyDataSetChanged()
+//        viewModel.recommendLiveChatRoom(ReqFeedRoom(1, 20)).observe(this) {
+//            if (it is Ret.Success) {
+//                println(it.value)
+//            } else {
+//                it.toString()
 //            }
 //        }
+        viewModel.getRecommend(page++, 100, type).observe(this) {
+            if (it is Ret.Success && it.value.data != null) {
+                val datas = it.value.data.liveRecommendRoomInfos.map { item ->
+                    LiveRecommendContent(item)
+                }
+                if (refresh) {
+                    page = 1
+                    dataList.clear()
+                }
+                dataList.addAll(datas)
+                recommendInfoAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
