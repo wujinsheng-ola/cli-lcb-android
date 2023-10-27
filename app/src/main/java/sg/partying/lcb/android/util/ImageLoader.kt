@@ -59,20 +59,11 @@ object ImageLoader {
         if (BuildConfig.DEBUG) {
 //            XLog.d(ImageLoader.class, "[loadFitCenter]" + ",url:" + url);
         }
-        //        Glide treats LayoutParams.WRAP_CONTENT as a request for an image the size of this device's screen dimensions.
-//        If you want to load the original image and are ok with the corresponding memory cost and OOMs (depending on the input size),
-//        use override(Target.SIZE_ORIGINAL).
-//            Otherwise, use LayoutParams.MATCH_PARENT, set layout_width and layout_height to fixed dimension, or use .override() with fixed dimensions.
-        val width = imageView.width
-        val height = imageView.height
-        val builder: RequestBuilder<*> = Glide.with(imageView)
+        Glide.with(imageView)
             .load(url)
-            .fitCenter()
+            .centerCrop()
             .thumbnail(0.3f)
-        if (width > 0 && height > 0) {
-            builder.override(width, height)
-        }
-        builder.into(imageView)
+            .into(imageView)
     }
 
     interface OnLoadBitmapCallback {

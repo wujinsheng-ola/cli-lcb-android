@@ -121,19 +121,19 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
                 it.toString()
             }
         }
-        viewModel.getRecommend(page++, 100, type).observe(this) {
-            if (it is Ret.Success && it.value.data != null) {
-                val datas = it.value.data.liveRecommendRoomInfos.map { item ->
-                    LiveRecommendContent(item)
-                }
-                if (refresh) {
-                    page = 1
-                    dataList.clear()
-                }
-                dataList.addAll(datas)
-                recommendInfoAdapter.notifyDataSetChanged()
-            }
-        }
+//        viewModel.getRecommend(page++, 100, type).observe(this) {
+//            if (it is Ret.Success && it.value.data != null) {
+//                val datas = it.value.data.liveRecommendRoomInfos.map { item ->
+//                    LiveRecommendContent(item)
+//                }
+//                if (refresh) {
+//                    page = 1
+//                    dataList.clear()
+//                }
+//                dataList.addAll(datas)
+//                recommendInfoAdapter.notifyDataSetChanged()
+//            }
+//        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {

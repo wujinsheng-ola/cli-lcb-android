@@ -1,5 +1,6 @@
 package sg.olaparty.network.base
 
+import android.util.Log
 import com.blankj.utilcode.util.GsonUtils
 import com.salton123.log.XLog
 import com.salton123.soulove.CommonClassPath
@@ -35,7 +36,7 @@ object ServiceCreator {
             addInterceptor(SignInterceptor())
             if (CommonClassPath.isDebugAppMode) {
                 addInterceptor(HttpLoggingInterceptor {
-                    XLog.d(TAG, it)
+                    Log.e(TAG, it)
                 }.apply {
                     level = HttpLoggingInterceptor.Level.BODY
                 })

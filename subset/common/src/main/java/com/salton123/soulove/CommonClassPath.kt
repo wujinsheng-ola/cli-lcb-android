@@ -23,5 +23,6 @@ object CommonClassPath {
             field = value
         }
 
-    val isDebugAppMode: Boolean get() = appMode == AppModeEnum.Debug
+//    val isDebugAppMode: Boolean get() = appMode == AppModeEnum.Debug
+    val isDebugAppMode: Boolean get() = true
 }

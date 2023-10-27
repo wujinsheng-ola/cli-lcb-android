@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#80ff4400">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="#80ff4400">
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -27,11 +28,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:background="#80ffcc00"
                 android:orientation="vertical"
                 android:padding="10dp"
                 android:visibility="gone"
-                app:cardBackgroundColor="#80ffcc00"
+                app:cardBackgroundColor="#00000000"
                 app:cardCornerRadius="15dp">
 
                 <com.tmall.ultraviewpager.UltraViewPager
@@ -44,7 +44,7 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#80ffcc00" />
+                tools:background="#80ffcc00" />
         </LinearLayout>
 
         <com.salton123.widget.TRefreshFooter

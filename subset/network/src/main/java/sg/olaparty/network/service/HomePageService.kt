@@ -2,6 +2,7 @@ package sg.olaparty.network.service
 
 import pb.ReqFeedRecommendRoom
 import pb.ReqFeedRoom
+import pb.ResFeedRecommendRoom
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -20,9 +21,9 @@ interface HomePageService {
     @POST("homepage/recommendedRoomList")
     suspend fun recommendedRoomList(): Resp<MutableList<BannerItem>>
 
-    @Headers("Content-Type: application/octet-stream")
+    @Headers("Content-Type: application/protobuf")
     @POST("go/ps/feed/recommendLiveChatRoom/(PB)")
-    suspend fun recommendLiveChatRoom(@Body req: ReqFeedRoom): ReqFeedRecommendRoom
+    suspend fun recommendLiveChatRoom(@Body req: ReqFeedRoom): ResFeedRecommendRoom
 
     @POST("foryou/recommend")
     @FormUrlEncoded

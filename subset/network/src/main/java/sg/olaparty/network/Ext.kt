@@ -7,17 +7,12 @@ import com.salton123.coroutine.Ret
 import com.salton123.log.XLog
 import kotlinx.coroutines.*
 
-/**
- * 作者　: hegaojian
- * 时间　: 2020/4/8
- * 描述　:BaseViewModel请求协程封装
- */
 
 /**
  *  不过滤请求结果
  * @param block 请求体 必须要用suspend关键字修饰
  * @param success 成功回调
- * @param error 失败回调 可不给
+ * @param failed 失败回调 可不给
  *
  */
 fun <T> ViewModel.request(
@@ -35,8 +30,6 @@ fun <T> ViewModel.request(
             //成功回调
             success(it)
         }.onFailure {
-            //打印错误栈信息
-            it.printStackTrace()
             //失败回调
             failed(-1, it.stackTraceToString(), null)
         }

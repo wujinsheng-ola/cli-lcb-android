@@ -6,6 +6,7 @@ import com.salton123.coroutine.Ret
 import com.salton123.log.XLog
 import pb.ReqFeedRecommendRoom
 import pb.ReqFeedRoom
+import pb.ResFeedRecommendRoom
 import sg.olaparty.network.RequestCenter.homePageService
 import sg.olaparty.network.RequestCenter.loginService
 import sg.olaparty.network.request
@@ -27,7 +28,7 @@ class NetworkViewModel : ViewModel() {
 
     private val loginOptionsRet by lazy { MutableLiveData<Ret<Resp<LoginOption>>>() }
     private val videoLiveFeedRet by lazy { MutableLiveData<Ret<Resp<MutableList<BannerItem>>>>() }
-    private val recommendLiveChatRoom by lazy { MutableLiveData<Ret<ReqFeedRecommendRoom>>() }
+    private val recommendLiveChatRoom by lazy { MutableLiveData<Ret<ResFeedRecommendRoom>>() }
     private val liveLiveRecommendModel by lazy { MutableLiveData<Ret<Resp<LiveRecommendModel>>>() }
 
     fun loginOptions(): MutableLiveData<Ret<Resp<LoginOption>>> {
@@ -56,7 +57,7 @@ class NetworkViewModel : ViewModel() {
         return videoLiveFeedRet
     }
 
-    fun recommendLiveChatRoom(req: ReqFeedRoom): MutableLiveData<Ret<ReqFeedRecommendRoom>> {
+    fun recommendLiveChatRoom(req: ReqFeedRoom): MutableLiveData<Ret<ResFeedRecommendRoom>> {
         request({
             homePageService.recommendLiveChatRoom(req)
         }, { apiResponse ->
