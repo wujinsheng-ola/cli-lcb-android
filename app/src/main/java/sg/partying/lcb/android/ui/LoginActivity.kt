@@ -11,13 +11,13 @@ import com.salton123.app.BaseApplication
 import com.salton123.base.DelegateActivity
 import com.salton123.base.feature.ImmersionFeature
 import com.salton123.config.AppModeEnum
-import sg.olaparty.network.viewmodel.NetworkViewModel
-import sg.partying.lcb.android.dialog.PhoneLoginDialog
+import com.salton123.coroutine.Ret
 import com.salton123.soulove.CommonClassPath
 import kt.getString
 import kt.singleClick
-import me.hgj.jetpackmvvm.state.ResultState
+import sg.olaparty.network.viewmodel.NetworkViewModel
 import sg.partying.lcb.android.R
+import sg.partying.lcb.android.dialog.PhoneLoginDialog
 
 class LoginActivity : DelegateActivity() {
     private val viewModel by viewModels<NetworkViewModel>()
@@ -57,8 +57,8 @@ class LoginActivity : DelegateActivity() {
             openActivity(DevelopModeActivity::class.java, Bundle())
         }
         viewModel.loginOptions().observe(this) {
-            if (it is ResultState.Success) {
-                it.data.data.sub.forEach { sub ->
+            if (it is Ret.Success) {
+                it.value.data.sub.forEach { sub ->
                     when (sub) {
                         "google" -> {
                             val loginTypeView = LayoutInflater.from(BaseApplication.sInstance).inflate(R.layout.login_type_view_holder, null)

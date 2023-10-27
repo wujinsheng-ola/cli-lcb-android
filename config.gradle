@@ -71,7 +71,7 @@ ext {
             "firebase-analytics"           : "com.google.firebase:firebase-analytics:21.2.0",
             "firebase-crashlytics"         : "com.google.firebase:firebase-crashlytics:18.3.2",
             "google-play-services-auth"    : "com.google.android.gms:play-services-auth:20.2.0",
-            "JetpackMvvm"                  : 'com.github.hegaojian:JetpackMvvm:1.2.7',
+//            "JetpackMvvm"                  : 'com.github.hegaojian:JetpackMvvm:1.2.7',
             "agentweb-core"                : "com.github.Justson.AgentWeb:agentweb-core:v5.0.6-androidx",
             "wire"                         : "com.squareup.wire:wire-runtime:${ext.wire_version}"
 

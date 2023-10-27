@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.salton123.base.BaseFragment
+import com.salton123.coroutine.Ret
 import sg.olaparty.network.viewmodel.NetworkViewModel
 import com.salton123.log.XLog
 import com.salton123.rtc.agora.AgoraFacade
@@ -20,7 +21,6 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.tmall.ultraviewpager.UltraViewPager
-import me.hgj.jetpackmvvm.state.ResultState
 import pb.ReqFeedRoom
 import sg.partying.lcb.android.Prop
 import sg.partying.lcb.android.R
@@ -78,10 +78,10 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
                 XLog.i(this, "colorBanner:$colorBanner")
             }
         }
-        viewModel.videoLiveFeed().observe(this) {
-            if (it is ResultState.Success && it.data.data != null) {
+        viewModel.recommendBanner(type).observe(this) {
+            if (it is Ret.Success && it.value.data != null) {
                 cardView.visibility = View.VISIBLE
-                ultraPagerAdapter.update(it.data.data!!)
+                ultraPagerAdapter.update(it.value.data!!)
                 ultraViewPager.apply {
                     setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
                     setMultiScreen(1f)
@@ -115,15 +115,15 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
 
     private fun getData(refresh: Boolean = true) {
         viewModel.recommendLiveChatRoom(ReqFeedRoom(1, 20)).observe(this) {
-            if (it is ResultState.Success) {
-                println(it.data)
+            if (it is Ret.Success) {
+                println(it.value)
             } else {
                 it.toString()
             }
         }
         viewModel.getRecommend(page++, 100, type).observe(this) {
-            if (it is ResultState.Success && it.data.data != null) {
-                val datas = it.data.data.liveRecommendRoomInfos.map { item ->
+            if (it is Ret.Success && it.value.data != null) {
+                val datas = it.value.data.liveRecommendRoomInfos.map { item ->
                     LiveRecommendContent(item)
                 }
                 if (refresh) {

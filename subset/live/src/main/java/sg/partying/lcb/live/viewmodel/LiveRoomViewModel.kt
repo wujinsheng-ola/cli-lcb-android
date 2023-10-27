@@ -1,18 +1,18 @@
 package sg.partying.lcb.live.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.salton123.rtc.agora.AgoraFacade
 import io.agora.rtc2.Constants.REMOTE_VIDEO_STATE_STARTING
 import io.agora.rtc2.Constants.REMOTE_VIDEO_STATE_STOPPED
 import io.agora.rtc2.IRtcEngineEventHandler
-import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 
 /**
  * Time:2023/10/18 11:58
  * Author:
  * Description:
  */
-class LiveRoomViewModel : BaseViewModel() {
+class LiveRoomViewModel : ViewModel() {
     val seatInfoRet by lazy { MutableLiveData<HashSet<Int>>() }
     val onlineLiveSet = hashSetOf<Int>()
     private var currentRid: String = ""

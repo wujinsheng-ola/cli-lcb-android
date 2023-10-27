@@ -1,11 +1,18 @@
 package com.salton123.coroutine
 
+import androidx.lifecycle.MutableLiveData
+
 /**
  * @Time:2021/3/26 17:49
  * @Author:wujinsheng
  * @Description:
  */
 sealed class Ret<T> {
+
+    companion object {
+        fun <T> onSuccess(data: T): Ret<T> = Success(data)
+        fun <T> onFailure(errorCode: Int = -1, errorMessage: String = "", throwable: Throwable? = null): Ret<T> = Failure(errorCode, errorMessage, throwable)
+    }
 
     /**
      * 调用执行成功，返回结果[value]

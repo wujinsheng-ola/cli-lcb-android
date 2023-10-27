@@ -48,8 +48,8 @@ object ServiceCreator {
         return Retrofit.Builder().apply {
             baseUrl(baseUrl)
             client(okHttpClient)
-            addConverterFactory(WireConverterFactory.create())
             addConverterFactory(GsonConverterFactory.create(GsonUtils.getGson()))
+            addConverterFactory(WireConverterFactory.create())
         }.build().create(serviceClass)
     }
 
