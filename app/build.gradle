@@ -5,6 +5,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply from: "../kapt.gradle"
 apply plugin: 'center.uploadpgy.plugin'
 apply plugin: 'io.gitlab.arturbosch.detekt'
+apply from: "../kotlin-static-analysis.gradle"
 
 def gitHash = "git rev-parse HEAD".execute().text.trim()
 def buildTime = new Date().format("yyyy-MM-dd-HH-mm-ss")
@@ -56,8 +57,8 @@ android {
     }
     android {
         compileOptions {
-            sourceCompatibility 1.8
-            targetCompatibility 1.8
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
         }
     }
 
@@ -175,6 +176,7 @@ dependencies {
     api project(path: ':protocols')
     api project(':resources')
     api project(':network')
+    api project(':translate')
     debugImplementation project(path: ':crash-core')
     releaseImplementation project(path: ':crash-core')
 }

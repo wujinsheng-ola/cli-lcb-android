@@ -71,8 +71,6 @@ class LiveRoomFragment : BaseFragment() {
                 surfaceView2.layoutParams = surfaceView2Params
                 AgoraFacade.rtcEngine.setupRemoteVideo(VideoCanvas(surfaceView2, VideoCanvas.RENDER_MODE_HIDDEN, dataSet.last()))
                 linearLayout.addView(surfaceView2)
-                linearLayout.id = R.id.salton_id_title_layout
-                linearLayout.tag = "hello"
                 liveViewHolder.removeAllViews()
                 liveViewHolder.addView(linearLayout)
             }

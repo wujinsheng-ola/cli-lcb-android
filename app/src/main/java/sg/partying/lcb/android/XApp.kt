@@ -8,7 +8,6 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.Utils
 import com.bumptech.glide.Glide
 import com.salton123.app.BaseApplication
-import com.salton123.config.AppModeEnum
 import com.salton123.crash.XCrashManager
 import com.salton123.rtc.agora.AgoraFacade
 import com.salton123.soulove.CommonClassPath
@@ -40,7 +39,8 @@ class XApp : BaseApplication() {
 
                 override fun onBackground(activity: Activity?) {
                 }
-            })
+            }
+        )
         val configProvider = ConfigProvider()
         AppConfig.init(configProvider)
         AgoraFacade.init(this)
@@ -51,7 +51,6 @@ class XApp : BaseApplication() {
         ARouter.init(this)
         XCrashManager.init(this)
     }
-
 
     override fun onLowMemory() {
         super.onLowMemory()

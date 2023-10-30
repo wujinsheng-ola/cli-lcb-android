@@ -18,8 +18,8 @@ object CommonToolKits {
     private var IS_DEBUG = BuildConfig.DEBUG
 
     fun bugly(): CommonToolKits {
-        Beta.largeIconId = R.drawable.ic_launcher
-        Beta.smallIconId = R.drawable.ic_launcher
+//        Beta.largeIconId = R.drawable.ic_launcher
+//        Beta.smallIconId = R.drawable.ic_launcher
         Beta.canNotifyUserRestart = IS_DEBUG
         Bugly.setIsDevelopmentDevice(BaseApplication.sInstance, IS_DEBUG)
         Bugly.init(BaseApplication.sInstance, CommonClassPath.BUGLY_APP_ID, IS_DEBUG)

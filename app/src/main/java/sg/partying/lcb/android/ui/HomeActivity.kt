@@ -29,14 +29,14 @@ class HomeActivity : DelegateActivity() {
 
     override fun initVariable(savedInstanceState: Bundle?) {
         addFeature(ImmersionFeature(this))
-        addFeature(PermissionFeature {
-            if (it) {
-
-            } else {
-                toast("please grant all permissions")
-                AppUtils.launchAppDetailsSettings()
+        addFeature(
+            PermissionFeature {
+                if (!it) {
+                    toast("please grant all permissions")
+                    AppUtils.launchAppDetailsSettings()
+                }
             }
-        })
+        )
     }
 
     @SuppressLint("CheckResult")
@@ -68,7 +68,6 @@ class HomeActivity : DelegateActivity() {
 //            showSurpriseBox()
 //        }, 10000)
     }
-
 
 //    private fun showSurpriseBox() {
 //        var lastShowTime = PreferencesUtils.getLong("last_show_surprise_box_time", 0)
@@ -102,5 +101,4 @@ class HomeActivity : DelegateActivity() {
 //        small.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 //        startActivity(small)
     }
-
 }

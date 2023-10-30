@@ -3,7 +3,7 @@ package sg.partying.lcb.android.ui.adapter
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kt.log
+import sg.partying.lcb.android.R
 import sg.partying.lcb.android.model.IMultiType
 import sg.partying.lcb.android.model.LiveRecommendContent
 import sg.partying.lcb.android.model.TYPE_LIVE_RECOMMEND_CONTENT
@@ -27,7 +27,7 @@ class RecommendInfoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_LIVE_RECOMMEND_CONTENT -> {
-                SectionContentViewHolder(View.inflate(parent.context, viewType, null))
+                SectionContentViewHolder(View.inflate(parent.context, R.layout.adapter_item_live_recomemd, null))
             }
 
             else -> {
@@ -49,7 +49,6 @@ class RecommendInfoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
         holder.itemView.setOnClickListener {
             onItemClick?.invoke(mutableType, position) ?: run {
-
             }
         }
     }

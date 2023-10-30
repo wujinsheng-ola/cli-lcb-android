@@ -11,32 +11,33 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.salton123.base.BaseFragment
 import com.salton123.coroutine.Ret
-import sg.olaparty.network.viewmodel.NetworkViewModel
 import com.salton123.log.XLog
 import com.salton123.rtc.agora.AgoraFacade
 import com.salton123.soulove.api.RouterManager
 import com.salton123.utils.ScreenUtils
-import com.salton123.widget.itemdecoration.provider.GridItemDecoration
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.tmall.ultraviewpager.UltraViewPager
-import pb.ReqFeedRoom
-import sg.olaparty.network.viewmodel.TempCode
+import com.zyyoona7.itemdecoration.provider.GridItemDecoration
+import sg.olaparty.network.viewmodel.NetworkViewModel
 import sg.partying.lcb.android.Prop
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.Session
 import sg.partying.lcb.android.model.IMultiType
 import sg.partying.lcb.android.model.LiveRecommendContent
-import sg.partying.lcb.android.ui.adapter.UltraPagerAdapter
 import sg.partying.lcb.android.ui.adapter.RecommendInfoAdapter
+import sg.partying.lcb.android.ui.adapter.UltraPagerAdapter
 import sg.partying.lcb.model.RoomInfo
 
 const val VIDEO_LIST_SPAN_COUNT = 2
 const val VIDEO_LIST_DIVIDER_SIZE = 10f
 
 class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
-    private val TAG = "LiveRecommendFragment"
+//    companion object {
+//        private const val TAG = "LiveRecommendFragment"
+//    }
+
     private val viewModel by viewModels<NetworkViewModel>()
     private lateinit var refreshLayout: SmartRefreshLayout
     private lateinit var cardView: CardView
@@ -105,7 +106,7 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
         }
         recommendInfoAdapter.onItemClick = { type, position ->
             if (type is LiveRecommendContent) {
-                val content = type.liveRecommendRoomInfo;
+                val content = type.liveRecommendRoomInfo
                 Prop.currentRoomInfo = RoomInfo("agora", content.agoraToken, content.rid, content.password, content.uid)
                 AgoraFacade.joinChannel(content.agoraToken, content.rid, Session.uid)
                 RouterManager.goLiveRoom(activity())
@@ -146,6 +147,4 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
         refreshLayout.finishLoadMore(0)
         getData(false)
     }
-
-
 }

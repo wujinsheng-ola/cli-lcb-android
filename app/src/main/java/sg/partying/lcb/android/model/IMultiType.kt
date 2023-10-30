@@ -1,6 +1,5 @@
 package sg.partying.lcb.android.model
 
-import sg.partying.lcb.android.R
 import sg.partying.lcb.api.resp.LiveRecommendRoomInfo
 
 /**
@@ -8,12 +7,11 @@ import sg.partying.lcb.api.resp.LiveRecommendRoomInfo
  * Author:
  * Description:
  */
-const val TYPE_LIVE_RECOMMEND_CONTENT = R.layout.adapter_item_live_recomemd
+const val TYPE_LIVE_RECOMMEND_CONTENT = 0x100
 
 interface IMultiType {
     val type: Int
 }
-
 
 data class LiveRecommendContent(val liveRecommendRoomInfo: LiveRecommendRoomInfo) : IMultiType {
     override val type: Int get() = TYPE_LIVE_RECOMMEND_CONTENT

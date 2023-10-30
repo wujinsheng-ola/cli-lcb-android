@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
@@ -32,8 +31,11 @@ object ImageLoader {
 
     fun loadCenterInsideRoundedCorners(imageView: ImageView?, url: String, sizeMultiplier: Float, roundingRadius: Int) {
         if (BuildConfig.DEBUG) {
-            d(ImageLoader::class.java, "[loadCenterInside] sizeMultiplier:" + sizeMultiplier
-                + ",roundingRadius:" + roundingRadius + ",url:" + url)
+            d(
+                ImageLoader::class.java,
+                "[loadCenterInside] sizeMultiplier:" + sizeMultiplier +
+                    ",roundingRadius:" + roundingRadius + ",url:" + url
+            )
         }
         Glide.with(imageView!!)
             .load(url)

@@ -61,7 +61,9 @@ class LoginActivity : DelegateActivity() {
                 it.value.data.sub.forEach { sub ->
                     when (sub) {
                         "google" -> {
-                            val loginTypeView = LayoutInflater.from(BaseApplication.sInstance).inflate(R.layout.login_type_view_holder, null)
+                            val loginTypeView = LayoutInflater.from(
+                                BaseApplication.sInstance
+                            ).inflate(R.layout.login_type_view_holder, null)
                             val ivLoginIcon = loginTypeView.findViewById<ImageView>(R.id.ivLoginIcon)
                             val tvLoginName = loginTypeView.findViewById<TextView>(R.id.tvLoginName)
                             ivLoginIcon.setImageResource(R.drawable.ic_google_login)
@@ -72,7 +74,9 @@ class LoginActivity : DelegateActivity() {
                         }
 
                         "phone" -> {
-                            val loginTypeView = LayoutInflater.from(BaseApplication.sInstance).inflate(R.layout.login_type_view_holder, null)
+                            val loginTypeView = LayoutInflater.from(
+                                BaseApplication.sInstance
+                            ).inflate(R.layout.login_type_view_holder, null)
                             val ivLoginIcon = loginTypeView.findViewById<ImageView>(R.id.ivLoginIcon)
                             val tvLoginName = loginTypeView.findViewById<TextView>(R.id.tvLoginName)
                             ivLoginIcon.setImageResource(R.drawable.ic_phone_login)
@@ -91,19 +95,23 @@ class LoginActivity : DelegateActivity() {
         tvUserService.paint.flags = Paint.UNDERLINE_TEXT_FLAG
         tvUserService.paint.isAntiAlias = true
         tvUserService.setOnClickListener {
-            openActivity(WebActivity::class.java, Bundle().apply {
-                putString("url", "https://www.salton123.com/terms-of-service")
-            })
+            openActivity(
+                WebActivity::class.java,
+                Bundle().apply {
+                    putString("url", "https://www.salton123.com/terms-of-service")
+                }
+            )
         }
 
         tvPrivatePolicy.paint.flags = Paint.UNDERLINE_TEXT_FLAG
         tvPrivatePolicy.paint.isAntiAlias = true
         tvPrivatePolicy.setOnClickListener {
-            openActivity(WebActivity::class.java, Bundle().apply {
-                putString("url", "https://www.salton123.com/terms-of-service")
-            })
+            openActivity(
+                WebActivity::class.java,
+                Bundle().apply {
+                    putString("url", "https://www.salton123.com/terms-of-service")
+                }
+            )
         }
-
     }
-
 }

@@ -1,0 +1,49 @@
+apply plugin: 'io.gitlab.arturbosch.detekt'
+//apply plugin: 'org.jlleitschuh.gradle.ktlint'
+
+//android.sourceSets.configureEach {
+//    java.srcDirs("src/$name/kotlin")
+//}
+
+//ktlint {
+//    debug = true
+//    verbose = true
+//    android = true
+//    outputToConsole = true
+//    ignoreFailures = false
+//    enableExperimentalRules = true
+//    kotlinScriptAdditionalPaths {
+//        include fileTree("scripts/")
+//    }
+//    filter {
+//        exclude { element -> element.file.path.contains("generated/") }
+//        include("**/kotlin/**")
+//    }
+//}
+
+detekt {
+    buildUponDefaultConfig = true
+    config = files("../detekt-config.yml")
+//    baseline = file("detekt-baseline.xml") // https://detekt.dev/docs/introduction/baseline/
+//    ignoredBuildTypes = ["debug"]
+    ignoredFlavors = []
+    ignoredVariants = []
+
+    parallel = true
+    autoCorrect = true
+    reports {
+        html.required.set(true)
+    }
+}
+
+dependencies {
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1"
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-cli:1.23.1"
+}
+
+tasks.whenTaskAdded {
+    if (name == "compileDebugKotlin") {
+        dependsOn(tasks.detekt)
+        mustRunAfter(tasks.detekt)
+    }
+}

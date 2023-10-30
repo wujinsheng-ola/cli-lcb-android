@@ -2,10 +2,10 @@ package sg.partying.lcb.android.ui
 
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import sg.partying.lcb.base.BaseActivity
 import com.salton123.config.AppModeEnum
 import com.salton123.soulove.CommonClassPath
 import sg.partying.lcb.android.R
+import sg.partying.lcb.base.BaseActivity
 
 class DevelopModeActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.avtivity_develop_mode
@@ -52,6 +52,5 @@ class DevelopModeActivity : BaseActivity() {
                 radioGroup.check(R.id.rbDebug)
             }
         }
-
     }
 }

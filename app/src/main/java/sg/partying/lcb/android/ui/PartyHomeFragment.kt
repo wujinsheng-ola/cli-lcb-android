@@ -2,14 +2,13 @@ package sg.partying.lcb.android.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.salton123.base.BaseFragment
 import kt.getColor
+import kt.getDimension
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.ViewPagerHelper
-import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
@@ -32,17 +31,26 @@ class PartyHomeFragment : BaseFragment() {
     }
 
     override fun initViewAndData() {
-
-        fragments.add(Pair(LiveRecommendFragment().apply {
-            arguments = Bundle().apply {
-                putString("type","liveroom")
-            }
-        }, getString(R.string.live)))
-        fragments.add(Pair(LiveRecommendFragment().apply {
-            arguments = Bundle().apply {
-                putString("type","chatroom")
-            }
-        }, getString(R.string.chat)))
+        fragments.add(
+            Pair(
+                LiveRecommendFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("type", "liveroom")
+                    }
+                },
+                getString(R.string.live)
+            )
+        )
+        fragments.add(
+            Pair(
+                LiveRecommendFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("type", "chatroom")
+                    }
+                },
+                getString(R.string.chat)
+            )
+        )
         fragments.add(Pair(HelloFragment(), getString(R.string.relate)))
         fragmentPagerIndicator = f(R.id.fragmentPagerIndicator)
         viewPager = f(R.id.viewPager)
@@ -60,7 +68,7 @@ class PartyHomeFragment : BaseFragment() {
                     simplePagerTitleView.text = fragments[index].second
                     simplePagerTitleView.normalColor = R.color.white60.getColor()
                     simplePagerTitleView.selectedColor = R.color.white.getColor()
-                    simplePagerTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+                    simplePagerTitleView.textSize = R.dimen.home_tab_title_size.getDimension()
                     simplePagerTitleView.setOnClickListener { viewPager.currentItem = index }
                     return simplePagerTitleView
                 }
@@ -69,9 +77,9 @@ class PartyHomeFragment : BaseFragment() {
 
             override fun getIndicator(context: Context): IPagerIndicator {
                 val indicator = LinePagerIndicator(context)
-                indicator.lineWidth = UIUtil.dip2px(context, 15.0).toFloat()
+                indicator.lineWidth = R.dimen.home_tab_line_width.getDimension()
                 indicator.mode = LinePagerIndicator.MODE_EXACTLY
-                indicator.yOffset = UIUtil.dip2px(context, 8.0).toFloat()
+                indicator.yOffset = R.dimen.home_tab_line_offset.getDimension()
                 indicator.setColors(R.color.white.getColor(), R.color.white.getColor())
                 return indicator
             }

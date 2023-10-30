@@ -5,10 +5,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.salton123.base.BaseFragment
 import kt.singleClick
+import sg.olaparty.network.base.NetworkConfigProvider
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.Session
 import sg.partying.lcb.android.util.ImageLoader
-import sg.olaparty.network.base.NetworkConfigProvider
 
 class PartyMeFragment : BaseFragment() {
     private lateinit var ivAvatar: ImageView

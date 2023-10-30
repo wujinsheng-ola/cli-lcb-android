@@ -18,7 +18,7 @@ class SplashActivity : Activity() {
         if (Session.isLogined) {
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
-        }else{
+        } else {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }

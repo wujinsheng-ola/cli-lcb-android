@@ -27,9 +27,9 @@ import sg.partying.lcb.android.Session
  * Description:
  */
 class PhoneLoginDialog(context: Context) : CenterPopupView(context) {
-    private val TAG = "PhoneLoginDialog"
 
     companion object {
+        private const val TAG = "PhoneLoginDialog"
         fun show(activity: Context, confirmListener: (() -> Unit)?) {
             val contentView = PhoneLoginDialog(activity)
             contentView.confirmListener = confirmListener
@@ -73,7 +73,9 @@ class PhoneLoginDialog(context: Context) : CenterPopupView(context) {
 //            3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
-                    val encryptPassword = EncryptUtils.encryptSHA1ToString(EncodeUtils.urlDecode(password, "UTF-8")).lowercase()
+                    val encryptPassword = EncryptUtils.encryptSHA1ToString(
+                        EncodeUtils.urlDecode(password, "UTF-8")
+                    ).lowercase()
                     XLog.i(TAG, "encryptPassword:$encryptPassword")
                     val cachedDToken = PreferencesUtils.getString("dtoken", "")
                     val ret = loginService.passwordLogin(mobile, encryptPassword, area, cachedDToken, "")

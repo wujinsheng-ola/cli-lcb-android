@@ -7,9 +7,8 @@ import android.widget.LinearLayout
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.salton123.app.BaseApplication
-import sg.partying.lcb.base.BaseActivity
 import sg.partying.lcb.android.R
-
+import sg.partying.lcb.base.BaseActivity
 
 /**
  * User: newSalton@outlook.com
@@ -45,8 +44,8 @@ class WebActivity : BaseActivity() {
 //            .setMainFrameErrorView(R.layout.agentweb_error_page, -1)
             .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
 //            .setWebLayout(WebLayout(this))
-            .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK) //打开其他应用时，弹窗咨询用户是否前往其他应用
-            .interceptUnkownUrl() //拦截找不到相关页面的Scheme
+            .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK) // 打开其他应用时，弹窗咨询用户是否前往其他应用
+            .interceptUnkownUrl() // 拦截找不到相关页面的Scheme
             .createAgentWeb()
             .ready()
             .go(url)
@@ -55,9 +54,10 @@ class WebActivity : BaseActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         return if (mAgentWeb.handleKeyEvent(keyCode, event)) {
             true
-        } else super.onKeyDown(keyCode, event)
+        } else {
+            super.onKeyDown(keyCode, event)
+        }
     }
-
 
     override fun onPause() {
         mAgentWeb.webLifeCycle.onPause()
@@ -68,7 +68,6 @@ class WebActivity : BaseActivity() {
         mAgentWeb.webLifeCycle.onResume()
         super.onResume()
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
