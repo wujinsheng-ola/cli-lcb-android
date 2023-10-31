@@ -9,6 +9,7 @@ object AppConfig {
     fun init(configProvider: IConfigProvider?) {
         sConfigProvider = configProvider
         if (sConfigProvider == null) {
+//            require()
             throw IllegalArgumentException("you must setProvider first")
         }
         val appMode = CommonClassPath.appMode

@@ -2,18 +2,27 @@ package sg.olaparty.network.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.salton123.coroutine.Ret
 import com.salton123.log.XLog
+import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import pb.ReqFeedRoom
 import pb.ResFeedRecommendRoom
 import sg.olaparty.network.RequestCenter.homePageService
 import sg.olaparty.network.RequestCenter.loginService
 import sg.olaparty.network.request
 import sg.olaparty.network.success
+import sg.partying.lcb.api.resp.Banner
 import sg.partying.lcb.api.resp.BannerItem
+import sg.partying.lcb.api.resp.ChatBannerType
+import sg.partying.lcb.api.resp.IBannerType
+import sg.partying.lcb.api.resp.LiveBannerType
 import sg.partying.lcb.api.resp.LiveRecommendModel
 import sg.partying.lcb.api.resp.LoginOption
 import sg.partying.lcb.api.resp.Resp
+import kotlin.coroutines.resume
 
 /**
  * Time:2023/9/26 16:49
@@ -26,8 +35,8 @@ class NetworkViewModel : ViewModel() {
     }
 
     private val loginOptionsRet by lazy { MutableLiveData<Ret<Resp<LoginOption>>>() }
-    private val videoLiveFeedRet by lazy { MutableLiveData<Ret<Resp<MutableList<BannerItem>>>>() }
-    private val recommendLiveChatRoom by lazy { MutableLiveData<Ret<ResFeedRecommendRoom>>() }
+    private val videoLiveFeedRet by lazy { MutableLiveData<Ret<MutableList<IBannerType>?>>() }
+    private val recommendHomeRet by lazy { MutableLiveData<Ret<ResFeedRecommendRoom>>() }
     private val liveLiveRecommendModel by lazy { MutableLiveData<Ret<Resp<LiveRecommendModel>>>() }
 
     fun loginOptions(): MutableLiveData<Ret<Resp<LoginOption>>> {
@@ -41,30 +50,34 @@ class NetworkViewModel : ViewModel() {
         return loginOptionsRet
     }
 
-    fun recommendBanner(type: String): MutableLiveData<Ret<Resp<MutableList<BannerItem>>>> {
+    fun recommendBanner(type: String): MutableLiveData<Ret<MutableList<IBannerType>?>> {
         request({
             if (type == "liveroom") {
-                homePageService.videoLiveFeed()
+                homePageService.recommendLiveBanner().data?.map { LiveBannerType(it) }
             } else {
-                homePageService.recommendedRoomList()
+                homePageService.recommendChatBanner().data?.bannerList?.map { ChatBannerType(it) }
             }
         }, { apiResponse ->
-            videoLiveFeedRet.success(apiResponse)
+            videoLiveFeedRet.success(apiResponse?.toMutableList())
         }, { errorCode: Int, errorMessage: String, throwable: Throwable? ->
             XLog.e(TAG, "[onFailed] error:$errorCode,$errorMessage,$throwable")
         })
         return videoLiveFeedRet
     }
 
-    fun recommendLiveChatRoom(req: ReqFeedRoom): MutableLiveData<Ret<ResFeedRecommendRoom>> {
+    fun recommendHome(type: String, req: ReqFeedRoom): MutableLiveData<Ret<ResFeedRecommendRoom>> {
         request({
-            homePageService.recommendLiveChatRoom(req)
+            if (type == "liveroom") {
+                homePageService.recommendLiveChatRoom(req)
+            } else {
+                homePageService.recommendVoiceChatRoom(req)
+            }
         }, { apiResponse ->
-            recommendLiveChatRoom.success(apiResponse)
+            recommendHomeRet.success(apiResponse)
         }, { errorCode: Int, errorMessage: String, throwable: Throwable? ->
             XLog.e(TAG, "[onFailed] error:$errorCode,$errorMessage,$throwable")
         })
-        return recommendLiveChatRoom
+        return recommendHomeRet
     }
 
     fun getRecommend(page: Int, limit: Int, feedType: String): MutableLiveData<Ret<Resp<LiveRecommendModel>>> {

@@ -20,6 +20,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.tmall.ultraviewpager.UltraViewPager
 import com.zyyoona7.itemdecoration.provider.GridItemDecoration
+import pb.ReqFeedRoom
 import sg.olaparty.network.viewmodel.NetworkViewModel
 import sg.partying.lcb.android.Prop
 import sg.partying.lcb.android.R
@@ -28,6 +29,7 @@ import sg.partying.lcb.android.model.IMultiType
 import sg.partying.lcb.android.model.LiveRecommendContent
 import sg.partying.lcb.android.ui.adapter.RecommendInfoAdapter
 import sg.partying.lcb.android.ui.adapter.UltraPagerAdapter
+import sg.partying.lcb.api.resp.RecommendItem
 import sg.partying.lcb.model.RoomInfo
 
 const val VIDEO_LIST_SPAN_COUNT = 2
@@ -80,10 +82,23 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
                 XLog.i(this, "colorBanner:$colorBanner")
             }
         }
+
+        recommendInfoAdapter.onItemClick = { type, position ->
+            if (type is LiveRecommendContent) {
+                val content = type.recommendItem
+                Prop.currentRoomInfo = RoomInfo("agora", content.agoraToken, "${content.rid}", content.uid)
+                AgoraFacade.joinChannel(content.agoraToken, "${content.rid}", Session.uid)
+                RouterManager.goLiveRoom(activity())
+            }
+        }
+        getData()
+    }
+
+    private fun getData(refresh: Boolean = true) {
         viewModel.recommendBanner(type).observe(this) {
-            if (it is Ret.Success && it.value.data != null) {
+            if (it is Ret.Success) {
                 cardView.visibility = View.VISIBLE
-                ultraPagerAdapter.update(it.value.data!!)
+                it.value?.let { it1 -> ultraPagerAdapter.update(it1) }
                 ultraViewPager.apply {
                     setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
                     setMultiScreen(1f)
@@ -104,38 +119,57 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
                 cardView.visibility = View.GONE
             }
         }
-        recommendInfoAdapter.onItemClick = { type, position ->
-            if (type is LiveRecommendContent) {
-                val content = type.liveRecommendRoomInfo
-                Prop.currentRoomInfo = RoomInfo("agora", content.agoraToken, content.rid, content.password, content.uid)
-                AgoraFacade.joinChannel(content.agoraToken, content.rid, Session.uid)
-                RouterManager.goLiveRoom(activity())
+
+        viewModel.recommendHome(type, ReqFeedRoom(page++, 20)).observe(this) {
+            if (it is Ret.Success) {
+                println(it.value)
+                val datas = it.value.data_?.data_?.map { item ->
+                    LiveRecommendContent(
+                        RecommendItem(
+                            agoraToken = item.agora_token,
+                            areaCode = item.area_code,
+                            boomRocketLv = item.boom_rocket_lv,
+                            hotNum = item.hot_num,
+                            icon = item.icon,
+                            linkMicStatus = item.link_mic_status,
+                            name = item.name,
+                            onlineNum = item.online_num,
+                            pkState = item.pk_state,
+                            property = item.property_,
+                            rid = item.rid,
+                            roomSex = item.rid,
+                            showRedPacket = item.show_red_packet,
+                            tags = item.tags,
+                            teamPkState = item.team_pk_state,
+                            uid = item.uid
+                        )
+                    )
+                }
+                datas?.let { it1 ->
+                    if (refresh) {
+                        page = 1
+                        dataList.clear()
+                    }
+                    dataList.addAll(it1)
+                    recommendInfoAdapter.notifyDataSetChanged()
+                }
+            } else {
+                it.toString()
             }
         }
-        getData()
-    }
-
-    private fun getData(refresh: Boolean = true) {
-//        viewModel.recommendLiveChatRoom(ReqFeedRoom(1, 20)).observe(this) {
-//            if (it is Ret.Success) {
-//                println(it.value)
-//            } else {
-//                it.toString()
+//        viewModel.getRecommend(page++, 100, type).observe(this) {
+//            if (it is Ret.Success && it.value.data != null) {
+//                val datas = it.value.data.liveRecommendRoomInfos.map { item ->
+//                    LiveRecommendContent(item)
+//                }
+//                if (refresh) {
+//                    page = 1
+//                    dataList.clear()
+//                }
+//                dataList.addAll(datas)
+//                recommendInfoAdapter.notifyDataSetChanged()
 //            }
 //        }
-        viewModel.getRecommend(page++, 100, type).observe(this) {
-            if (it is Ret.Success && it.value.data != null) {
-                val datas = it.value.data.liveRecommendRoomInfos.map { item ->
-                    LiveRecommendContent(item)
-                }
-                if (refresh) {
-                    page = 1
-                    dataList.clear()
-                }
-                dataList.addAll(datas)
-                recommendInfoAdapter.notifyDataSetChanged()
-            }
-        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {

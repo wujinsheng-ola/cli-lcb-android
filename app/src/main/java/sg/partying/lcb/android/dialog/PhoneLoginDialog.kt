@@ -61,7 +61,6 @@ class PhoneLoginDialog(context: Context) : CenterPopupView(context) {
         tvLogin.singleClick {
             val mobile = etMobile.text.toString().trim()
             val password = etPassword.text.toString().trim()
-            val area = Session.area
             if (mobile.isNullOrEmpty()) {
                 toast("请填写手机号")
                 return@singleClick
@@ -70,64 +69,72 @@ class PhoneLoginDialog(context: Context) : CenterPopupView(context) {
                 toast("请填写密码")
                 return@singleClick
             }
-//            3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
-            GlobalScope.launch {
-                withContext(Dispatchers.IO) {
-                    val encryptPassword = EncryptUtils.encryptSHA1ToString(
-                        EncodeUtils.urlDecode(password, "UTF-8")
-                    ).lowercase()
-                    XLog.i(TAG, "encryptPassword:$encryptPassword")
-                    val cachedDToken = PreferencesUtils.getString("dtoken", "")
-                    val ret = loginService.passwordLogin(mobile, encryptPassword, area, cachedDToken, "")
-                    if (ret.success) {
-                        XLog.i(TAG, "${ret.data}")
-                        PreferencesUtils.putInt("age", ret.data.age)
-                        PreferencesUtils.putInt("app", ret.data.app)
-                        PreferencesUtils.putString("birthday", ret.data.birthday)
-                        PreferencesUtils.putInt("cash_min", ret.data.cashMin)
-                        PreferencesUtils.putInt("cash_rate", ret.data.cashRate)
-                        PreferencesUtils.putString("city", ret.data.city)
-                        PreferencesUtils.putInt("city_code", ret.data.cityCode)
-                        PreferencesUtils.putInt("dateline", ret.data.dateline)
-                        PreferencesUtils.putInt("deleted", ret.data.deleted)
-                        PreferencesUtils.putString("dtoken", ret.data.dtoken)
-                        PreferencesUtils.putInt("friend", ret.data.friend)
-                        PreferencesUtils.putString("game_login_token", ret.data.gameLoginToken)
-                        PreferencesUtils.putInt("god_num", ret.data.godNum)
-//                        PreferencesUtils.putString("icon", ret.data.icon)
-                        Session.icon = ret.data.icon
-                        PreferencesUtils.putInt("job", ret.data.job)
-//                        PreferencesUtils.putInt("latitude", ret.data.latitude)
-                        Session.latitude = ret.data.latitude
-//                        PreferencesUtils.putInt("longitude", ret.data.longitude)
-                        Session.longitude = ret.data.longitude
-//                        PreferencesUtils.putString("name", ret.data.name)
-                        Session.name = ret.data.name
+            dispatchPhoneLogin(mobile, password)
+        }
+    }
 
-                        PreferencesUtils.putInt("online_dateline", ret.data.onlineDateline)
-                        PreferencesUtils.putInt("pay_money", ret.data.payMoney)
-                        PreferencesUtils.putInt("pay_num", ret.data.payNum)
-                        PreferencesUtils.putString("position", ret.data.position)
-                        PreferencesUtils.putInt("role", ret.data.role)
-                        PreferencesUtils.putInt("server_time", ret.data.serverTime)
-                        PreferencesUtils.putInt("sex", ret.data.sex)
-                        PreferencesUtils.putString("sign", ret.data.sign)
-                        PreferencesUtils.putInt("star", ret.data.star)
-                        PreferencesUtils.putInt("title", ret.data.title)
-                        PreferencesUtils.putInt("title_new", ret.data.titleNew)
-                        PreferencesUtils.putString("tmp_icon", ret.data.tmpIcon)
-//                        PreferencesUtils.putString("token", ret.data.token)
-                        Session.token = ret.data.token
-//                        PreferencesUtils.putInt("uid", ret.data.uid)
-                        Session.uid = ret.data.uid
-                        PreferencesUtils.putInt("version", ret.data.version)
-                        PreferencesUtils.putInt("vip", ret.data.vip)
-                        PreferencesUtils.putInt("vip_new", ret.data.vipNew)
-                        confirmListener?.invoke()
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            toast(ret.msg)
-                        }
+    fun dispatchPhoneLogin(mobile: String, password: String) {
+        val area = Session.area
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                val encryptPassword = EncryptUtils.encryptSHA1ToString(
+                    EncodeUtils.urlDecode(password, "UTF-8")
+                ).lowercase()
+                XLog.i(TAG, "encryptPassword:$encryptPassword")
+                val cachedDToken = PreferencesUtils.getString("dtoken", "")
+                val ret = loginService.passwordLogin(mobile, encryptPassword, area, cachedDToken, "")
+                if (ret.success) {
+                    XLog.i(TAG, "${ret.data}")
+                    PreferencesUtils.putInt("age", ret.data?.age ?: 0)
+                    PreferencesUtils.putInt("app", ret.data?.app ?: 0)
+                    PreferencesUtils.putString("birthday", ret.data?.birthday ?: "")
+                    PreferencesUtils.putInt("cash_min", ret.data?.cashMin ?: 0)
+                    PreferencesUtils.putInt("cash_rate", ret.data?.cashRate ?: 0)
+                    PreferencesUtils.putString("city", ret.data?.city ?: "")
+                    PreferencesUtils.putInt("city_code", ret.data?.cityCode ?: 0)
+                    PreferencesUtils.putInt("dateline", ret.data?.dateline ?: 0)
+                    PreferencesUtils.putInt("deleted", ret.data?.deleted ?: 0)
+                    PreferencesUtils.putString("dtoken", ret.data?.dtoken ?: "")
+                    PreferencesUtils.putInt("friend", ret.data?.friend ?: 0)
+                    PreferencesUtils.putString(
+                        "game_login_token",
+                        ret.data?.gameLoginToken
+                            ?: ""
+                    )
+                    PreferencesUtils.putInt("god_num", ret.data?.godNum ?: 0)
+//                        PreferencesUtils.putString("icon", ret.data?.icon)
+                    Session.icon = ret.data?.icon ?: ""
+                    PreferencesUtils.putInt("job", ret.data?.job ?: 0)
+//                        PreferencesUtils.putInt("latitude", ret.data?.latitude)
+                    Session.latitude = ret.data?.latitude ?: 0
+//                        PreferencesUtils.putInt("longitude", ret.data?.longitude)
+                    Session.longitude = ret.data?.longitude ?: 0
+//                        PreferencesUtils.putString("name", ret.data?.name)
+                    Session.name = ret.data?.name ?: ""
+
+                    PreferencesUtils.putInt("online_dateline", ret.data?.onlineDateline ?: 0)
+                    PreferencesUtils.putInt("pay_money", ret.data?.payMoney ?: 0)
+                    PreferencesUtils.putInt("pay_num", ret.data?.payNum ?: 0)
+                    PreferencesUtils.putString("position", ret.data?.position ?: "")
+                    PreferencesUtils.putInt("role", ret.data?.role ?: 0)
+                    PreferencesUtils.putInt("server_time", ret.data?.serverTime ?: 0)
+                    PreferencesUtils.putInt("sex", ret.data?.sex ?: 0)
+                    PreferencesUtils.putString("sign", ret.data?.sign ?: "")
+                    PreferencesUtils.putInt("star", ret.data?.star ?: 0)
+                    PreferencesUtils.putInt("title", ret.data?.title ?: 0)
+                    PreferencesUtils.putInt("title_new", ret.data?.titleNew ?: 0)
+                    PreferencesUtils.putString("tmp_icon", ret.data?.tmpIcon ?: "")
+//                        PreferencesUtils.putString("token", ret.data?.token)
+                    Session.token = ret.data?.token ?: ""
+//                        PreferencesUtils.putInt("uid", ret.data?.uid)
+                    Session.uid = ret.data?.uid ?: 0
+                    PreferencesUtils.putInt("version", ret.data?.version ?: 0)
+                    PreferencesUtils.putInt("vip", ret.data?.vip ?: 0)
+                    PreferencesUtils.putInt("vip_new", ret.data?.vipNew ?: 0)
+                    confirmListener?.invoke()
+                } else {
+                    withContext(Dispatchers.Main) {
+                        toast(ret.msg)
                     }
                 }
             }

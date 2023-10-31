@@ -6,80 +6,80 @@ option go_package = "../app/pb";
 import "common.proto";
 
 enum FeedType {
-    FEED_TYPE_NONE = 0; // 占位符
-    FEED_TYPE_VOICE = 1; // 语音房feed
-    FEED_TYPE_LIVEROOM = 2;  // 视频房feed
-    FEED_TYPE_PASSWORD_VOICE = 3; // 密码语音房feed
+  FEED_TYPE_NONE = 0; // 占位符
+  FEED_TYPE_VOICE = 1; // 语音房feed
+  FEED_TYPE_LIVEROOM = 2;  // 视频房feed
+  FEED_TYPE_PASSWORD_VOICE = 3; // 密码语音房feed
 }
 
 message ReqFeedRecommendRoom {
-    FeedType feed_type = 1; // feed 类型 1 语音房间 2 视频房间
-    uint32 page = 2;
-    uint32 page_size = 3;
+  FeedType feed_type = 1; // feed 类型 1 语音房间 2 视频房间
+  uint32 page = 2;
+  uint32 page_size = 3;
 }
 
 message ResFeedRecommendRoom {
-    CommonData common = 1;
-    FeedRecommendRoom data = 2;
+  CommonData common = 1;
+  FeedRecommendRoom data = 2;
 }
 
 message RecommendRoomParams {
-    uint32 uid = 1;
-    uint32 page = 2;
-    uint32 page_size = 3;
-    FeedType feed_type = 4; 
+  uint32 uid = 1;
+  uint32 page = 2;
+  uint32 page_size = 3;
+  FeedType feed_type = 4;
 }
 
 message FeedRecommendRoomData {
-    uint32 uid = 1; // uid
-    uint32 rid = 2; // rid
-	string icon = 3; // 房间封面
-	string name = 4; // 房间名称
-	uint32 online_num = 5; // 在线人数
-    uint32 hot_num = 6;
-	string property = 7; // 房间类型
-    string agora_token = 8; // 声网token
-    int32 tags = 9; // 房间tags
-    string area_code = 10; // 房主地区
-    uint32 link_mic_status = 11; // 连麦状态
-    bool show_red_packet = 12; // 是否展示红包
-    uint32 pk_state = 13; // pk状态
-    uint32 team_pk_state = 14;
-    uint32 room_sex = 15; // 房主性别
-    uint32 boom_rocket_lv = 16; // 爆火箭等级
+  uint32 uid = 1; // uid
+  uint32 rid = 2; // rid
+  string icon = 3; // 房间封面
+  string name = 4; // 房间名称
+  uint32 online_num = 5; // 在线人数
+  uint32 hot_num = 6;
+  string property = 7; // 房间类型
+  string agora_token = 8; // 声网token
+  int32 tags = 9; // 房间tags
+  string area_code = 10; // 房主地区
+  uint32 link_mic_status = 11; // 连麦状态
+  bool show_red_packet = 12; // 是否展示红包
+  uint32 pk_state = 13; // pk状态
+  uint32 team_pk_state = 14;
+  uint32 room_sex = 15; // 房主性别
+  uint32 boom_rocket_lv = 16; // 爆火箭等级
 }
 
 message FeedRecommendRoom {
-    repeated FeedRecommendRoomData data = 2;
-    bool more = 3;
+  repeated FeedRecommendRoomData data = 2;
+  bool more = 3;
 }
 
 
 message ReqGetRoomRecommendFeedList {
-    uint32 uid = 1;
-    FeedType feed_type = 2;
-    uint32 page = 3;
-    uint32 page_size = 4;
+  uint32 uid = 1;
+  FeedType feed_type = 2;
+  uint32 page = 3;
+  uint32 page_size = 4;
 }
 
 message RpcRspGetRoomRecommendFeedList {
-    FeedRecommendRoom data = 1;
+  FeedRecommendRoom data = 1;
 }
 
 message ReqFeedRoom {
-    uint32 page = 1;
-    uint32 page_size = 2;
+  uint32 page = 1;
+  uint32 page_size = 2;
 }
 
 service FeedService {
-    // go/ps/feed/recommendroom feed 流
-    rpc Recommendroom (ReqFeedRecommendRoom) returns (ResFeedRecommendRoom);
-    // go/ps/feed/recommendChatroom 语音房feed流
-    rpc RecommendChatroom (ReqFeedRoom) returns (ResFeedRecommendRoom);
-    // go/ps/feed/recommendLiveroom 视频房feed流
-    rpc RecommendLiveroom (ReqFeedRoom) returns (ResFeedRecommendRoom);
-    // go/ps/feed/recommendPasswordChatroom 密码语音房间feed流
-    rpc RecommendPasswordChatroom (ReqFeedRoom) returns (ResFeedRecommendRoom);
+  // go/ps/feed/recommendroom feed 流
+  rpc Recommendroom (ReqFeedRecommendRoom) returns (ResFeedRecommendRoom);
+  // go/ps/feed/recommendChatroom 语音房feed流
+  rpc RecommendChatroom (ReqFeedRoom) returns (ResFeedRecommendRoom);
+  // go/ps/feed/recommendLiveroom 视频房feed流
+  rpc RecommendLiveroom (ReqFeedRoom) returns (ResFeedRecommendRoom);
+  // go/ps/feed/recommendPasswordChatroom 密码语音房间feed流
+  rpc RecommendPasswordChatroom (ReqFeedRoom) returns (ResFeedRecommendRoom);
 }
 
 

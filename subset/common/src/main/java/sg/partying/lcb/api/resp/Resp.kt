@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName
 data class Resp<T>(
     @SerializedName("success") var success: Boolean = false,
     @SerializedName("msg") var msg: String = "",
-    @SerializedName("data") var data: T)
+    @SerializedName("data") var data: T?)
 
 data class LoginOption(
     @SerializedName("main") var main: List<String> = mutableListOf(),
@@ -63,101 +63,152 @@ data class BannerItem(
     @SerializedName("image") var image: String = "",
     @SerializedName("title") var title: String = "",
     @SerializedName("type") var type: String = "",
-    @SerializedName("url") var url: String
+    @SerializedName("url") var url: String = ""
 )
 
+data class BannerList(
+    @SerializedName("banner_list") val bannerList: MutableList<Banner> = mutableListOf(),
+)
+
+data class Banner(
+    @SerializedName("app_id") val appId: String = "",
+    @SerializedName("area") val area: String = "",
+    @SerializedName("begin_time") val beginTime: String = "",
+    @SerializedName("cid") val cid: String = "",
+    @SerializedName("cover_url") val coverUrl: String = "",
+    @SerializedName("data") val dataInfo: String = "",
+    @SerializedName("dateline") val dateline: String = "",
+    @SerializedName("deleted") val deleted: String = "",
+    @SerializedName("duration") val duration: String = "",
+    @SerializedName("end_time") val endTime: String = "",
+    @SerializedName("icon") val icon: String = "",
+    @SerializedName("id") val id: String = "",
+    @SerializedName("image") val image: String = "",
+    @SerializedName("language") val language: String = "",
+    @SerializedName("limit_lv") val limitLv: String = "",
+    @SerializedName("ordering") val ordering: String = "",
+    @SerializedName("position") val position: String = "",
+    @SerializedName("role") val role: String = "",
+    @SerializedName("room_type") val roomType: String = "",
+    @SerializedName("settlement_channel") val settlementChannel: String = "",
+    @SerializedName("stype") val sType: String = "",
+    @SerializedName("title") val title: String = "",
+    @SerializedName("type") val type: String = "",
+    @SerializedName("url") val url: String = ""
+)
+
+
 data class LiveRecommendModel(
-    @SerializedName("more") var more: Int,
-    @SerializedName("ranker") var ranker: List<Ranker>,
-    @SerializedName("rooms") var liveRecommendRoomInfos: List<LiveRecommendRoomInfo>
+    @SerializedName("more") var more: Int = 0,
+    @SerializedName("ranker") var ranker: List<Ranker> = mutableListOf(),
+    @SerializedName("rooms") var liveRecommendRoomInfos: List<LiveRecommendRoomInfo> = mutableListOf()
 )
 
 data class Ranker(
-    @SerializedName("icon") var icon: String,
-    @SerializedName("uid") var uid: String
+    @SerializedName("icon") var icon: String = "",
+    @SerializedName("uid") var uid: String = ""
+)
+
+
+data class RecommendItem(
+    @SerializedName("agora_token") var agoraToken: String = "",
+    @SerializedName("area_code") var areaCode: String = "",
+    @SerializedName("boom_rocket_lv") var boomRocketLv: Int = 0,
+    @SerializedName("hot_num") var hotNum: Int = 0,
+    @SerializedName("icon") var icon: String = "",
+    @SerializedName("link_mic_status") var linkMicStatus: Int = 0,
+    @SerializedName("name") var name: String = "",
+    @SerializedName("online_num") var onlineNum: Int = 0,
+    @SerializedName("pk_state") var pkState: Int = 0,
+    @SerializedName("property") var property: String = "",
+    @SerializedName("rid") var rid: Int = 0,
+    @SerializedName("room_sex") var roomSex: Int = 0,
+    @SerializedName("show_red_packet") var showRedPacket: Boolean,
+    @SerializedName("tags") var tags: Int = 0,
+    @SerializedName("team_pk_state") var teamPkState: Int = 0,
+    @SerializedName("uid") var uid: Int = 0,
 )
 
 data class LiveRecommendRoomInfo(
-    @SerializedName("act_hot_num") var actHotNum: Int,
-    @SerializedName("agora_token") var agoraToken: String,
-    @SerializedName("area") var area: String,
-    @SerializedName("areaCode") var areaCode: String,
-    @SerializedName("boom_rocket_lv") var boomRocketLv: Int,
-    @SerializedName("boss_icon") var bossIcon: String,
-    @SerializedName("boss_uid") var bossUid: String,
-    @SerializedName("dateline") var dateline: String,
-    @SerializedName("deleted") var deleted: Int,
-    @SerializedName("effect") var effect: String,
-    @SerializedName("fixed_tag_id_new") var fixedTagIdNew: Int,
-    @SerializedName("game_money_type") var gameMoneyType: Int,
-    @SerializedName("game_status") var gameStatus: Int,
-    @SerializedName("guestEnable") var guestEnable: Int,
-    @SerializedName("hot") var hot: Int,
-    @SerializedName("hot_num") var hotNum: Int,
-    @SerializedName("icon") var icon: String,
-    @SerializedName("is_biz") var isBiz: Int,
-    @SerializedName("language") var language: String,
-    @SerializedName("link_mic_status") var linkMicStatus: Int,
-    @SerializedName("name") var name: String,
-    @SerializedName("num_boy") var numBoy: Int,
-    @SerializedName("num_girl") var numGirl: Int,
-    @SerializedName("online_num") var onlineNum: Int,
-    @SerializedName("password") var password: Int,
-    @SerializedName("pattern_style") var patternStyle: Int,
-    @SerializedName("pay_room_money") var payRoomMoney: Int,
-    @SerializedName("pk_state") var pkState: Int,
-    @SerializedName("prefix") var prefix: String,
-    @SerializedName("property") var property: String,
-    @SerializedName("real") var real: Int,
-    @SerializedName("reception_uid") var receptionUid: String,
-    @SerializedName("rid") var rid: String,
-    @SerializedName("sex") var sex: Int,
-    @SerializedName("show_red_packet") var showRedPacket: Boolean,
-    @SerializedName("tags") var tags: String,
-    @SerializedName("team_pk_state") var teamPkState: Int,
-    @SerializedName("type") var type: String,
+    @SerializedName("act_hot_num") var actHotNum: Int = 0,
+    @SerializedName("agora_token") var agoraToken: String = "",
+    @SerializedName("area") var area: String = "",
+    @SerializedName("areaCode") var areaCode: String = "",
+
+    @SerializedName("boss_icon") var bossIcon: String = "",
+    @SerializedName("boss_uid") var bossUid: String = "",
+    @SerializedName("dateline") var dateline: String = "",
+    @SerializedName("deleted") var deleted: Int = 0,
+    @SerializedName("effect") var effect: String = "",
+    @SerializedName("fixed_tag_id_new") var fixedTagIdNew: Int = 0,
+    @SerializedName("game_money_type") var gameMoneyType: Int = 0,
+    @SerializedName("game_status") var gameStatus: Int = 0,
+    @SerializedName("guestEnable") var guestEnable: Int = 0,
+    @SerializedName("hot") var hot: Int = 0,
+    @SerializedName("hot_num") var hotNum: Int = 0,
+    @SerializedName("icon") var icon: String = "",
+    @SerializedName("is_biz") var isBiz: Int = 0,
+    @SerializedName("language") var language: String = "",
+
+
+    @SerializedName("num_boy") var numBoy: Int = 0,
+    @SerializedName("num_girl") var numGirl: Int = 0,
+
+    @SerializedName("password") var password: Int = 0,
+    @SerializedName("pattern_style") var patternStyle: Int = 0,
+    @SerializedName("pay_room_money") var payRoomMoney: Int = 0,
+    @SerializedName("pk_state") var pkState: Int = 0,
+    @SerializedName("prefix") var prefix: String = "",
+    @SerializedName("property") var property: String = "",
+    @SerializedName("real") var real: Int = 0,
+    @SerializedName("reception_uid") var receptionUid: String = "",
+
+    @SerializedName("sex") var sex: Int = 0,
+
+
+    @SerializedName("type") var type: String = "",
     @SerializedName("typeName") var typeName: TypeName,
-    @SerializedName("types") var types: String,
-    @SerializedName("uid") var uid: Int,
-    @SerializedName("uname") var uname: String,
-    @SerializedName("user_icon") var userIcon: String,
+    @SerializedName("types") var types: String = "",
+    @SerializedName("uid") var uid: Int = 0,
+    @SerializedName("uname") var uname: String = "",
+    @SerializedName("user_icon") var userIcon: String = "",
     @SerializedName("users") var users: List<User>,
-    @SerializedName("utitle") var uTitle: Int,
-    @SerializedName("vip") var vip: Int
+    @SerializedName("utitle") var uTitle: Int = 0,
+    @SerializedName("vip") var vip: Int = 0
 )
 
 data class TypeName(
-    @SerializedName("abstract_icon") var abstractIcon: String,
-    @SerializedName("acute_icon") var acuteIcon: String,
+    @SerializedName("abstract_icon") var abstractIcon: String = "",
+    @SerializedName("acute_icon") var acuteIcon: String = "",
     @SerializedName("bg") var bg: List<String>,
-    @SerializedName("big_icon") var bigIcon: String,
-    @SerializedName("color") var color: String,
-    @SerializedName("icon") var icon: String,
-    @SerializedName("label") var label: String,
+    @SerializedName("big_icon") var bigIcon: String = "",
+    @SerializedName("color") var color: String = "",
+    @SerializedName("icon") var icon: String = "",
+    @SerializedName("label") var label: String = "",
     @SerializedName("main_bg") var mainBg: List<String>,
-    @SerializedName("party_style") var partyStyle: Int,
+    @SerializedName("party_style") var partyStyle: Int = 0,
     @SerializedName("room_type") var roomType: RoomType,
-    @SerializedName("show") var show: String,
-    @SerializedName("small_icon") var smallIcon: String,
-    @SerializedName("tag_color") var tagColor: String,
-    @SerializedName("tag_icon") var tagIcon: String,
-    @SerializedName("taginfo_type") var taginfoType: String,
+    @SerializedName("show") var show: String = "",
+    @SerializedName("small_icon") var smallIcon: String = "",
+    @SerializedName("tag_color") var tagColor: String = "",
+    @SerializedName("tag_icon") var tagIcon: String = "",
+    @SerializedName("taginfo_type") var taginfoType: String = "",
     @SerializedName("type_bg") var typeBg: List<String>,
-    @SerializedName("type_icon") var typeIcon: String
+    @SerializedName("type_icon") var typeIcon: String = ""
 )
 
 data class User(
-    @SerializedName("icon") var icon: String,
-    @SerializedName("raw_icon") var rawIcon: String,
-    @SerializedName("uid") var uid: Int
+    @SerializedName("icon") var icon: String = "",
+    @SerializedName("raw_icon") var rawIcon: String = "",
+    @SerializedName("uid") var uid: Int = 0
 )
 
 data class RoomType(
-    @SerializedName("acute_icon") var acuteIcon: String,
+    @SerializedName("acute_icon") var acuteIcon: String = "",
     @SerializedName("app_id") var appId: List<Int>,
     @SerializedName("bg") var bg: List<String>,
-    @SerializedName("label") var label: String,
-    @SerializedName("room_type") var roomType: String,
-    @SerializedName("show") var show: String,
-    @SerializedName("string_key") var stringKey: String
+    @SerializedName("label") var label: String = "",
+    @SerializedName("room_type") var roomType: String = "",
+    @SerializedName("show") var show: String = "",
+    @SerializedName("string_key") var stringKey: String = ""
 )

@@ -22,9 +22,9 @@ class SectionContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     fun updateUi(sectionItem: LiveRecommendContent) {
         ImageLoader.loadFitCenter(
             ivThumbnail,
-            NetworkConfigProvider.RESOURCE_PREFIX_URL + sectionItem.liveRecommendRoomInfo.icon + "!cover375"
+            NetworkConfigProvider.RESOURCE_PREFIX_URL + sectionItem.recommendItem.icon + "!cover375"
         )
-        val info = sectionItem.liveRecommendRoomInfo
+        val info = sectionItem.recommendItem
         if (info.pkState == 1) {
             ivBadgePk.visibility = View.VISIBLE
         } else {

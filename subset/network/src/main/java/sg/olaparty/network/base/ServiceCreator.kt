@@ -11,6 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.wire.WireConverterFactory
 import sg.olaparty.network.adapter.WireCallAdapterFactory
+import sg.olaparty.network.custom.CWireConverterFactory
 import sg.olaparty.network.interceptor.HeaderInterceptor
 import sg.olaparty.network.interceptor.SignInterceptor
 import sg.partying.lcb.android.Prop
@@ -35,9 +36,7 @@ object ServiceCreator {
             addInterceptor(HeaderInterceptor())
             addInterceptor(SignInterceptor())
             if (CommonClassPath.isDebugAppMode) {
-                addInterceptor(HttpLoggingInterceptor {
-                    Log.e(TAG, it)
-                }.apply {
+                addInterceptor(HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
                 })
             }
@@ -49,9 +48,9 @@ object ServiceCreator {
         return Retrofit.Builder().apply {
             baseUrl(baseUrl)
             client(okHttpClient)
+            addConverterFactory(CWireConverterFactory.create())
 //            addCallAdapterFactory(WireCallAdapterFactory())
             addConverterFactory(GsonConverterFactory.create(GsonUtils.getGson()))
-            addConverterFactory(WireConverterFactory.create())
         }.build().create(serviceClass)
     }
 

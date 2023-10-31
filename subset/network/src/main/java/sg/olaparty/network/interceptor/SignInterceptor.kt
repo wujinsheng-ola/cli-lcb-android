@@ -74,7 +74,7 @@ class SignInterceptor : Interceptor {
             }
         }
         val finalUrl = url + (if (url.indexOf("?") > -1) '&' else "?") + targetArgsList.joinToString("&")
-        XLog.i(tag, "[generateSignUrl] $finalUrl")
+//        XLog.i(tag, "[generateSignUrl] $finalUrl")
         return finalUrl
     }
 }

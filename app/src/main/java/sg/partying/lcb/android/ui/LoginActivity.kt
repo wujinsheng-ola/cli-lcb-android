@@ -58,7 +58,7 @@ class LoginActivity : DelegateActivity() {
         }
         viewModel.loginOptions().observe(this) {
             if (it is Ret.Success) {
-                it.value.data.sub.forEach { sub ->
+                it.value.data?.sub?.forEach { sub ->
                     when (sub) {
                         "google" -> {
                             val loginTypeView = LayoutInflater.from(

@@ -9,21 +9,28 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
+import sg.partying.lcb.api.resp.Banner
 import sg.partying.lcb.api.resp.BannerItem
+import sg.partying.lcb.api.resp.BannerList
 import sg.partying.lcb.api.resp.LiveRecommendModel
 import sg.partying.lcb.api.resp.Resp
 
 interface HomePageService {
 
     @POST("banner/videoLiveFeed")
-    suspend fun videoLiveFeed(): Resp<MutableList<BannerItem>>
+    suspend fun recommendLiveBanner(): Resp<MutableList<BannerItem>>
 
     @POST("homepage/recommendedRoomList")
-    suspend fun recommendedRoomList(): Resp<MutableList<BannerItem>>
+    suspend fun recommendChatBanner(): Resp<BannerList>
 
     @Headers("Content-Type: application/protobuf")
     @POST("go/ps/feed/recommendLiveChatRoom/(PB)")
     suspend fun recommendLiveChatRoom(@Body req: ReqFeedRoom): ResFeedRecommendRoom
+
+    @Headers("Content-Type: application/protobuf")
+    @POST("go/ps/feed/recommendVoiceChatRoom/(PB)")
+    suspend fun recommendVoiceChatRoom(@Body req: ReqFeedRoom): ResFeedRecommendRoom
+
 
     @POST("foryou/recommend")
     @FormUrlEncoded

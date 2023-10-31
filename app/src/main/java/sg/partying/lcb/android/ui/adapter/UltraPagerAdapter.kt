@@ -7,7 +7,9 @@ import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.util.ImageLoader
-import sg.partying.lcb.api.resp.BannerItem
+import sg.partying.lcb.api.resp.ChatBannerType
+import sg.partying.lcb.api.resp.IBannerType
+import sg.partying.lcb.api.resp.LiveBannerType
 
 /**
  * User: newSalton@outlook.com
@@ -16,18 +18,18 @@ import sg.partying.lcb.api.resp.BannerItem
  * Description:
  */
 interface ImageClick {
-    fun onClick(position: Int, item: BannerItem)
+    fun onClick(position: Int, item: IBannerType)
 }
 
 class UltraPagerAdapter : PagerAdapter() {
-    private var mDatas: MutableList<BannerItem> = mutableListOf()
-    fun update(datas: MutableList<BannerItem>) {
+    private var mDatas: MutableList<IBannerType> = mutableListOf()
+    fun update(datas: MutableList<IBannerType>) {
         mDatas.clear()
         mDatas.addAll(datas)
         notifyDataSetChanged()
     }
 
-    var itemImageClick: ((position: Int, item: BannerItem) -> Unit)? = null
+    var itemImageClick: ((position: Int, item: IBannerType) -> Unit)? = null
     override fun getCount(): Int {
         return mDatas.size
     }
@@ -42,7 +44,12 @@ class UltraPagerAdapter : PagerAdapter() {
         imageView.setOnClickListener { view: View? ->
             itemImageClick?.invoke(position, mDatas[position])
         }
-        ImageLoader.loadFitCenter(imageView, mDatas[position].image)
+        val dataItem = mDatas[position]
+        if (dataItem is ChatBannerType) {
+            ImageLoader.loadFitCenter(imageView, dataItem.banner.image)
+        } else if (dataItem is LiveBannerType) {
+            ImageLoader.loadFitCenter(imageView, dataItem.banner.image)
+        }
         container.addView(viewGroup)
         return viewGroup
     }
