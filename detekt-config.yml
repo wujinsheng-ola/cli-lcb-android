@@ -7,7 +7,7 @@ build:
   # comments: 1
 
 processors:
-  active: true
+  active: false
   exclude:
   # - 'FunctionCountProcessor'
   # - 'PropertyCountProcessor'
