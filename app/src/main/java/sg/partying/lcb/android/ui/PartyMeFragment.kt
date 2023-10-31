@@ -51,7 +51,7 @@ class PartyMeFragment : BaseFragment() {
             PictureSelector.create(this@PartyMeFragment)
                 .openGallery(SelectMimeType.ofImage())
                 .isDisplayCamera(true)
-                .setCropEngine(ImageCropEngine())
+                .setCropEngine(ImageFileCropEngine())
                 .isCameraForegroundService(true)
                 .setMaxSelectNum(1)
                 .setImageEngine(GlideEngine.createGlideEngine())
