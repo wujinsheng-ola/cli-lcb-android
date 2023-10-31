@@ -94,6 +94,8 @@ complexity:
     ignoreDeprecated: true
     ignorePrivate: false
     ignoreOverridden: true
+  CyclomaticComplexMethod:
+    active: false
 
 empty-blocks:
   active: true
@@ -410,3 +412,5 @@ style:
   WildcardImport:
     active: true
     excludeImports: 'java.util.*,kotlinx.android.synthetic.*'
+  UseRequire:
+    active: false
