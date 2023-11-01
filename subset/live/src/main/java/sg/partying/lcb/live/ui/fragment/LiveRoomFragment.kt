@@ -39,11 +39,11 @@ class LiveRoomFragment : BaseFragment() {
         viewModel.seatInfoRet.observe(this) { dataSet ->
             setupLiveView(dataSet)
         }
-        viewModel.isJoinedRoom()?.observe(this) {
-            if (!it) {
-                toast("进rtc房间失败，请重试")
-            }
-        }
+//        viewModel.isJoinedRoom()?.observe(this) {
+//            if (!it) {
+//                toast("进rtc房间失败，请重试")
+//            }
+//        }
     }
 
     private fun setupLiveView(dataSet: HashSet<Int>) {

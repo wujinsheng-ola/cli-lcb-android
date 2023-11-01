@@ -38,7 +38,10 @@ class LiveRoomViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        ProviderManager.liveRoom()?.removeListener(rtcEngineEventHandler)
+        ProviderManager.liveRoom()?.apply {
+            removeListener(rtcEngineEventHandler)
+            leaveRoom()
+        }
     }
 
     fun isJoinedRoom(): LiveData<Boolean>? {

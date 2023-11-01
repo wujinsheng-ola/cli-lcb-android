@@ -86,7 +86,7 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
         recommendInfoAdapter.onItemClick = { type, position ->
             if (type is LiveRecommendContent) {
                 val content = type.recommendItem
-                Prop.currentRoomInfo = RoomInfo("agora", content.agoraToken, "${content.rid}", content.uid)
+                Prop.currentRoomInfo = RoomInfo("agora", content.agoraToken, "${content.rid}", Session.uid)
                 ProviderManager.liveRoom()?.joinRoom(Prop.currentRoomInfo)
                 RouterManager.goLiveRoom(activity())
             }
@@ -120,56 +120,73 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
             }
         }
 
-        viewModel.recommendHome(type, ReqFeedRoom(page++, 20)).observe(this) {
-            if (it is Ret.Success) {
-                println(it.value)
-                val datas = it.value.data_?.data_?.map { item ->
-                    LiveRecommendContent(
-                        RecommendItem(
-                            agoraToken = item.agora_token,
-                            areaCode = item.area_code,
-                            boomRocketLv = item.boom_rocket_lv,
-                            hotNum = item.hot_num,
-                            icon = item.icon,
-                            linkMicStatus = item.link_mic_status,
-                            name = item.name,
-                            onlineNum = item.online_num,
-                            pkState = item.pk_state,
-                            property = item.property_,
-                            rid = item.rid,
-                            roomSex = item.rid,
-                            showRedPacket = item.show_red_packet,
-                            tags = item.tags,
-                            teamPkState = item.team_pk_state,
-                            uid = item.uid
-                        )
-                    )
-                }
-                datas?.let { it1 ->
-                    if (refresh) {
-                        page = 1
-                        dataList.clear()
-                    }
-                    dataList.addAll(it1)
-                    recommendInfoAdapter.notifyDataSetChanged()
-                }
-            } else {
-                it.toString()
-            }
-        }
-//        viewModel.getRecommend(page++, 100, type).observe(this) {
-//            if (it is Ret.Success && it.value.data != null) {
-//                val datas = it.value.data.liveRecommendRoomInfos.map { item ->
-//                    LiveRecommendContent(item)
+//        viewModel.recommendHome(type, ReqFeedRoom(page++, 20)).observe(this) {
+//            if (it is Ret.Success) {
+//                println(it.value)
+//                val datas = it.value.data_?.data_?.map { item ->
+//                    LiveRecommendContent(
+//                        RecommendItem(
+//                            agoraToken = item.agora_token,
+//                            areaCode = item.area_code,
+//                            boomRocketLv = item.boom_rocket_lv,
+//                            hotNum = item.hot_num,
+//                            icon = item.icon,
+//                            linkMicStatus = item.link_mic_status,
+//                            name = item.name,
+//                            onlineNum = item.online_num,
+//                            pkState = item.pk_state,
+//                            property = item.property_,
+//                            rid = item.rid,
+//                            roomSex = item.room_sex,
+//                            showRedPacket = item.show_red_packet,
+//                            tags = item.tags,
+//                            teamPkState = item.team_pk_state,
+//                            uid = item.uid
+//                        )
+//                    )
 //                }
-//                if (refresh) {
-//                    page = 1
-//                    dataList.clear()
+//                datas?.let { it1 ->
+//                    if (refresh) {
+//                        page = 1
+//                        dataList.clear()
+//                    }
+//                    dataList.addAll(it1)
+//                    recommendInfoAdapter.notifyDataSetChanged()
 //                }
-//                dataList.addAll(datas)
-//                recommendInfoAdapter.notifyDataSetChanged()
+//            } else {
+//                it.toString()
 //            }
 //        }
+        viewModel.getRecommend(page++, 100, type).observe(this) {
+            if (it is Ret.Success && it.value.data != null) {
+                val datas = it.value!!.data!!.liveRecommendRoomInfos.map { item ->
+                    LiveRecommendContent(RecommendItem(
+                        agoraToken = item.agoraToken,
+                        areaCode = item.areaCode,
+                        boomRocketLv = item.boomRocketLv,
+                        hotNum = item.hotNum,
+                        icon = item.icon,
+                        linkMicStatus = item.linkMicStatus,
+                        name = item.name,
+                        onlineNum = item.onlineNum,
+                        pkState = item.pkState,
+                        property = item.property,
+                        rid = item.rid.toInt(),
+                        roomSex = item.sex,
+                        showRedPacket = item.showRedPacket,
+                        tags = item.tags.toInt(),
+                        teamPkState = item.teamPkState,
+                        uid = item.uid
+                    ))
+                }
+                if (refresh) {
+                    page = 1
+                    dataList.clear()
+                }
+                dataList.addAll(datas)
+                recommendInfoAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
