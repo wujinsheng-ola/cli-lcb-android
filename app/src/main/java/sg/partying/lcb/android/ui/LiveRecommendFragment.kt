@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.salton123.base.BaseFragment
 import com.salton123.coroutine.Ret
 import com.salton123.log.XLog
-import com.salton123.rtc.agora.AgoraFacade
+import com.salton123.soulove.api.ProviderManager
 import com.salton123.soulove.api.RouterManager
 import com.salton123.utils.ScreenUtils
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -87,7 +87,7 @@ class LiveRecommendFragment : BaseFragment(), OnRefreshLoadMoreListener {
             if (type is LiveRecommendContent) {
                 val content = type.recommendItem
                 Prop.currentRoomInfo = RoomInfo("agora", content.agoraToken, "${content.rid}", content.uid)
-                AgoraFacade.joinChannel(content.agoraToken, "${content.rid}", Session.uid)
+                ProviderManager.liveRoom()?.joinRoom(Prop.currentRoomInfo)
                 RouterManager.goLiveRoom(activity())
             }
         }

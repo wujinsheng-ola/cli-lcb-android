@@ -14,4 +14,7 @@ public interface Constants {
         }
     }
 
+    interface Provider {
+        String LIVE_ROOM = "/provider/liveroom";
+    }
 }

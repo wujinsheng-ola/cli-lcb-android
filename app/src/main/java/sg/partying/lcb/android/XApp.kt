@@ -9,8 +9,8 @@ import com.blankj.utilcode.util.Utils
 import com.bumptech.glide.Glide
 import com.salton123.app.BaseApplication
 import com.salton123.crash.XCrashManager
-import com.salton123.rtc.agora.AgoraFacade
 import com.salton123.soulove.CommonClassPath
+import com.salton123.soulove.api.ProviderManager
 import sg.partying.lcb.android.config.AppConfig
 import sg.partying.lcb.android.config.ConfigProvider
 
@@ -43,13 +43,14 @@ class XApp : BaseApplication() {
         )
         val configProvider = ConfigProvider()
         AppConfig.init(configProvider)
-        AgoraFacade.init(this)
+
         if (CommonClassPath.isDebugAppMode) {
             ARouter.openLog()
             ARouter.openDebug()
         }
         ARouter.init(this)
         XCrashManager.init(this)
+        ProviderManager.liveRoom()?.init(this)
     }
 
     override fun onLowMemory() {

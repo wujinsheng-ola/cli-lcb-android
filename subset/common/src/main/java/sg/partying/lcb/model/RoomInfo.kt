@@ -12,8 +12,9 @@ import com.google.gson.annotations.SerializedName
  * 标准的房间信息
  */
 data class RoomInfo(
-    @SerializedName("rtc_type") var rtcType: String,
-    @SerializedName("rtc_token") var rtcToken: String,
-    @SerializedName("room_id") var rid: String,
-    @SerializedName("anchor_id") var anchorId: Int,
+    @SerializedName("rtc_type") var rtcType: String = "",
+    @SerializedName("rtc_token") var rtcToken: String = "",
+    @SerializedName("room_id") var rid: String = "",
+    @SerializedName("uid") var uid: Int = 0,
+    @SerializedName("anchor_id") var anchorId: Int = 0
 )

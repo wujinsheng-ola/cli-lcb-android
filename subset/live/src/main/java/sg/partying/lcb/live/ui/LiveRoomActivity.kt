@@ -20,11 +20,6 @@ class LiveRoomActivity : DelegateActivity() {
 
     override fun initVariable(savedInstanceState: Bundle?) {
         addFeature(ImmersionFeature(this))
-        if (Prop.currentRoomInfo == null) {
-            toast("room info is invalid, please try again!")
-            finish()
-            return
-        }
     }
 
     override fun initViewAndData() {

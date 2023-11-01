@@ -22,4 +22,6 @@ dependencies {
     api project(':resources')
     api project(':framework')
     api project(':protocols')
+    api rootProject.ext.otherDependenciesLibs
+    api rootProject.ext.supportLibs
 }

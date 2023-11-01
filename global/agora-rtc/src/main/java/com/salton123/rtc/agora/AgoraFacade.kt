@@ -7,6 +7,7 @@ import io.agora.rtc2.Constants
 import io.agora.rtc2.IRtcEngineEventHandler
 import io.agora.rtc2.RtcEngine
 import io.agora.rtc2.UserInfo
+import io.agora.rtc2.video.VideoCanvas
 import io.agora.rtc2.video.VideoEncoderConfiguration
 
 /**
@@ -17,7 +18,7 @@ import io.agora.rtc2.video.VideoEncoderConfiguration
 object AgoraFacade {
     private const val tag = "AgoraFacade"
     private val agoraEventHandler: AgoraEventHandler = AgoraEventHandler()
-    lateinit var rtcEngine: RtcEngine
+    private lateinit var rtcEngine: RtcEngine
     fun init(context: Context) {
         rtcEngine = RtcEngine.create(context, AgoraConfigProvider.AGORA_APP_ID, agoraEventHandler)
         rtcEngine.apply {
@@ -54,6 +55,10 @@ object AgoraFacade {
         rtcEngine.joinChannel(token, channelName, uid, options)
     }
 
+
+    fun setupRemoteVideo(canvas: VideoCanvas): Int {
+        return rtcEngine.setupRemoteVideo(canvas)
+    }
 
     /**
      * 可以获取直播间内用户的UserInfo

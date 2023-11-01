@@ -17,6 +17,10 @@ object ProviderManager {
         return of(IUserProvider::class.java)
     }
 
+    fun liveRoom(): ILiveRoomProvider? {
+        return of(ILiveRoomProvider::class.java)
+    }
+
     fun ease(): IEaseProvider? {
         return of(IEaseProvider::class.java)
     }
