@@ -2,27 +2,20 @@ package sg.olaparty.network.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.salton123.coroutine.Ret
 import com.salton123.log.XLog
-import kotlinx.coroutines.CancellableContinuation
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
 import pb.ReqFeedRoom
 import pb.ResFeedRecommendRoom
 import sg.olaparty.network.RequestCenter.homePageService
-import sg.olaparty.network.RequestCenter.loginService
+import sg.olaparty.network.RequestCenter.profileService
 import sg.olaparty.network.request
 import sg.olaparty.network.success
-import sg.partying.lcb.api.resp.Banner
-import sg.partying.lcb.api.resp.BannerItem
 import sg.partying.lcb.api.resp.ChatBannerType
 import sg.partying.lcb.api.resp.IBannerType
 import sg.partying.lcb.api.resp.LiveBannerType
 import sg.partying.lcb.api.resp.LiveRecommendModel
 import sg.partying.lcb.api.resp.LoginOption
 import sg.partying.lcb.api.resp.Resp
-import kotlin.coroutines.resume
 
 /**
  * Time:2023/9/26 16:49
@@ -38,10 +31,11 @@ class NetworkViewModel : ViewModel() {
     private val videoLiveFeedRet by lazy { MutableLiveData<Ret<MutableList<IBannerType>?>>() }
     private val recommendHomeRet by lazy { MutableLiveData<Ret<ResFeedRecommendRoom>>() }
     private val liveLiveRecommendModel by lazy { MutableLiveData<Ret<Resp<LiveRecommendModel>>>() }
+//    private val accountInfoRet by lazy { MutableLiveData<Ret<Resp<LiveRecommendModel>>>() }
 
     fun loginOptions(): MutableLiveData<Ret<Resp<LoginOption>>> {
         request({
-            loginService.loginOptions()
+            profileService.loginOptions()
         }, { apiResponse ->
             loginOptionsRet.success(apiResponse)
         }, { errorCode: Int, errorMessage: String, throwable: Throwable? ->
