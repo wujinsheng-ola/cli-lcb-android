@@ -5,9 +5,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import sg.olaparty.network.base.NetworkConfigProvider
+import sg.partying.lcb.AppProperty
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.model.LiveRecommendContent
-import sg.partying.lcb.android.util.ImageLoader
+import sg.partying.lcb.util.ImageLoader
 
 /**
  * Time:2022/1/30 11:43 下午
@@ -22,7 +23,7 @@ class SectionContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     fun updateUi(sectionItem: LiveRecommendContent) {
         ImageLoader.loadFitCenter(
             ivThumbnail,
-            NetworkConfigProvider.RESOURCE_PREFIX_URL + sectionItem.recommendItem.icon + "!cover375"
+            AppProperty.RESOURCE_PREFIX_URL + sectionItem.recommendItem.icon + "!cover375"
         )
         val info = sectionItem.recommendItem
         if (info.pkState == 1) {

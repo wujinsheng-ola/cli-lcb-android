@@ -7,6 +7,10 @@ project(":translate").projectDir = new File("subset/translate")
 include ':live'
 project(":live").projectDir = new File("subset/live")
 
+include ':user-profile'
+project(":user-profile").projectDir = new File("subset/user-profile")
+
+
 include ':protocols'
 project(":protocols").projectDir = new File("subset/protocols")
 

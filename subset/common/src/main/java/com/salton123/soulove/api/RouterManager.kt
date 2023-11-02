@@ -29,4 +29,8 @@ object RouterManager {
     fun goLiveRoom(context: Context) {
         Constants.Router.Live.LIVE_ROOM.goPage(context)
     }
+
+    fun goEditProfile(context: Context) {
+        Constants.Router.Profile.EDIT.goPage(context)
+    }
 }

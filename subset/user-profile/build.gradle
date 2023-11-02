@@ -1,0 +1,10 @@
+apply from: "../../common.gradle"
+android {
+    namespace 'com.salton123.profile'
+}
+
+dependencies {
+    implementation 'com.android.volley:volley:1.2.1'
+    implementation project(path: ':network')
+}
+

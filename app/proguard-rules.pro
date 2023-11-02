@@ -21,21 +21,6 @@
 #-renamesourcefileattribute SourceFile
  -ignorewarnings
 
- -keep class com.salton123.eleph.video.compressor.model.** { *; }
-# -keep class org.xutils.db.** { *; }
-
--keep class com.arthenica.ffmpegkit.FFmpegKitConfig {
-    native <methods>;
-    void log(long, int, byte[]);
-    void statistics(long, int, float, float, long , int, double, double);
-    int safOpen(int);
-    int safClose(int);
-}
-
--keep class com.arthenica.ffmpegkit.AbiDetect {
-    native <methods>;
-}
-
 -dontwarn com.lxj.xpopup.widget.**
 -keep class com.lxj.xpopup.widget.**{*;}
 -keep class com.luck.picture.lib.** { *; }
@@ -49,3 +34,13 @@
 
 # If single-type injection is used, that is, no interface is defined to implement IProvider, the following rules need to be added to protect the implementation
 # -keep class * implements com.alibaba.android.arouter.facade.template.IProvider
+
+
+################ ViewBinding & DataBinding ###############
+-keepclassmembers class * implements androidx.viewbinding.ViewBinding {
+  public static * inflate(android.view.LayoutInflater);
+  public static * inflate(android.view.LayoutInflater, android.view.ViewGroup, boolean);
+  public static * bind(android.view.View);
+}
+
+

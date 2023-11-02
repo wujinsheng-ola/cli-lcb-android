@@ -1,4 +1,4 @@
-package sg.partying.lcb.android.ui;
+package sg.partying.lcb.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

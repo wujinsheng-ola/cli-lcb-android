@@ -1,4 +1,4 @@
-package sg.partying.lcb.android.util
+package sg.partying.lcb.util
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -8,8 +8,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.salton123.common.BuildConfig
+import com.salton123.common.R
 import com.salton123.log.XLog.d
-import sg.partying.lcb.android.R
 
 /**
  * User: newSalton@outlook.com

@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
-import sg.partying.lcb.android.R;
+import com.salton123.common.R;
 
 
 public class RoundedShader extends ShaderHelper {

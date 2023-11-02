@@ -12,6 +12,10 @@ public interface Constants {
         interface Live {
             String LIVE_ROOM = "/live/aty/live_room";
         }
+
+        interface Profile {
+            String EDIT = "/profile/aty/edit";
+        }
     }
 
     interface Provider {

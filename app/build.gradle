@@ -173,6 +173,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':common')
     api project(":live")
+    api project(":user-profile")
     api project(path: ':protocols')
     api project(':resources')
     api project(':network')

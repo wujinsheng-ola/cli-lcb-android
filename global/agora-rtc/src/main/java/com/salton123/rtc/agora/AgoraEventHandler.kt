@@ -22,6 +22,9 @@ class AgoraEventHandler : IRtcEngineEventHandler() {
         eventHandlers.remove(listener)
     }
 
+    /**
+     * @param err  https://docportal.shengwang.cn/cn/extension_customer/API%20Reference/java_ng/API/toc_core_method.html?platform=Android#callback_irtcengineeventhandler_onerror
+     */
     override fun onError(err: Int) {
         super.onError(err)
         eventHandlers.forEach {
