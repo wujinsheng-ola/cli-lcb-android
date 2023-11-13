@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
-    <color name="colorPrimary">#B06940B2</color>
+    <color name="colorPrimary">#FFFFC542</color>
     <color name="colorPrimaryDark">#FF513090</color>
     <color name="colorAccent">#FF2B2B2F</color>
+
+    <!--    文字颜色-->
+    <color name="mainTextColor">#FF171725</color>
+    <color name="secondTextColor">#FF696974</color>
+    <color name="thirdTextColor">#FF92929D</color>
+    <color name="forthTextColor">#FFFAFAFB</color>
+    <color name="fifthTextColor">#FF2B2B2F</color>
+    <!--    品牌颜色-->
+    <color name="mainBrandColor">#FF2B2B2F</color>
+    <color name="secondaryBrandColor">#FF2B2B2F</color>
+
+    <!--    分割线-->
+    <color name="buttonBgColor">#FF2B2B2F</color>
+    <color name="buttonTextColor">#FF2B2B2F</color>
+    <color name="buttonBgDisabledColor">#FF2B2B2F</color>
+    <color name="buttonTextDisabledColor">#FF2B2B2F</color>
+    <color name="buttonTextWhiteColor">#FF2B2B2F</color>
+
 
     <color name="default_red">#FD645E</color>
     <color name="default_black">#333333</color>

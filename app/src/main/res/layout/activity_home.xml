@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_gravity="center"
-        android:background="@drawable/bg_party_home_bottom_bar"
+        android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -29,15 +29,15 @@
             android:layout_weight="1"
             android:clipChildren="true"
             android:gravity="center"
-            app:iconHeight="30dp"
-            app:iconNormal="@drawable/ic_tab_scan_normal"
-            app:iconSelected="@drawable/ic_tab_scan_select"
-            app:iconWidth="30dp"
+            app:iconHeight="40dp"
+            app:iconNormal="@drawable/ic_home_tab_game_normal"
+            app:iconSelected="@drawable/ic_home_tab_game_selected"
+            app:iconWidth="40dp"
             app:itemMarginTop="2dp"
             app:itemText="@string/tab_home"
-            app:itemTextSize="14sp"
-            app:textColorNormal="#929292"
-            app:textColorSelected="@color/colorPrimary" />
+            app:itemTextSize="16sp"
+            app:textColorNormal="#FF4E5969"
+            app:textColorSelected="#FF4E5969" />
 
         <com.salton123.widget.BottomBarItem
             android:layout_width="0dp"
@@ -46,15 +46,15 @@
             android:layout_weight="1"
             android:clipChildren="true"
             android:gravity="center"
-            app:iconHeight="30dp"
-            app:iconNormal="@drawable/ic_tab_history_normal"
-            app:iconSelected="@drawable/ic_tab_history_select"
-            app:iconWidth="30dp"
+            app:iconHeight="40dp"
+            app:iconNormal="@drawable/ic_home_tab_me_normal"
+            app:iconSelected="@drawable/ic_home_tab_me_selected"
+            app:iconWidth="40dp"
             app:itemMarginTop="2dp"
             app:itemText="@string/tab_gallery"
-            app:itemTextSize="14sp"
-            app:textColorNormal="#929292"
-            app:textColorSelected="@color/colorPrimary" />
+            app:itemTextSize="16sp"
+            app:textColorNormal="#FF4E5969"
+            app:textColorSelected="#FF4E5969" />
 
     </com.salton123.widget.BottomBarLayout>
 
