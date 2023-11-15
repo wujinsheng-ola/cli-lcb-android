@@ -123,7 +123,7 @@ message UserInfoExtend {
 	bool is_new_user = 2;
 	WearMedals wear_medal_list = 3; 
 	pb.EntityXsUserProfile profile = 4;
-	VIPInfo vip_info = 5;
+	VipInfo vip_info = 5;
 	uint32 big_area_id = 6;
 	FamilyInfoAndContribution family = 7;
 	bool is_first_recharge = 8;
@@ -151,4 +151,47 @@ message RpcReqUserRichMap {
 
 message RpcRspUserRichMap {
 	map<uint32, bool> data = 1;
+}
+
+message UserDiamondInfo {
+	bool switch = 1;
+	bool is_display = 2;
+	uint32 diamond = 3;
+}
+
+message RpcReqGetUserConfig {
+	uint32 scenes = 1;
+	uint32 my_uid = 2;
+	uint32 uid = 3;
+}
+
+enum SCENES_TYPE {
+	SCENES_TYPE_UNKNOWN = 0;
+	SCENES_TYPE_CHAT = 1;   // 1:语音房
+	SCENES_TYPE_VIDEO = 2;  // 2：视频房
+}
+
+message RpcRspGetUserConfig {
+	UserDiamondInfo diamond_info = 1;
+}
+
+message UserMonthDiamond{
+	uint32 diamond = 1; // 用户本月收入钻石
+}
+
+message RspUserMonthDiamond {
+	bool success = 1;
+	UserMonthDiamond data = 2;
+}
+
+message RpcUserFaceVerify {
+	uint32 uid = 1;
+	string mac = 2;
+	uint32 native_version = 3; //客户端版本号
+	bool is_join_broker = 4; // 是否是加入公会请求
+}
+
+message RpcRspUserFaceVerify {
+	bool is_verify = 1;
+	string verify_type = 2;
 }

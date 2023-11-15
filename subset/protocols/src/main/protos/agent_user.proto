@@ -1,0 +1,102 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "certification_sign.proto";
+
+enum PAY_USER_TYPE{
+  PAY_USER_TYPE_NONE = 0;
+  PAY_USER_TYPE_AGENT = 1;
+}
+
+enum AGENT_TYPE {
+  SECOND_LEVEL_AGENT = 0;
+  FIRST_LEVEL_AGENT = 1;
+}
+
+enum TRANSFER_LEVEL_CHECK {
+  TRANSFER_SAME_LEVEL_ILLEGAL = 0;
+  TRANSFER_SAME_LEVEL_LEGAL = 1;
+}
+
+
+message ResAgentUserPermissions {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  int32 isAgentUser = 3;                //是否为代冲,PAY_USER_TYPE 
+}
+
+message ResUserBalance {
+  bool success = 1;                    // 成功true，失败false
+  string msg = 2;                      // 失败message
+  int32 money_balance = 3;             // 钻石余额
+  int32 gold_coin_balance = 4;         // 金币, 旧客户端展示为金豆，新版本已经不展示这个字段了
+  int32 agent_money_balance = 5;       // 代冲余额
+  int32 charm = 6;                     // 主播在客户端展示为魅力值，非主播展示为金豆（新版本）
+  int32 money_b = 7;                   // 虚拟货币
+  int32 game_chip = 8;                 // 游戏筹码
+  int32 game_coin = 9;                 // 游戏金币
+  int64 banknote = 10;                 // 现金余额
+}
+
+message ReqAgentUserList {
+  int32 page = 1;                      //分页数据
+}
+
+message AgentUser {
+  string name = 1;
+  uint32 uid = 2;
+  string country = 3;
+  uint32 gender = 4;
+  string icon = 5;
+  uint32 agentMoney = 6; //币商钻石数
+  string pretty_uid = 7; // 靓号
+  int64  score = 8; // 计分
+  UserCertificationSign certification_sign = 9; //认证
+  uint32 transfer = 10;
+  uint32 transfer_reseller_send = 11;
+}
+
+message ResAgentUserList {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  repeated AgentUser agentList = 3;    //币商列表
+  bool display_agent_diamond = 4; //是否展示币商余额
+}
+
+message ReqCheckReseller {
+  uint32 receiverId = 1;
+}
+
+message RespCheckReseller{
+  bool success = 1;
+  string msg = 2;
+  bool data = 3;
+}
+
+message ReqAgentUserTransfer{
+    // @gotags: v:"required#收钱方id为空"
+    uint32 receive_user_id = 1;
+    // @gotags: v:"required|min:0#金额为空"
+    int32 transfer_money_num = 2;
+    // @gotags: v:"required|min:0#余额为空"
+    int32 money_balance = 3;
+    int32 transfer_type = 4;      // 0 普通转账 1币商转账
+}
+
+message RespAgentUserTransfer{
+    bool success = 1;
+    string msg = 2;
+    int32 err_code = 3;
+    int32 current_money = 4;
+}
+
+
+
+service AgentUserService {
+  // go/ps/agentuser/agentUserTransfer 获取用户明细数据
+  rpc AgentUserTransfer (ReqAgentUserTransfer) returns (RespAgentUserTransfer);
+  // go/ps/agentuser/checkReseller 获取用户明细数据
+  rpc CheckReseller (ReqCheckReseller) returns (RespCheckReseller);
+}

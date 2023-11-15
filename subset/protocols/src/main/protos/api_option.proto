@@ -1,0 +1,20 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "common.proto";
+
+message ReqSetMicNum {
+    // @gotags: v:"required|min:1"
+    uint32 rid = 1; // 房间 ID
+    // @gotags: v:"required|min:1"
+    uint32 mic_num = 2; // 设置的麦位数量
+}
+
+service ApiOptionService {
+    // go/room/option/setMicNum 设置房间麦位数量
+    rpc SetMicNum (ReqSetMicNum) returns (RspCommon);
+}

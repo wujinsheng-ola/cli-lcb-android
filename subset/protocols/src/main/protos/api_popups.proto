@@ -1,0 +1,64 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+
+enum PopupsScene {
+    POPUPS_SCENE_UNKNOWN = 0;
+    POPUPS_SCENE_IN_PARTY_TAB = 1;
+    POPUPS_SCENE_STAY_GAME_TAB = 2;
+    POPUPS_SCENE_BACK_GAME_TAB = 3;
+}
+
+enum PopupsType {
+    POPUPS_TYPE_UNKNOWN = 0;
+    POPUPS_TYPE_NEW_USER = 1;
+    POPUPS_TYPE_FRONT_PAGE = 2;
+}
+
+message ReqPopupsRecommendRoom {
+    uint32 popups_scene = 1; //弹窗场景 类型见PopupsScene
+}
+
+message PopupsRecommendRoomData {
+    string icon = 1; //房主头像
+    uint32 sex = 2; //房主性别
+    uint32 live_status = 3; //在播状态 0不在 1在
+    string recommend_msg = 4; //推荐文案
+    string tittle = 5; //弹窗标题
+    string button = 6; //按钮文案
+    uint32 room_id = 7;
+    uint32 room_type = 8;
+    uint32 ruid = 9; //房主uid
+}
+
+message RspPopupsRecommendRoom {
+    CommonData common = 1;
+    PopupsRecommendRoomData data = 2;
+    bool is_new_user = 3;
+    uint32 popups_interval = 4; //弹窗CD
+    bool limit_popups = 5; //为true时不再请求弹窗
+}
+
+message ReqPopupsFrontPage {
+}
+
+message PopupsFrontPageData {
+    string jump_url = 1;
+    string icon = 2;
+}
+
+message RspPopupsFrontPage {
+    CommonData common = 1;
+    PopupsFrontPageData data = 2;
+    uint32 first_page_day_count = 3; //首页弹窗每日次数
+}
+
+service PopupsService {
+    // /go/ps/popups/recommendRoom 获取弹窗推荐房间
+    rpc RecommendRoom (ReqPopupsRecommendRoom) returns (RspPopupsRecommendRoom);
+    // /go/ps/popups/frontPage 获取首页弹窗
+	rpc FrontPage(ReqPopupsFrontPage) returns (RspPopupsFrontPage);
+}

@@ -1,0 +1,46 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+message FriendsNumVisitorData {
+  uint32 new_num = 1;
+  uint32 time = 2;
+  uint32 total = 3;
+}
+
+message FriendsNumPopularityData {
+  uint32 level = 1;
+  uint32 popularity = 2;
+  string link = 3;
+}
+
+
+message FriendsNumData {
+  uint32 follow = 1;
+  uint32 fans = 2;
+  uint32 friends = 3;
+  uint32 fans_incre = 4;
+  uint32 group = 5;
+  uint32 accompany_num = 6;
+  uint32 contacts_new = 7;
+  bool like_me_new = 8;
+  FriendsNumVisitorData visitor = 9;
+  FriendsNumPopularityData popularity = 10;
+}
+
+message FriendsNumResp {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  FriendsNumData data = 3;             //返回数据
+}
+
+message FriendData {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 online_status = 4;
+  uint32 online_dateline = 5;
+  string online_dateline_diff = 6; 
+  uint32 vip_level = 7;
+}

@@ -1,0 +1,136 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "common.proto";
+
+enum ChatroomPlayMod {
+	CHATROOM_PLAY_MOD_NONE = 0;
+	CHATROOM_PLAY_MOD_TEAM_PK = 1; //团战pk
+}
+
+enum HostTeamType {
+	HOST_TEAM_TYPE_NO_TEAM = 0;
+	HOST_TEAM_TYPE_RED = 1;
+	HOST_TEAM_TYPE_BLUE = 2;
+}
+
+enum TeamPKState {
+	TEAM_PK_STATE_WAIT = 0;
+	TEAM_PK_STATE_OPEN = 1;
+}
+
+enum TeamPKRecordState {
+	TEAM_PK_RECORD_STATE_IN_PROGRESS = 0;
+	TEAM_PK_RECORD_STATE_END = 1;
+}
+
+enum TeamPKEndType {
+	TEAM_PK_END_TYPE_NONE = 0;
+	TEAM_PK_END_TYPE_NORMAL = 1; //倒计时结束
+	TEAM_PK_END_TYPE_INTERRUPT = 2; //关房结束
+	TEAM_PK_END_TYPE_ABNORMAL = 3; //异常结束
+}
+
+enum TeamPKRankType {
+	TEAM_PK_RANK_TYPE_RED_REC = 0; //红方收礼
+	TEAM_PK_RANK_TYPE_BLUE_REC = 1; //蓝方收礼
+	TEAM_PK_RANK_TYPE_RED_SEND = 2; //红方送礼
+	TEAM_PK_RANK_TYPE_BLUE_SEND = 3; //蓝方送礼
+}
+
+message ReqTPkOpenMod {
+	uint32 rid = 1;
+	int64 pk_time = 2; //pk时间 单位:秒
+	uint32 host_team = 3; //主持位属于队伍 取值HostTeamType
+}
+
+message ReqTPkBegin {
+	uint32 rid = 1;
+}
+
+message RspTPkBegin {
+	CommonData common = 1;
+	string pk_id = 2;
+}
+
+message ReqTPkCloseMod {
+	uint32 rid = 1;
+}
+
+message ReqTPkInfo {
+	uint32 rid = 1;
+}
+
+message TPkData {
+	optional uint32 pk_state = 1; //pk状态 取值TeamPKState
+	optional uint32 host_team = 2; //主持位属于队伍 取值HostTeamType
+	optional int64 red_diamond = 3;
+	optional int64 blue_diamond = 4;
+	optional int64 start_time = 5; //PK 的开始时间戳
+    optional int64 end_time = 6;   //PK 的结束时间戳
+    optional int64 left_time = 7; //当前阶段剩余时间 单位：毫秒
+	optional string pk_id = 8;
+}
+
+message RspTPkInfo {
+	CommonData common = 1;
+	TPkData data = 2;
+	int64 now = 3; // 服务器当前时间戳
+}
+
+message TeamPkTomlConfig {
+	uint32 switch = 1;
+	repeated uint32 pk_time = 2;
+	repeated uint32 pk_arms = 3;
+}
+
+message ReqRpcRoomTeamPkState {
+    repeated uint32 rids = 1;
+}
+
+message RspRpcRoomTeamPkState {
+    map<uint32, uint32> ridTeamPkMap = 1;
+}
+
+message TeamPkUserData {
+	uint32 uid = 1;
+	string icon = 2;
+	string name = 3;
+	int64 diamond = 4;
+}
+
+message TeamPkEndData {
+	uint32 rid = 1;
+	string pk_id = 2;
+	int64 redDiamond = 3;
+	int64 blue_diamond = 4;
+	TeamPkUserData contributor = 5;
+	repeated TeamPkUserData winner = 6;
+}
+
+message ReqTPkEndData {
+	string pk_id = 1;
+	uint32 rid = 2;
+}
+
+message RspTPkEndData {
+	CommonData common = 1;
+	TeamPkEndData pk_end_data = 2;
+}
+
+service TeamPkService {
+    // go/room/teampk/openMod 开启PK模式
+    rpc OpenMod (ReqTPkOpenMod) returns (RspCommon);
+    // go/room/teampk/begin 开始PK
+    rpc Begin (ReqTPkBegin) returns (RspTPkBegin);
+    // go/room/teampk/closeMod 关闭PK模式
+    rpc CloseMod (ReqTPkCloseMod) returns (RspCommon);
+    // go/room/teampk/info 获取PK信息
+    rpc Info (ReqTPkInfo) returns (RspTPkInfo);
+	// go/room/teampk/endPkData pk结束消息
+    rpc EndPkData (ReqTPkEndData) returns (RspTPkEndData);
+}

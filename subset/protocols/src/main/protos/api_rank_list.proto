@@ -1,0 +1,117 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+import "medal.proto";
+import "api_vip.proto";
+import "certification_sign.proto";
+
+enum RANK_TYPE {
+    RANK_TYPE_START = 0;
+    RANK_TYPE_ROOM = 1;  // 房间榜
+    RANK_TYPE_GIVE = 2;  // 贡献榜
+    RANK_TYPE_RECEIVE = 3;  // 流水榜榜
+    RANK_TYPE_LIVE_GIVE = 4; // 记录房间内收礼数据，跟语音房保持一致
+    RANK_TYPE_LIVE_RECEIVE = 5;  // 直播收礼榜
+    RANK_TYPE_GREEDY_REWARD = 6;  // greedy奖励榜
+    RANK_TYPE_FAMILY = 7;  // 家族榜
+    RANK_TYPE_TEAM_PK_CONTRIBUTOR = 8;  // 团战pk贡献榜
+    RANK_TYPE_HORSE_RACE = 9;  // 赛马
+    RANK_TYPE_USER_GLOBAL_CHAT_RECEIVE = 10;  // 语音房主播全局收礼榜
+    RANK_TYPE_USER_GLOBAL_VIDEO_RECEIVE = 11; // 视频房主播全局收礼榜
+    RANK_TYPE_GLOBAL_VIDEO_RECEIVE_CHARM = 12; // 视频直播全局魅力榜
+    RANK_TYPE_END = 13;
+}
+
+enum CYCLE_TYPE{
+    CYCLE_TYPE_START = 0;
+    CYCLE_TYPE_TODAY = 1;  // 日榜
+    CYCLE_TYPE_WEEK  = 2;  // 周榜
+    CYCLE_TYPE_MONTH = 3;  // 月榜
+    CYCLE_TYPE_SESSION_ID   = 4;  // 直播场次榜
+    CYCLE_TYPE_HALF_MONTH   = 5;  // 半月榜
+    CYCLE_TYPE_END   = 6;
+}
+
+enum RANK_SCOPE_TYPE {
+    RANK_SCOPE_TYPE_START = 0;
+    RANK_SCOPE_TYPE_ROOM = 1;    // 房间榜
+    RANK_SCOPE_TYPE_GLOBAL = 2;  // 全局榜
+    RANK_SCOPE_TYPE_END = 3;
+}
+
+enum MERGE_BIG_AREA_ID {
+    MERGE_BIG_AREA_ID_START = 0;
+    MERGE_BIG_AREA_ID_NY = 10000; // 南亚
+    MERGE_BIG_AREA_ID_DNY = 10001; // 东南亚（菲律宾+马来西亚）
+    MERGE_BIG_AREA_ID_ALL = 20000; // 所有大区
+}
+
+message ReqRankList {
+    // @gotags: v:"required"
+    int32 rank_type = 1;  // 榜单类型
+    // @gotags: v:"required"
+    int32 cycle = 2;      //  榜单周期
+    // @gotags: v:"required"
+    int32 scope = 3;      //  榜单周期
+    // @gotags: v:"required"
+    bool is_current_rank = 4;  // 是否为当前周期
+    uint32 room_owner_id = 5;  // 房主id
+    int32 merge_area_id = 6;   // 归并大区id
+    uint32 session_id = 7;     // 直播场次id
+}
+
+message RankItemInfo {
+    string icon = 1;  // 头像
+    string name = 2;  // 昵称
+    int32 gender = 3; // 性别
+    string avatar = 4; // 头像框
+    uint32 level = 5; // 等级
+    repeated WearMedal wear_medal_list = 6; // 勋章信息
+    VIPProfile vip_info = 7; // VIP 信息
+    UserCertificationSign certification_sign = 8; //认证标识
+}
+
+message RankItem {
+    uint32 rank = 1;  // 排名
+    uint64 score = 2; // 积分
+    uint32 object_id = 3;  // 对象id
+    RankItemInfo info = 4;  // 对象信息
+    optional uint32 room_id = 5;  // 房间id
+    optional string property = 6;  // 房间id
+}
+
+message ResRankList {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    RankItem user = 3;                   //请求用户信息
+    int64 timezone_offset = 4;           //时区偏移量
+    repeated RankItem rank_list = 5;     //榜单列表
+    optional uint64 room_total_score = 6;    //房间总积分
+    optional uint64 rank_list_score = 7;     //榜单总积分
+    string area = 8;                    //地区
+    int64 cycle_end = 9;                //周期结束时间
+    optional uint64 gift_user_count = 10; //送礼物用户数
+    optional ServMyFamilyScore my_family_score = 11; // 我的家族的积分信息, 如果没有这个字段，代表用户没有加入家族
+}
+
+message ReqRoomTotalScore {
+    // @gotags: v:"required"
+    uint32 room_owner_id = 1; // 房主id
+    string property = 2;      // 房间类型
+}
+
+message ResRoomTotalScore {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    uint64 room_total_score = 3;     //房间总积分
+}
+
+message ServMyFamilyScore {
+    string name = 1;
+    string badge = 2;
+    uint32 big_area_id = 3; // 家族所属的大区 ID
+    uint32 fid = 4; // 家族 ID
+    uint64 score = 5; // 家族获得的积分
+    int32 rank = 6; // 在榜上的名次， -1 代表没有上榜
+}

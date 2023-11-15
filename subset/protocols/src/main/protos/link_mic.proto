@@ -70,7 +70,7 @@ message ReqLinkmicHeartbeat {
 
 // 申请 等待列表
 enum ApplyListFrom {
-    NONE = 0; 
+    NONE = 0;
     ANCHOR = 1; // 主播端 主播邀请列表
     AUDIENCE = 2; // 主播端 用户邀请列表
     AUDIENCE_WAIT = 3; // 观众端 等待列表
@@ -214,6 +214,13 @@ message RspLinkmicInvite {
 message ReqLinkmicRejectMatch {
 }
 
+message ReqLinkmicReceiveGiftSwitch {
+    // @gotags: v:"required|min:1"
+    uint32 rid = 1; // 房间 ID
+    // @gotags: v:"required"
+    bool receive_gift = 2; // 是否接收礼物
+}
+
 service LinkmicService {
     // go/room/linkmic/invite 邀请连麦
     rpc LinkmicInvite (ReqLinkmicInvite) returns (RspLinkmicInvite);
@@ -253,4 +260,6 @@ service LinkmicService {
     rpc LinkmicLinkInfo (ReqLinkmicLinkInfo) returns (RspLinkmicLinkInfo);
     // go/room/linkmic/rejectMatch 拒绝匹配的邀请
     rpc LinkmicRejectMatch (ReqLinkmicRejectMatch) returns (RspLinkmicCommon);
+    // go/room/linkmic/receiveGiftSwitch 接收礼物开关
+    rpc LinkmicReceiveGiftSwitch (ReqLinkmicReceiveGiftSwitch) returns (RspLinkmicCommon);
 }

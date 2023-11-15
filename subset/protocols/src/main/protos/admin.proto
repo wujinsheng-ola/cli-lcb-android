@@ -1,0 +1,49 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+import "common.proto";
+
+message CharmBlackListNotify {
+    repeated uint32 ids = 1; // 用户ID或者公会Bid
+    int32 type = 2; // 1 用户，2 公会
+    int32 op = 3; // 1 新增，2 删除 
+}
+
+message ReqOpChatroomSuper {
+    uint32 is_open = 1; // 0 关闭权限 1 开启权限
+}
+
+enum BAN_ROOM_REASON {
+	BAN_ROOM_REASON_UNKNOWN = 0;
+	BAN_ROOM_REASON_DISTURB_RULE = 1; // 扰乱平台秩序
+	BAN_ROOM_REASON_POLITICS = 2; // 时事政治
+	BAN_ROOM_REASON_ILLEGAL = 3; // 违法信息
+	BAN_ROOM_REASON_VULGAR = 4; // 低俗恶心
+	BAN_ROOM_REASON_PORN = 5; // 淫秽色情
+	BAN_ROOM_REASON_FRAUDULENT_AD = 6; // 诈骗广告
+}
+
+message ReqBanRoom {
+	uint32 rid = 1; // 要封禁的房间 ID
+	uint32 admin_uid = 2; // 管理后台管理员的 uid, 客户端请求时传 0 即可
+	int64 duration = 3; // 要封禁的时长, 单位为秒
+	BAN_ROOM_REASON reason = 4; // 封禁理由
+	string remark = 5; // 备注
+}
+
+message ReqUnbanRoom {
+    uint32 rid = 1; // 房间 ID
+	uint32 admin_uid = 2; // 管理后台管理员的 uid, 客户端请求时传 0 即可
+    string remark = 3; // 备注
+}
+
+service SuperAdminService {
+    // go/ps/admin/opChatroomSuper 操作巡管权限
+    rpc OpChatroomSuper (ReqOpChatroomSuper) returns (RspCommon);
+
+    // go/ps/admin/banRoom 封禁房间
+    rpc BanRoom (ReqBanRoom) returns (RspCommon);
+    // go/ps/admin/unbanRoom 解封房间
+    rpc UnbanRoom (ReqUnbanRoom) returns (RspCommon);
+}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "common.proto";
+
+/* /go/room/admin/setRoomAdmin 设置房间内用户管理员权限 */
+// body 中的数据
+message ReqSetRoomAdmin {
+    // @gotags: v:"required|min:1"
+    uint32 rid = 1; // 房间id
+    uint32 ruid = 2; // 房主id
+    uint32 uid = 3; // 用户id
+    uint32 admin = 4; // admin > 0 接待管理员 否则 普通管理员
+    string op = 5; // 操作类型 add 增加 remove 删除
+}
+
+message RspSetRoomAdmin {
+    bool success = 1; // 是否成功
+    string msg = 2; // 错误信息
+}
+
+service AdminService {
+    // go/room/admin/setRoomAdmin 设置房间内用户管理员权限
+    rpc SetRoomAdmin (ReqSetRoomAdmin) returns (RspCommon);
+}
+

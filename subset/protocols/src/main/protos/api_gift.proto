@@ -1,0 +1,327 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+
+message ReqGiftConfig {
+    string display = 1; // 礼物面板展示的位置, 有效值： room, chat, order, video，默认为 room
+    uint32 rid = 2; // 房间 ID，当 display 是 room 时需要传递，其他场景传 0 即可
+}
+
+message GiftV2 {
+    int32 id = 1;
+    string name = 2;
+    // @inject_tag: json:"price"
+    float price = 3;
+    string display = 4;
+    string sub_display = 5;
+    string type = 6;
+    string gift_type = 7;
+    string income_type = 8;
+    string with_end = 9;
+    // @inject_tag: json:"size"
+    int32 size = 10;
+    // @inject_tag: json:"size_big"
+    int32 size_big = 11;
+    // @inject_tag: json:"ordering"
+    int32 ordering = 12;
+    // @inject_tag: json:"deleted"
+    int32 deleted = 13;
+    string title = 14;
+    string naming = 15;
+    string xratio = 16;
+    string xtype = 17;
+    string excludes = 18;
+    string tag_url = 19;
+    string tag_ids = 20;
+    string description = 21;
+    string jump_page = 22;
+    // @inject_tag: json:"version"
+    uint32 version = 23;
+    string vap_type = 24;
+    // @inject_tag: json:"vap_size"
+    int32 vap_size = 25;
+    // @inject_tag: json:"vap_header"
+    int32 vap_header = 26;
+    // @inject_tag: json:"vap_header_start"
+    int32 vap_header_start = 27;
+    // @inject_tag: json:"vap_header_end"
+    int32 vap_header_end = 28;
+    // @inject_tag: json:"is_combo"
+    uint32 is_combo = 29;
+    // @inject_tag: json:"is_skin"
+    int32 is_skin = 30;
+    int32 gid_basic = 31;
+    int32 num_to_unlock = 32;
+    uint32 app_id = 33;
+    uint32 is_app_public = 34;
+    string category = 35;
+    string name_ja = 36;
+    int32 price_ratio = 37;
+    // @inject_tag: json:"is_named"
+    uint32 is_named = 38;
+    // @inject_tag: json:"is_lucky"
+    int32 is_lucky = 39;
+    // @inject_tag: json:"isnaming"
+    uint32 isnaming = 40;
+    // @inject_tag: json:"close_hit"
+    uint32 close_hit = 41;
+    // @inject_tag: json:"num"
+    uint32 num = 42; // 背包中这个礼物的数量
+    // @inject_tag: json:"cid"
+    uint32 cid = 43;
+    // @inject_tag: json:"cnum"
+    uint32 cnum = 44; // 背包中这个礼物的优惠券数量
+    // @inject_tag: json:"duction_money"
+    uint32 duction_money = 45; // 可以扣减的金额
+    // @inject_tag: json:"has"
+    bool has = 46; // 背包中是否有这个礼物或者优惠券
+    // @inject_tag: json:"only_newpay"
+    int32 only_newpay = 47;
+    // @inject_tag: json:"state"
+    int32 state = 48;
+    // @inject_tag: json:"star"
+    int32 star = 49;
+    repeated GiftTag tag_list = 50;
+    string grant_way = 51;
+    string grant_status = 52;
+    string grant_limit = 53;
+    string grant_limit_range = 54;
+    // @inject_tag: json:"grant_limit_from"
+    uint32 grant_limit_from = 55;
+    // @inject_tag: json:"grant_limit_to"
+    uint32 grant_limit_to = 56;
+    string grant_limit_icon = 57;
+    string unlock_tips = 58;
+    string jump_tips = 59;
+    SkinGift skin = 60;
+    string ctype = 61;
+    // @inject_tag: json:"is_crown"
+    int32 is_crown = 62;
+    string icon = 63;
+    repeated GiftV2 skin_gifts = 64;    //  // 将所有的子孙皮肤礼物按照解锁顺序排列
+    int32 current_unlocked_index = 65;   //已被解锁的最高级别的皮肤礼物在skin_gifts的下标, -1,该礼物没有已经解锁的皮肤礼物
+    SkinGiftState skin_gift_state = 66; // 当前皮肤礼物状态进度
+    // @inject_tag: json:"worthy"
+    bool worthy = 67;
+    uint32 sent_num = 68; // 当前礼物在本月已经送出的数量, 即销量
+    CustomizedGiftInfo customized_gift_info = 69; // 自定义礼物属性
+    uint32 sent_num_rank = 70; // 当前销量的排行，1 第一名, 2 第二名，依此类推
+    string price_text = 71; // 礼物单价 string 版
+}
+
+message CustomizedGiftInfo {
+    int64 online_time = 1; // 上线时间戳
+    uint32 owner = 2; // 礼物拥有者 uid
+    string owner_pretty_id = 3; // 礼物拥有者的靓号
+}
+
+message GiftTag {
+    int32 id = 1;
+    string name = 2;
+    string icon = 3;
+    string remark = 4;
+}
+
+message SkinGiftState {
+    int32 basic_id = 1;
+    int32 total = 2;
+    int32 current = 3;
+    string tips = 4;
+    bool unlocked = 5;
+    int32 root_id = 6;
+}
+
+message SkinGift {
+    int32  id      = 1;
+    string name    = 2;
+    string icon    = 3;
+    int32  total   = 4;
+    int32  current = 5;
+    string tips    = 6;
+}
+
+
+
+message Commodities {
+    uint32 id = 1;
+    string name = 2;
+    int32 price = 3;
+    uint32 maxNum = 4;
+    uint32 num = 5;
+    string image = 6;
+    string giftImage = 7;
+    string type = 8;
+    string gift_type = 9;
+    string coupon_type = 10;
+    uint32 cid = 11;
+    // @inject_tag: json:"boxNum"
+    uint32 boxNum = 12;
+    // @inject_tag: json:"keyNum"
+    uint32 keyNum = 13;
+    // @inject_tag: json:"keyPrice"
+    uint32 keyPrice = 14;
+    uint32 duction_money = 15;
+    // @inject_tag: json:"only_newpay"
+    int32 only_newpay = 16;
+    // @inject_tag: json:"is_continue"
+    int32 is_continue = 17;
+    string ext_name = 18;
+    // @inject_tag: json:"used"
+    int32 used = 19;
+    // @inject_tag: json:"in_use"
+    int32 in_use = 20;
+    // @inject_tag: json:"period"
+    uint32 period = 21;
+    // @inject_tag: json:"period_hour"
+    uint32 period_hour = 22;
+    // @inject_tag: json:"period_end"
+    uint32 period_end = 23;
+}
+
+message Globalbox {
+    string type = 1;
+    string last_refresh_sub_cid = 2;
+    string last_refresh_dateline = 3;
+    string name = 4;
+    string image = 5;
+    string gid = 6;
+}
+
+message KeyName {
+    string key_name_5 = 1;
+    string key_name_6 = 2;
+    string key_name_7 = 3;
+}
+
+message FirstPayGift {
+    bool first_pay_entry_show = 1;
+    string first_pay_entry_doc = 2;
+    string first_pay_entry_icon = 3;
+    bool gift_board_entry_show = 4;
+    string gift_board_entry_doc = 5;
+    string gift_board_entry_icon = 6;
+    string gift_board_entry_url = 7;
+    bool pay_banner_show = 8;
+    string pay_banner_url = 9;
+    string pay_banner_img = 10;
+}
+
+enum GiftTabID {
+    GIFT_TAB_ID_UNKOWN = 0; // 占位用
+    GIFT_TAB_ID_ACTIVITY = 1; // 活动礼物 tab
+    GIFT_TAB_ID_HOT = 2; // 热门礼物 tab
+    GIFT_TAB_ID_COUNTRY_FLAG = 3; // 国旗礼物 tab
+    GIFT_TAB_ID_LUCK_GIFT = 4; // 幸运礼物 tab
+    GIFT_TAB_ID_CONSUME = 5; // 定制礼物 tab
+}
+
+message GiftTab {
+    // @inject_tag: json:"tab_id"
+    uint32 tab_id = 1; // 详见枚举 GiftTabID
+    string tab_name = 2;
+}
+
+message RspGiftConfigData {
+    // @inject_tag: json:"tab_id"
+    uint32 tab_id = 1; // 详见枚举 GiftTabID
+    string tab_name = 2;
+    repeated GiftV2 gifts = 3;
+}
+
+message ComboConfig {
+    uint32 maximum_interval = 1; // 产品定义断开combo的时长长，该时长有服务端配置定义，重置时机为用户触发combo礼物
+    uint32 package_duration = 2; // 客户端打包时长，该时长要大于combo最大间隔，重置时机为发送了服务端请求
+    uint32 time_out = 3; // 服务端定义的combo断开时长，该时长应为combo最大间隔的数倍，用于服务端对异常未能结束combo的事件，服务端自动结束combo处理。
+}
+
+message RspGiftConfig {
+    CommonData common = 1;
+    repeated RspGiftConfigData data = 2;
+    // @inject_tag: json:"money"
+    uint32 money = 3; // 用户钻石余额
+    // @inject_tag: json:"gold_coin"
+    uint32 gold_coin = 4; // 用户金币余额
+    repeated Commodities commodities = 5; // 用户背包物品列表
+    repeated Globalbox globalBox = 6; // 全局礼物
+    repeated Commodities keyCommodity = 7; // 用户背包的钥匙
+    // @inject_tag: json:"showBuyHeader"
+    uint32 showBuyHeader = 8; // 购买头像框是否弹窗
+    KeyName key_name = 9;
+    FirstPayGift pay_gift = 10; // 首充礼包
+    string country_reward_text = 11; // 国旗奖励文本
+    uint32 gift_version = 12;
+    uint32 hitTest = 13; // 余额不足直接弹充值弹窗A/B测试
+    uint32 limitMoney = 14; // 小于多少钱，余额不足，充值弹窗
+    ComboConfig combo_config = 15; // 连击配置
+    int64 timezone_offset = 16;           //时区偏移量
+    string customized_gift_text = 17; // 定制礼物玩法文本，仅当前大区支持此玩法时赋值
+}
+
+
+enum ComboStatus {
+    COMBO_STATUS_UNKNOWN = 0; // 未知
+    COMBO_STATUS_START = 1; // 开始
+    COMBO_STATUS_CONTINUE = 2; // 连续
+    COMBO_STATUS_COMMIT = 3; // 结束
+    COMBO_STATUS_NORMAL_GIFT = 4; // 普通礼物
+}
+
+message SendGiftInfo {
+    uint32 from_uid = 1; // 送礼uid
+    repeated SendGiftReceiver to_list = 2; // 收礼人列表
+    int32 gift_id = 3; // 礼物id
+    int32 gift_num = 4; // 礼物数量
+    uint32 rid = 5; // 送礼房间
+}
+
+message SendGiftReceiver {
+    uint32 uid = 1;
+    int32 position = 2; // 麦位, -1 表示用户已经不在麦位上
+}
+
+message ReqComboStart {
+    SendGiftInfo send_gift_info = 2;
+}
+message RspCombo {
+    CommonData common = 1;
+    int64 combo_id = 2; //
+    int32 user_balance = 3; // 用户钻石余额
+    int32 success_num = 4; // 真实连击数量
+    int32 failed_num = 5; // 失败连击数量
+}
+
+message ReqComboContinue {
+    int64 combo_id = 1; //
+    int32 combo_num = 2; // 连击数量
+    SendGiftInfo send_gift_info = 3; //
+}
+
+message ReqComboCommit {
+    int64 combo_id = 1; //
+    int32 combo_num = 2; // 连击数量
+    SendGiftInfo send_gift_info = 3;
+}
+
+message ReqSend {
+    SendGiftInfo send_gift_info = 2;
+}
+message RspSend {
+    CommonData common = 1;
+    int32 user_balance = 2; // 用户钻石余额
+}
+
+service GiftService {
+    // go/ps/gift/config 礼物面板
+    rpc Config (ReqGiftConfig) returns (RspGiftConfig);
+    // go/ps/gift/comboStart 首次连击
+    rpc ComboStart (ReqComboStart) returns (RspCombo);
+    // go/ps/gift/comboContinue 持续连击
+    rpc ComboContinue (ReqComboContinue) returns (RspCombo);
+    // go/ps/gift/comboCommit 连击结束提交
+    rpc ComboCommit (ReqComboCommit) returns (RspCombo);
+    // go/ps/gift/send 普通送礼接口
+    rpc Send (ReqSend) returns (RspSend);
+}

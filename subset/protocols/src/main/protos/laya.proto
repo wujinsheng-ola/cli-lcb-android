@@ -1,0 +1,73 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+import "game.proto";
+import "common.proto";
+// 客户端查询用户数据
+message ReqLayaUserDetail {
+   uint32 uid = 1;
+}
+
+message RespLayaUserDetail {
+   bool success = 1;
+   string msg = 2;
+   GameUserDetailData data = 3;
+   LayaUserInfo user_info = 4;
+}
+
+
+message LayaUserInfo {
+   string icon = 4;
+   string headerIcon = 5;
+   uint32 sex = 6;
+   uint32 age = 7;
+   string name = 8;
+   bool is_follow = 9;    // 我是否关注了他
+   bool is_my_follower = 10;  // 他是否关注了我
+}
+
+message ReqLayaExchange {
+   // @gotags: v:"required|min:1"
+   uint32 exchange_type = 1; // 兑换类型，1换金币，3换筹码
+   // @gotags: v:"required"
+   uint32 exchange_config_id = 2; // 兑换配置id，游戏策划会提供给产品
+}
+
+message RespLayaExchange {
+   bool success = 1;
+   string msg = 2;
+}
+
+message RespLayaStatus {
+   bool success = 1;
+   string msg = 2;
+   uint32 rid = 3;
+   string factoryType = 4; //  laya-billiards_match/ laya-carrom_match / laya-ludo_match / laya-teenpatti
+   uint32 room_type = 5; // 房间类型 0:房间外游戏,1:房间内游戏
+}
+
+message ReqLayaCancelReconnect{
+   uint32 rid = 1;
+}
+
+message RespLayaCancelReconnect{
+   bool success = 1;
+   string msg = 2;
+}
+
+
+service LayaService {
+   // go/ps/laya/userDetail 获取用户明细数据
+   rpc UserDetail (ReqLayaUserDetail) returns (RespLayaUserDetail);
+   // go/ps/laya/exchange 钻石兑换金币
+   rpc Exchange (ReqLayaExchange) returns (RespLayaExchange);
+   // go/ps/laya/status 用户是否在游戏中
+   rpc Status (Empty) returns (RespLayaStatus);
+   // go/ps/laya/userNum 获取当前用户数量
+   rpc UserNum (Empty) returns (RspGameUserNum);
+   // go/ps/laya/cancelReconnect
+   rpc CancelReconnect(ReqLayaCancelReconnect) returns (RespLayaCancelReconnect);
+}

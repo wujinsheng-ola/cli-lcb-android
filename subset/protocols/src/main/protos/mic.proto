@@ -1,0 +1,84 @@
+syntax = "proto3";
+package pb;
+
+// 表示目标文件生成的路径, go的包名就是最后的目录名
+// 目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+// RspMicCommon 通用的响应体，如果没有特别指出响应体，则使用该响应体
+message RspMicCommon {
+    optional bool success = 1;
+    optional string msg = 2;
+}
+
+/* -------------------- /go/room/mic/open 开启自己的麦克风 ----------------- */
+// ReqOpenMic 开麦请求体
+message ReqOpenMic {
+    optional int32 rid = 1; // 房间 ID
+    optional int32 position = 2; // 麦位
+}
+/* -------------------- /go/room/mic/open 开启自己的麦克风 ----------------- */
+
+/* -------------------- /go/room/mic/close 关闭自己的麦克风 ----------------- */
+// ReqOpenMic 开麦请求体
+message ReqCloseMic {
+    optional int32 rid = 1; // 房间 ID
+    optional int32 position = 2; // 麦位
+}
+/* -------------------- /go/room/mic/close 关闭自己的麦克风 ----------------- */
+
+/* -------------------- /go/room/mic/forbidden 禁麦克风，用户可以上麦但不能说话 ----------------- */
+message ReqForbiddenMic {
+    optional int32 rid = 1; // 房间 ID
+    optional int32 position = 2; // 麦位
+}
+/* -------------------- /go/room/mic/forbidden 禁麦克风，用户可以上麦但不能说话 ----------------- */
+
+/* -------------------- /go/room/mic/unforbidden 解禁麦克风 ----------------- */
+message ReqUnforbiddenMic {
+    optional int32 rid = 1; // 房间 ID
+    optional int32 position = 2; // 麦位
+}
+/* -------------------- /go/room/mic/unforbidden 解禁麦克风 ----------------- */
+
+/* -------------------- /go/room/mic/lock 禁用麦位 ----------------- */
+message ReqLockMic {
+    optional int32 rid = 1; // 房间 ID
+    optional int32 position = 2; // 麦位
+}
+/* -------------------- /go/room/mic/lock 禁用麦位 ----------------- */
+
+/* -------------------- /go/room/mic/unlock 解禁麦克风 ----------------- */
+message ReqUnlockMic {
+    optional int32 rid = 1; // 房间 ID
+    optional int32 position = 2; // 麦位
+}
+/* -------------------- /go/room/mic/unlock 解禁麦克风 ----------------- */
+
+/* -------------------- /go/room/mic/switch 切换麦位 ----------------- */
+message ReqSwitchMic {
+    optional int32 rid = 1; // 房间 ID
+    optional int32 from = 2; // 原来的麦位
+    optional int32 to = 3; // 想要切换到的麦位
+}
+/* -------------------- /go/room/mic/switch 切换麦位 ----------------- */
+
+message ReqJoinMic {
+    uint32 rid = 1; // 房间 ID
+    int32 position = 2; // 麦位位置, -1 代表没有选定麦位
+    uint32 uid = 3; // 用户ID
+    uint32 vrid = 4; // 车队房间 ID
+    uint32 inviter_uid = 5; // 邀请人
+    string unity_version = 6; // unity 游戏版本，已经无用了，只是为了保证和老接口的协议一致才保留这个字段
+}
+
+message RspJoinMic {
+    bool success = 1;
+    string msg = 2;
+    int32 err_code = 3;
+}
+
+service MicService {
+    // go/room/mic/join 上麦接口（迁移自 room/joinMic 接口）
+    rpc JoinMic (ReqJoinMic) returns (RspJoinMic);
+}

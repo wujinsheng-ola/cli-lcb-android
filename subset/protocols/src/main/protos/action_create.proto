@@ -1,0 +1,140 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "action_enter.proto";
+import "app.proto";
+import "live_room_sticker.proto";
+
+message ReqActionCreateV2 {
+    optional uint32 rid = 1; // 房间 ID, 如果没有填写 0 即可
+    // @gotags: v:"length:1,50"
+    optional string name = 2; // 房间标题
+    // @gotags: v:"length:1,64"
+    optional string icon = 3; // 房间封面
+    // @gotags: v:"max-length:256"
+    optional string tags = 4; // 房间标签, 多个标签用逗号隔开
+    // @gotags: v:"max-length:1024"
+    optional string desc = 5; // 房间描述(其实是房间公告), 视频直播没有可不填
+    // @gotags: v:"max-length:8"
+    optional string password = 6; // 房间密码, 没有可留空
+    optional string friends = 7; // 邀请的好友 uid 列表, 以逗号隔开
+    optional uint32 notify = 8; // 是否通知粉丝, 0 不通知, 1 通知, 默认为 1
+    // @gotags: v:"in:business,vip,fleet,private,game,union,liveroom"
+    optional string property = 9; // 房间类型, business 商业，vip 爵位(即现在的普通语音房)，fleet 家族房，private 个人(所有人都可以有), game 游戏房,union 联盟房, liveroom 视频直播
+    // @gotags: v:"in:chat,accompany,liveroom,ktv,laya-teenpatti"
+    optional string type = 10; // 房间子类型, 当 property 为 vip 时，需要填充此字段, chat 普通语言房, accompany 陪伴房
+}
+
+message RspActionCreateV2 {
+    bool success = 1; // 是否成功
+    string msg = 2; // 错误信息
+    optional uint32 rid = 3; // 房间 ID
+    int32 code = 4; // 错误码, 0 成功, 其它值表示失败, 详见 RoomErrorCode
+}
+
+message ReqPurviewCreate {
+    UserMemory user_memory = 1; // 用户手机内存配置
+}
+
+message UserLiveRoomSticker {
+    bool sticker_switch = 1; // 贴纸开关 1：开，2：关
+    LiveRoomSticker sticker_info = 2; //当前用户使用的贴纸id
+}
+
+message PurviewCreateData {
+    repeated PurviewCreateDataRoomInfo rooms = 1; // 已经存在的房间列表
+    repeated string chat_room_names = 2; // 普通语音房标题列表, 用于随机标题
+    repeated string video_room_names = 3; // 视频直播房标题列表, 用于随机标题
+    repeated string accompany_room_names = 4; // 陪伴语音房标题列表, 用于随机标题
+    PartyData party_data = 5; // 原 PHP 接口 /room/partyData 返回的数据
+    repeated RtcBaseInfo rtc_info = 6; // rtc 配置信息, 作废（但不能删掉，否则会影响线上的包）
+    RoomSwitchInfo switch_info = 7; // 开关信息
+    RtcInfo rtc_info_v2 = 8; // rtc 配置信息
+    VideoLiveBeautyAdaptiveConfig video_live_beauty_adaptive_config = 9; // 视频直播美颜自适应相关配置(定义在 partystar/app.proto 中)
+    uint32 auto_focus_face = 10; // 是否开启人脸对焦，0-关闭，1-开启，默认打开
+    repeated string private_parameters = 14; // 客户端透传给声网，固定结构
+    int32 landmark_quality = 15;  // 人脸识别精度参数
+}
+
+message RoomSwitchInfo {
+    optional bool voice_room = 1; // 语音房开关
+    optional bool video_live = 2; // 视频直播房开关
+    optional int32 video_live_beauty = 3; // 视频直播美颜开关配置, 参见 VideoLiveBeauty(定义在 partystar/app.proto 中)
+}
+
+message PartyDataRooms {
+    string room_type = 1;
+    string room_show = 2;
+    int32 room_lock = 3;
+}
+
+message PartyDataFriend {
+    uint32 uid = 1; // 好友 uid
+    uint32 online = 2; // 好友在线状态, 0 在线，1 离线，2 退出
+    uint32 online_dateline = 3; // 好友最后在线时间
+    string name = 4; // 好友昵称
+    string icon = 5; // 好友头像
+    uint32 in_room = 6; // 好友是否在房间中, 0 否，1 是
+}
+
+message PartyList {
+    string display = 1; // 显示的内容
+    string party_type = 2; // 类型
+    string party_group = 3; // 分组
+    string home_icon = 4; // 图标
+    string abstract_icon = 5; // 摘要图标
+}
+
+message PartyDataRoomInfo {
+    string icon = 1;
+    string type = 2;
+    string prefix = 3;
+    string name = 4;
+    string description = 5;
+    string rid = 6;
+    string password = 7;
+    uint32 reception = 8;
+    uint32 paier = 9;
+}
+
+message PartyDataPrivateLevel {
+    uint32 private_level = 1; // 私密等级
+    string level_name = 2; // 私密等级名称
+}
+
+message PartyData {
+    string party_name = 1;
+    string party_icon = 2;
+    repeated PartyDataRooms party_rooms = 3;
+    int32 friend_next = 4; // 好友列表是否有更多, 0 没有, 1 有
+    repeated PartyDataFriend friend_list = 5; // 好友列表
+    repeated PartyList party_list = 6; // 可以新建的房间列表
+    PartyDataRoomInfo room_info = 7; // 用户存在的语言房间信息
+    repeated PartyDataPrivateLevel private_levels = 8; // 私密等级列表
+    uint32 playing_num = 9;
+    uint32 match_style = 10;
+    uint32 need_verify_new = 11;
+}
+
+message PurviewCreateDataRoomInfo {
+    string label = 1;
+    string display = 2;
+    uint32 rid = 3; // 房间 ID
+    int32 deleted = 4; // 房间状态, -1 初始化, 0 正常, 1 关闭, 2 删除
+    string type = 5;
+    string icon = 6; // 房间封面
+    uint32 num = 7; // 房间人数
+    string property = 8; // 房间类型, // 房间类型, business 商业，vip 爵位(即现在的普通语音房)，fleet 家族房，private 个人(所有人都可以有), game 游戏房,union 联盟房, liveroom 视频直播
+    string tags = 9; // 房间标签, 以逗号隔开, 目前仅视频房有
+    int64 video_pk_duration = 10; // 当前用户设置的默认视频直播 pk 时长
+}
+
+message RspPurviewCreate {
+    bool success = 1; // 是否成功
+    string msg = 2; // 错误信息
+    PurviewCreateData data = 3;
+}

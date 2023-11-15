@@ -1,0 +1,28 @@
+// 重要： 新接口协议请不要再引用这个 proto 文件，请使用 partystar/common.proto 代替
+// 使用语句 import "common.proto"; 即可
+
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+enum RoomErrorCode {
+    SUCCESS = 0;
+    ERR_INVALID_PARAMS = 1000001; // 参数错误
+    ERR_INTERNAL_SERVER_ERROR = 1000002; // 服务器内部错误
+    ERR_USER_HAS_NO_PERMISSION = 1000003; // 用户没有权限
+    ERR_USER_IS_NOT_IN_ROOM = 1010001; // 用户已经不在房间里
+    ERR_USER_IS_NOT_IN_THIS_ROOM = 1010002; // 用户已经不在当前房间里
+    ERR_USER_WEALTH_LV_IS_NOT_ENOUGH_TO_LINK_MIC = 1010003; // 用户财富等级不够, 不能连麦
+    ERR_YOU_HAVE_BEEN_KICKED_OUT = 1010004; // 被踢出
+    ERR_WORD_DIRTY = 1010005; // 脏字检测未通过
+    ERR_DONOT_OP_AGIN = 1010006; // 请不要重复操作
+    ERR_LINKMIC_INVITATION_EXPIRED = 1010007; // 连麦邀请已过期
+    ERR_LINKMIC_USER_IS_LINKING = 1010008; // 尝试连麦的用户正在连麦中
+    ERR_ROOM_IS_NOT_EXISTS_OR_IS_CLOSED = 1010009; // 房间不存在或已关闭
+    ERR_LINKMIC_USER_LIVE_CALL_NOT_OPEN = 1010010; // 对方没有打开连麦功能
+    ERR_LINKMIC_LINK_MIC_IS_BREAK = 1010011; // 当前连麦已经中断了
+    ERR_ROOM_SKIN_EXPIRED   = 1010012;       // 房间皮肤已过期
+}

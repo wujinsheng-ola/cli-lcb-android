@@ -1,0 +1,111 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "app.proto";
+
+/* /go/ps/game/userDetail 获取游戏侧的等级和场次信息 */
+message ReqGameUserDetail {
+    // @gotags: v:"required|min:1"
+    uint32 uid = 1;
+}
+
+message PlayGameCountInfo {
+    uint32 game_id = 1; // 游戏 ID, 1 飞行棋, 2 撞球, 3 桌球
+    uint32 total = 2; // 游戏总次数
+    uint32 win = 3; // 冠军次数
+}
+
+message GameUserDetailData {
+    uint32 lv = 1; // 游戏等级
+    repeated PlayGameCountInfo game_info = 2;
+    GameLevelInfo game_level_info = 3;
+    DayGameExpInfo day_game_exp_info = 4;
+}
+
+message GameLevelInfo {
+    uint32 game_level = 1; // 当前的游戏等级
+    uint64 game_level_exp = 2; // 当前的经验值
+    uint64 cur_level_min_exp = 3; // 用户当前等级的最低经验值
+    uint64 next_level_min_exp = 4; // 用户下一等级的最低经验值
+}
+
+message DayGameExpInfo {
+    uint64 day_task_exp = 1; // 每日任务获取到的经验值
+    uint64 day_task_max_exp	= 2; // 每日任务获取到的经验值上限	
+    uint64 day_ludo_exp = 3;	// 飞行棋获得的经验值	
+    uint64 day_ludo_max_exp	= 4; // 玩飞行棋获取到的经验值上限	
+    uint64 day_carrom_exp = 5; // 撞球获得的经验值	
+    uint64 day_carrom_max_exp = 6; // 玩撞球获取到的经验值上限	
+    uint64 day_billiards_exp = 7; // 玩桌球获得的经验值	
+    uint64 day_billiards_max_exp = 8; // 通过玩桌球获取到的经验值上限
+    uint64 round_ludo_max_exp = 9; // 飞行棋每局最高经验
+    uint64 round_carrom_max_exp = 10; // 撞球每局最高经验
+    uint64 round_billiards_max_exp = 11; // 桌球每局最高经验
+}
+
+message RspGameUserDetail {
+    bool success = 1;
+    string msg = 2;
+    GameUserDetailData data = 3;
+}
+/* /go/ps/game/userDetail 获取游戏侧的等级和场次信息 */
+
+/* /go/ps/game/userNum 获取游戏的在玩人数 */
+message GameUserNumItem {
+    optional uint32 first_level = 1; // 赌注第一档位人数
+    optional uint32 second_level = 2; // 赌注第二档位人数
+    optional uint32 third_level = 3; // 赌注第三档位人数
+}
+
+message GameUserNumData {
+    GameUserNumItem ludo_info = 1; // 飞行棋的人数
+    GameUserNumItem carrom_info = 2; // 撞球的人数
+    GameUserNumItem billiards_info = 3; // 桌球的人数
+}
+
+message RspGameUserNum {
+    bool success = 1;
+    string msg = 2;
+    GameUserNumData data = 3;
+}
+/* /go/ps/game/userNum 获取游戏的在玩人数 */
+
+/* /go/ps/game/exchange 钻石兑换游戏货币 */
+// 钻石兑换游戏货币的请求体
+message ReqGameExchange {
+    // @gotags: v:"required|min:1"
+    uint32 exchange_type = 1; // 兑换类型，1换金币，3换筹码
+    // @gotags: v:"required"
+    uint32 exchange_config_id = 2; // 兑换配置id，游戏策划会提供给产品
+}
+
+// 钻石兑换游戏货币的响应体
+message RspGameExchange {
+    bool success = 1;
+    string msg = 2;
+}
+/* /go/ps/game/exchange 钻石兑换游戏货币 */
+
+/* /go/ps/game/quit 退出游戏房间，用于断线重连用户选择不进入游戏房间的场景 */
+message ReqGameQuit {
+    // @gotags: v:"required"
+    uint32 game_id = 1; // 游戏 ID, 1 飞行棋, 2 撞球, 3 桌球
+    // @gotags: v:"required"
+    uint32 room_id = 2; // 房间id
+}
+
+message RspGameQuit {
+    bool success = 1;
+    string msg = 2;
+}
+/* /go/ps/game/quit 退出游戏房间 */
+
+/* /go/ps/game/status 查询用户是否在游戏中的状态 */
+message RspGameStatus {
+    bool success = 1;
+    string msg = 2;
+    UserGameStatusInfo data = 3;
+}
+/* /go/ps/game/status 查询用户是否在游戏中的状态 */

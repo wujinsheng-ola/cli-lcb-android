@@ -1,0 +1,148 @@
+syntax = "proto3";
+package pb;
+
+// 表示目标文件生成的路径, go的包名就是最后的目录名
+// 目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message MicScoreCircle {
+  uint32 rid = 1;
+  uint32  circle_type = 2;
+  uint32 end_type = 3;
+  uint32 start_time = 4;
+  uint32 end_time = 5;
+  uint32 status = 6;
+  uint32 time = 7;
+  string winner = 8;
+  int64 remain_time = 9;
+  int64 runtime = 10;
+}
+
+message ScoreWithProfile {
+  uint32 uid = 2;
+  uint32 score = 3;
+  string username = 5;
+  string icon = 6;
+  uint32 lv = 7;
+  uint32 sex = 8;
+}
+
+message ReqMicScoreRunning {
+   uint32 rid = 1;
+}
+message RespMicScoreRunning {
+  MicScoreRunning data = 1;
+  string msg = 2;
+  uint32 err_code = 3;
+}
+message MicScoreRunning {
+  uint32 status = 1;
+  MicScoreCircle circle = 2;
+  uint32 is_running = 3;
+}
+
+message ReqMicScoreStartCircle {
+   uint32 rid = 1;
+   uint32 circle_type = 2;
+   uint32 time = 3;
+}
+
+message RespMicScoreStartCircle {
+   string msg = 1;
+   uint32 err_code = 2;
+}
+
+
+message ReqMicScoreEndCircle {
+   uint32 rid = 1;
+}
+
+message RespMicScoreEndCircle {
+  string msg = 1;
+  uint32 err_code = 2;
+}
+
+message ReqMicScoreRecord {
+   uint32 rid = 1;
+   uint32 page_size = 2;
+   uint32 page_num = 3;
+}
+
+message RespMicScoreRecord {
+   repeated MicScoreCircle data = 1;
+   string msg = 2;
+   uint32 err_code = 3;
+}
+
+message ReqMicScoreDetail {
+  uint32 rid = 1;
+  uint32 start_time = 2;
+  uint32 status = 3;
+}
+
+message RespMicScoreDetail {
+  MicScoreDetail data = 1;
+  string msg = 2;
+  uint32 err_code = 3;
+}
+
+message MicScoreDetail {
+  uint32 rid = 1;
+  uint32 start_time = 2;
+  repeated ScoreWithProfile scores = 3;
+}
+
+message ReqMicScoreClose {
+  uint32 rid = 1;
+}
+
+message RespMicScoreClose {
+  string msg = 1;
+  uint32 err_code = 2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

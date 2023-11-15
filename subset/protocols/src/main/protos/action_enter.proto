@@ -19,6 +19,7 @@ import "fall_treasure.proto";
 import "boom_rocket.proto";
 import "room_manage.proto";
 import "skin.proto";
+import "live_room_custom_sticker.proto";
 
 message EnterData {
     uint32 uid = 1; //用户ID
@@ -323,6 +324,7 @@ message BigAreaPkSwitch {
 message BanScreenShotAndRecord {
     bool ban_screen_shot = 1;
     bool ban_record = 2;
+    bool watermark = 3; // 是否展示水印
 }
 
 message BanScreenShotAndRecordConfig {
@@ -403,6 +405,15 @@ message ResRoomExtraData {
     ExtraCodeRedpacketConfig code_redpacket_config = 12; // 口令红包配置
     uint32 customize_bg_switch = 13;// 定制房间背景开关 0 关闭，1 开启
     RoomSkinData  room_skin_data = 14; // 房间皮肤数据
+    CustomStickerInfo custom_sticker_info = 15; // 自定义贴纸信息
+    uint64 start_time = 16; // 房间开播时间
+    ReceiveGiftSwitch receive_gift_switch = 17; // 收礼开关
+    bool music_witch = 18; // 视频直播间背景音乐开关
+}
+
+message ReceiveGiftSwitch {
+    bool display = 1; // 是否显示收礼开关
+    bool enable = 2; // 收礼开关
 }
 
 message ExtraCodeRedpacketConfig {

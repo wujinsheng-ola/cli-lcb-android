@@ -1,0 +1,27 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+import "api_lucky_wheel.proto";
+
+// /go/room/option/getOpenVideoRoom
+message ReqGetOpenVideoRoom {
+}
+
+message RspGetOpenVideoRoom {
+    CommonData common = 1;
+    optional uint32 rid = 2; // 是否有正在开播的房间，rid>0就是有
+}
+
+service VideoRoomInfoService {
+    // go/room/option/getOpenVideoRoom
+    rpc GetOpenVideoRoom (ReqGetOpenVideoRoom) returns (RspGetOpenVideoRoom);
+    
+}
+
+//返回房间在线人数
+message ResLuckyWheel {
+    LuckyWheelInfo info = 1;
+}

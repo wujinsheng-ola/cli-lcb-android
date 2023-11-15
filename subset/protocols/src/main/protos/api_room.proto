@@ -1,0 +1,53 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+import "medal.proto";
+import "api_vip.proto";
+import "certification_sign.proto";
+import "api_user.proto";
+import "action_enter.proto";
+import "common.proto";
+
+message ReqVideoLiveOnlineList {
+    int32 user_index = 1;  // 用户排序位置
+    // @gotags: v:"required"
+	uint32 room_id = 2; // 房间ID
+}
+
+message VideoLiveUserInfo {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    uint32 sex = 4;
+    uint32 age = 5;
+    string avatar = 6; // 头像框
+    uint32 diamond = 7; // 送礼钻石数
+    uint32 lv = 8;
+    uint32 room_role = 9;
+    repeated WearMedal wear_medal_list = 10;
+    VIPProfile vip_info = 11; // VIP 信息
+    UserCertificationSign certification_sign = 12;
+    bool is_rich = 13;
+    UserMountIcon user_mount = 14; // 用户的座驾
+}
+
+message ResVideoLiveOnlineList {
+    bool success = 1;
+    string msg = 2; // 错误信息
+    uint32 count = 3;
+    repeated VideoLiveUserInfo onlineUserList = 4;
+    bool end_tag = 5; // 结尾数据标记
+}
+
+// 设置直播间禁止录屏截图
+message ReqLiveRoomBanScreenShotAndRecord {
+    uint32 rid = 1;
+    BanScreenShotAndRecord config = 2;
+}
+
+
+service RoomService {
+     // /go/room/room_manage/banScreenShotAndRecord 设置直播间禁止录屏截图
+     rpc BanScreenShotAndRecord (ReqLiveRoomBanScreenShotAndRecord) returns (RspCommon);
+}

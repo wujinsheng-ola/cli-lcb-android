@@ -74,6 +74,7 @@ enum ErrorCode {
     ERROR_RED_PACKET_ROOM_IS_LOCKED = 1010305; // 房间已锁，不能发红包
     ERROR_RED_PACKET_WRONG_CODE = 1010306; // 口令红包的口令不正确
     ERROR_RED_PACKET_INVALID_CODE = 1010307; // 口令红包的口令不合法（如命中了敏感词）
+    ERROR_RED_PACKET_UPPER_LIMIT = 1010308; // 达到每日强红包上限
 
     ERROR_USER_ALREADY_JOIN_FAMILY = 1010400; // 用户已经加入家族
     ERROR_FAMILY_NAME_ALREADY_USED = 1010401; // 家族名已经被使用
@@ -131,6 +132,7 @@ enum ErrorCode {
 
     // 现金兑换钻石黑名单
     ERROR_EXCHANGE_CASH_TO_DIAMOND_IN_BLACKLIST     = 1011201; // 现金兑换钻石时用户在黑名单中返回
+    ERROR_EXCHANGE_CASH_TO_AGENT_DIAMOND_CAN_NOT    = 1011202; // 薪资兑换币商钻石无法进行兑换
 
     // 优惠券
     ERROR_COUPON_NOT_ENOUGH = 1011301;  // 优惠券不足
@@ -141,6 +143,25 @@ enum ErrorCode {
     ERROR_HORSE_RACE_PAUSE = 1011501; // 赛马暂停
     ERROR_HORSE_RACE_CLOSE = 1011502; // 赛马关闭
     ERROR_HORSE_RACE_STAKING_TIMEOUT = 1011503;// 赛马下注超时
+
+    // 充值活动
+    ERROR_TOP_UP_ACTIVITY_CLOSE = 1011600; // 活动未开启
+
+    // 公会管理员
+    ERROR_BROKER_ADMIN_CAN_NOT_SET = 1011700; // 不符合设置公会管理员的条件
+
+
+    // 人脸活体校验不通过
+    ERROR_FACE_DETECT_LIVING = 1011800;
+    // 人脸撞脸
+    ERROR_FACE_CONFLICT = 1011801;
+    // 人脸不匹配
+    ERROR_FACE_NOT_MATCH = 1011802;
+    // certifyId 不合法
+    ERROR_FACE_CERTIFY_ID_ILLEGALITY = 1011803;
+    // 频率控制
+    ERROR_FACE_RATE_LIMIT = 1011804;
+
 }
 
 message AdminAuditCommon {
@@ -182,10 +203,13 @@ enum AwardType {
     AwardType_VIP = 5; // vip
     AwardType_EXP = 6; // 经验
     AwardType_PRETTY_ID = 7; // 自选靓号
+    AwardType_TOP_UP_ACTIVITY_CUSTOMIZE = 8; // 累充活动自定义奖励
 }
 
 message AwardExpand {
     uint32 level = 1; // 等级， vip使用
+    string award_desc = 2; // 奖励描述， 累充奖励使用
+    string panel_image = 3; // 物品背景， 累充奖励使用
 }
 
 message AwardInfo {

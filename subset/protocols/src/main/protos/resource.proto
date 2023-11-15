@@ -1,0 +1,23 @@
+syntax = "proto3";
+package pb;
+
+import "common.proto";
+
+option go_package = "../app/pb";
+
+message ReqQueryCacheResource {
+}
+
+message CacheResourceData {
+    repeated string image = 1;
+}
+
+message RspQueryCacheResource {
+    CommonData common = 1;
+    CacheResourceData data = 2;
+}
+
+service ResourceService {
+    // /go/ps/resource/queryCacheResource 获取缓存资源
+    rpc QueryCacheResource (ReqQueryCacheResource) returns (RspQueryCacheResource);
+}

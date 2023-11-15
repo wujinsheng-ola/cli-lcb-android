@@ -1,0 +1,308 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+import "api_chatroom_background.proto";
+
+message LuckyGiftMsg {
+    uint32 rid = 1; // 房间id
+    uint32 uid = 2; // 送礼用户id
+    int32 gift_id = 3; // 礼物id
+    int32 gift_money = 4; // 礼物价格，单价
+    int32 gift_bet = 5; // 下注，单价
+    int32 num = 6; // 单组送出
+    string gift_name = 7;
+    repeated LuckyGiftOrder giftOrder = 8;
+}
+
+message LuckyGiftOrder {
+    uint32 receiveId = 1; // 收礼列表
+    uint64 order_id = 2; // 主键ID
+}
+
+enum LUCK_GIFT_PRIZE_TYPE {
+    LUCK_GIFT_PRIZE_TYPE_UNKNOWN = 0;
+    LUCK_GIFT_PRIZE_TYPE_NORMAL = 1; // 1 - 9 倍
+    LUCK_GIFT_PRIZE_TYPE_BIG = 2; // 10 - 49 倍
+    LUCK_GIFT_PRIZE_TYPE_SUPER = 3; // 50倍及以上
+}
+
+message NotifyLuckyGiftPrize {
+    uint32 uid = 1;
+    string uname = 2;
+    string uicon = 3;
+    int32 gift_id = 4; // 礼物id
+    uint32 rid = 5; // 房间id
+    repeated LuckyGiftPrizeInfo prize_list = 6;
+    // @inject_tag: json:"total_prize"
+    int32 total_prize = 7;
+    int32 count = 8;
+    string gift_name = 9;
+    repeated int32 oneTradePrizeList = 10; // 一个用户单次多个幸运礼物的中奖列表
+    int32 receive_count = 11; // 收礼用户数量
+}
+
+message LuckyGiftPrizeInfo {
+    int64 prize = 1;
+    int32 type = 2;
+}
+
+message LuckyGiftLogsReq{
+    string cursor = 1;
+}
+
+message LuckyGiftLogsResp{
+    string msg = 2;
+    uint32 err_code = 3;
+    LuckyGiftLog data = 4;
+
+}
+
+message LuckyGiftLog {
+    string cursor = 1;
+    bool has_next = 2;
+    repeated LuckyLog logs = 3;
+}
+
+message LuckyLog {
+    uint32 dateline = 1;
+    uint32 gift_id = 2;
+    uint32 gift_num = 3;
+    uint32 receive = 4;
+    uint32 diamond = 5;
+}
+
+
+message LuckyGiftBannerReq{
+    uint32 gift_id = 1;
+}
+
+message LuckyGiftBannerResp {
+    string msg = 2;
+    uint32 err_code = 3;
+    repeated  LuckyGiftBanner data = 4;
+}
+
+message LuckyGiftBigAreaSwitch {
+    optional int32 lucky_gift_switch = 1;
+}
+message LuckyGiftBanner {
+    string name  = 1;
+    string gift_name = 2;
+    uint32 money = 3;
+}
+
+// 查询中幸运大奖的用户记录列表请求参数
+message QueryWinBigPrizeListReq {
+    PaginationParams page_info  = 1;  // 分页信息
+    // @gotags: v:"required|between:1,2"
+    int32 query_type            = 2;  // 查询的类型，1:分页查询上一轮用户中奖列表； 2: 分页查询本轮用户中奖列表
+}
+
+enum BigPrizeType {
+    UnknownBigPrizeType = 0;
+    LastRound  = 1;  // 上一轮记录
+    ThisRound  = 2;  // 本轮记录
+}
+
+// 用户中幸运大奖信息
+message UserPrizeInfo {
+    uint32 uid = 1;         // 用户UID
+    string user_name = 2;   // 用户昵称
+    string user_icon = 3;   // 用户头像
+    int64  prize = 4;       // 中奖价值，单位：钻石
+    int64  record_id = 5;   // 中奖记录ID
+}
+
+message QueryWinBigPrizeListData {
+    repeated UserPrizeInfo prize_list = 1;  // 中奖用户列表
+    PaginationParams page_info        = 2;  // 分页信息
+}
+
+// 查询中幸运大奖的用户记录列表返回参数
+message QueryWinBigPrizeListResp {
+    CommonData common = 1;
+    QueryWinBigPrizeListData data = 3;
+}
+
+// 查询赠送幸运礼物中奖用户列表请求参数
+message QueryGiftPrizeListReq {
+    // @gotags: v:"required|between:1,2"
+    int32 query_type     = 1;  // 查询的类型，1:查询最新的赠送幸运礼物用户中奖列表；2:查询中X倍及以上的用户记录列表
+}
+
+enum GiftPrizeType {
+    UnknownGiftPrizeType = 0;
+    Recently  =   1;  // 最新的列表
+    XTimesLimit = 2;  // 中X倍以上的记录列表
+}
+
+// 赠送礼物的中奖信息
+message GiftPrizeInfo {
+    uint32 uid = 1;             // 用户UID
+    string user_name = 2;       // 用户昵称
+    string user_icon = 3;       // 用户头像
+    string gift_icon = 4;       // 礼物图标
+    int32  times     = 5;       // 中奖倍数
+    int64  prize     = 6;       // 中奖价值，单位：钻石
+    int32 gift_id    = 7;       // 礼物id
+}
+
+message QueryGiftPrizeListData {
+    repeated GiftPrizeInfo prize_list = 1;  // 中奖用户列表 默认返回最新30条记录
+}
+
+// 查询赠送幸运礼物中奖用户列表返回参数
+message QueryGiftPrizeListResp {
+    CommonData common = 1;
+    QueryGiftPrizeListData data = 3;
+}
+
+// 查询幸运礼物列表请求参数
+message QueryLuckyGiftListReq {
+}
+
+message GiftInfo {
+    int32 gift_id    = 1; // 礼物id
+    string gift_icon = 2; // 礼物图标
+    int64 gift_price = 3; // 礼物价格，单位：钻石
+}
+
+message QueryLuckyGiftListData {
+    repeated GiftInfo gift_list = 1;  // 幸运礼物列表
+}
+
+// 查询幸运礼物列表返回参数
+message QueryLuckyGiftListResp {
+    CommonData common = 1;
+    QueryLuckyGiftListData data = 3;
+}
+
+// 获取幸运礼物大奖的信息请求参数
+message GetBigPrizeInfoReq {
+}
+
+message GetBigPrizeInfoData {
+    int64 begin_time = 1;   // 开始时间， 时间戳，毫秒
+    int64 end_time   = 2;   // 结束时间，时间戳，毫秒
+    int32 has_begin  = 3;   // 奖池是否开启; 1: 已开启； 2:未开启； 3:奖池维护中
+    int64 remain_time = 4;  // 距离大奖结束还剩的时间，单位：毫秒
+    int32 threshold_times = 5; // 抽大奖的门槛，幸运礼物中的倍数这个值及以上才能参与抽大奖
+    int32 display_times   = 6; // 幸运礼物中的倍数在这个值及以上会在大奖页面展示出来
+    int64 total_prize     = 7; // 奖池累计奖金，单位：钻石
+    int32 percent_low     = 8; // 中奖百分比最低比例，单位：百分之一
+    int32 percent_up      = 9; // 中奖百分比最高比例，单位: 百分之一
+    string open_range_time = 10; // 大奖每天开启的时间段， 形如 23:00-24:00
+    bool   is_first_round  = 11; // 当前是否是第一轮开奖
+}
+
+enum BigPrizeBeginType {
+    UnknownBeginType = 0;
+    HasOpen = 1; // 已开启
+    NotOpen = 2; // 未开启
+    Closed  = 3; // 奖池关闭维护中
+}
+
+// 获取幸运礼物大奖的信息的返回参数
+message GetBigPrizeInfoResp {
+    CommonData common = 1;
+    GetBigPrizeInfoData data = 3;
+}
+
+// 查询用户中大奖的记录列表请求参数
+message QueryUserBigPrizeListReq {
+    PaginationParams page_info  = 1;  // 分页信息
+}
+
+// 中大奖的信息
+message BigPrizeRecord {
+    int32 percent   = 1;  // 中奖百分比, 单位：百分之一
+    int64 prize = 2;      // 中奖价值，单位：钻石
+    int64 prize_time = 3; // 中奖时间，时间戳， 毫秒
+    int64 record_id  = 4; // 中奖记录id
+}
+
+message QueryUserBigPrizeListData {
+    repeated BigPrizeRecord prize_list = 1;  // 中奖用户列表
+    PaginationParams page_info         = 2;  // 分页信息
+}
+
+// 查询用户中大奖的记录列表返回参数
+message QueryUserBigPrizeListResp {
+    CommonData common = 1;
+    QueryUserBigPrizeListData data = 3;
+}
+
+message LuckyGiftBigPrizeBannerRsp {
+    CommonData common = 1;
+    LuckyGiftBigPrizeBanner data = 2;
+}
+
+message LuckyGiftBigPrizeBanner {
+    int64 prize_pool_num = 1; // 奖池金额
+    string content = 2; // banner内容
+    int32 count_down = 3; // 倒计时, -1 代表不展示倒计时
+    bool is_open = 4; // 当前大区是否开启幸运礼物大奖池活动
+    bool show_user_list = 5; // 是否展示用户中奖记录列表
+}
+
+message LucyGiftBigPrizeRateConfigItem {
+    uint32 rate = 2; // 倍率，万分之几，1000 代表 10%，2000 代表 20%，以此类推
+    uint32 weight = 3; // 权重
+}
+
+message LucyGiftBigPrizeRateConfig {
+    uint32 stage = 1; // 可以使用本配置的阶段
+    repeated LucyGiftBigPrizeRateConfigItem rate_list = 2; 
+}
+
+message LuckyGiftBigPrizeDisplayConfig {
+    string time_range = 1; // 可以开奖的时间区间
+    uint32 reward_low_percent = 2; // 可以获取奖池的最低百分比
+    uint32 reward_high_percent = 3; // 可以获取奖池的最高百分比
+    uint32 open_prize_threshold = 4; // 可以参与开大奖的普通返奖倍数
+}
+
+message LuckyGiftBigPrizeLotteryConfig {
+    string start_time = 1;
+    int64 duration = 2;
+    int64 start_time_ts = 3; // 开奖的开始时间，时间戳
+    int64 end_time_ts = 4; // 开奖的结束时间，时间戳
+    uint32 switch = 5; // 开奖开关
+    uint32 threshold = 6; // 可以参与开大奖的普通返奖倍数
+    uint32 bet_percent = 7; // 分到大奖池的百分比
+    uint32 min_diamond_can_open = 8; // 可以开奖的最小奖池金额，单位是钻石
+    uint32 min_display_rate = 9; // 需要记录到 redis 的最小普通返奖倍数
+    repeated LucyGiftBigPrizeRateConfig rate = 10; // 各阶段的开奖比例配置
+    int64 now = 11; // 获取当前轮次信息时的时间戳
+    uint64 round_id = 12; // 开奖轮次 ID
+}
+
+message LuckyGiftBigPrizeInfo {
+    uint64 round_id = 1; // 轮次ID
+    int64 total_diamonds = 2; // 当前奖池钻石数
+    int64 diamonds_left = 3; // 发奖后奖池剩余钻石数
+    uint32 uid = 4; // 用户ID
+    string region = 5; // 大区缩写
+    uint32 winning_ratio = 6; // 用户获的的奖励倍数
+    int64 winning_diamonds = 7; // 用户赢取的奖励
+}
+
+service LuckyGiftService {
+    // go/ps/lucky-gift/queryLuckyGiftList 查询幸运礼物列表
+    rpc QueryLuckyGiftList(QueryLuckyGiftListReq) returns(QueryLuckyGiftListResp);
+    // go/ps/lucky-gift/getBigPrizeInfo 获取幸运礼物大奖的信息
+    rpc GetBigPrizeInfo(GetBigPrizeInfoReq) returns(GetBigPrizeInfoResp);
+    // go/ps/lucky-gift/queryWinBigPrizeList 查询中幸运大奖的用户记录列表
+    rpc QueryWinBigPrizeList(QueryWinBigPrizeListReq) returns(QueryWinBigPrizeListResp);
+    // go/ps/lucky-gift/queryGiftPrizeList 查询赠送幸运礼物中奖用户列表
+    rpc QueryGiftPrizeList(QueryGiftPrizeListReq) returns(QueryGiftPrizeListResp);
+    // go/ps/lucky-gift/queryUserBigPrizeList 查询用户中大奖的记录列表
+    rpc QueryUserBigPrizeList(QueryUserBigPrizeListReq) returns(QueryUserBigPrizeListResp);
+
+    // go/ps/lucky-gift/luckyGiftBigPrizeBanner 幸运大奖banner
+    rpc LuckyGiftBigPrizeBanner (Empty) returns (LuckyGiftBigPrizeBannerRsp);
+}
+

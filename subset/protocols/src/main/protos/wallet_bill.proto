@@ -1,0 +1,293 @@
+syntax = "proto3";
+import "entity_xs_user_money.proto";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+
+message ReqWalletBill {
+  // @gotags: v:"bill_type@integer|min:1"
+  int32 bill_type = 1;
+  // @gotags: v:"bill_page@integer|min:0"
+  int32 bill_page = 2;
+  // @gotags: v:"bill_version@integer|min:0"
+  int32 bill_version = 3;
+}
+
+message WalletBillResp {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  BillFlow bill_flow = 3;              //账单数据
+}
+
+enum BILL_TYPE{
+  BILL_TYPE_START = 0;
+  BILL_TYPE_DIAMOND = 1;
+  BILL_TYPE_COIN = 2;
+  BILL_TYPE_AGENT = 3;
+  BILL_TYPE_CHARM = 4;
+  BILL_TYPE_BANKNOTE = 5;
+  BILL_TYPE_END = 6;
+}
+
+enum BILL_CONDITION {
+   BILL_CONDITION_START = 0;
+   BILL_CONDITION_ALL = 1;
+   BILL_CONDITION_CHAT_ROOM = 2;
+   BILL_CONDITION_LIVE_ROOM = 3;
+   BILL_CONDITION_PRIVATE_CHAT = 4;
+   BILL_CONDITION_CONSUME = 5;
+   BILL_CONDITION_END = 6;
+}
+message BillFlow {
+  uint32 BillType = 1;
+  oneof BillData{
+    BillInfo BillInfo = 2;
+  }
+}
+
+message OneBillData{
+  uint64 id = 1;
+  string op = 2;
+  uint32 dateline = 3;
+  string subject = 4;
+  uint32 money = 5;
+  string reason = 6;
+  uint32 tag = 7;
+}
+
+enum ONE_BILL_DATA_TAG{
+    ONE_BILL_DATA_TAG_START = 0;
+    ONE_BILL_DATA_TAG_CHAT = 1;
+    ONE_BILL_DATA_TAG_LIVE = 2;
+    ONE_BILL_DATA_TAG_PRIVATE = 3;
+    ONE_BILL_DATA_TAG_COUPON = 4;
+    ONE_BILL_DATA_TAG_END = 5;
+}
+
+
+message BillInfo{
+  repeated OneBillData BillDataList = 1;
+}
+
+message AllowResp {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  bool switch = 3;                     //开关
+}
+
+// 维护账单的REASON，如果是兑换，命名需体现出A货币兑换B货币
+enum BILL_TYPE_OP_REASON {
+  BILL_TYPE_OP_REASON_START = 0;
+  BILL_TYPE_OP_REASON_CHARM_EXCHANGE_DIAMOND = 1;    // 魅力兑换钻石
+  BILL_TYPE_OP_REASON_CHARM_EXCHANGE_BANKNOTE = 2;   // 魅力兑换现金
+  BILL_TYPE_OP_REASON_BANKNOTE_EXCHANGE_DIAMOND = 3; // 现金兑换钻石
+  BILL_TYPE_OP_REASON_DIAMOND_EXCHANGE_COIN = 4;   // 钻石兑换金币
+  BILL_TYPE_OP_REASON_DIAMOND_EXCHANGE_CHIP = 5;   // 钻石兑换筹码
+  BILL_TYPE_OP_REASON_CHARM_CONVERT_DIAMOND = 6;   // 魅力值转换为钻石
+  BILL_TYPE_OP_REASON_BANKNOTE_EXCHANGE_DIAMOND_TO_OTHER = 7;   // 现金兑换钻石
+  BILL_TYPE_OP_REASON_BANKNOTE_EXCHANGE_DIAMOND_FROM_OTHER = 8;   // 现金兑换钻石
+  BILL_TYPE_OP_REASON_BEAN_CONVERT_DIAMOND = 9;   // 金豆转钻石
+  BILL_TYPE_OP_REASON_TICK_CLEAN_CHARM = 10;      // 薪资结算扣除
+  BILL_TYPE_OP_REASON_REFUND_CHARM = 11;          // 退款操作
+  BILL_TYPE_OP_REASON_ACTIVITY_REWARD_DIAMOND = 12;  // 活动奖励钻石
+  BILL_TYPE_OP_REASON_OFFICIAL_DEDUCTION = 13;  // 官方扣除
+  BILL_TYPE_OP_BANKNOTE_EXCHANGE_DIAMOND= 14;  // 现金兑换钻石，现金账单
+  BILL_TYPE_OP_BANKNOTE_EXCHANGE_SELF= 15;  // 提现给自己
+  BILL_TYPE_OP_BANKNOTE_TRANSFER_OTHER= 16;  // 现金转给他人
+  BILL_TYPE_OP_BANKNOTE_RECEIVE= 17;  // 收到他人转账
+  BILL_TYPE_OP_BANKNOTE_EXCHANGE_FAILED_REFUND= 18;  // 现金提现失败退还
+  BILL_TYPE_OP_REASON_OFFICIAL_DEDUCTION_CHARM = 19;  // 官方扣除魅力值
+  BILL_TYPE_OP_REASON_OFFICIAL_DEDUCTION_DIAMOND = 20;  // 官方扣除钻石
+  BILL_TYPE_OP_REASON_OFFICIAL_DEDUCTION_AGENT = 21;  // 官方扣除币商钻石
+  BILL_TYPE_OP_REASON_OFFICIAL_DEDUCTION_BANKNOTE = 22;  // 官方扣除薪资
+  BILL_TYPE_LIVE_ROOM_GIFT_GIVE = 23;  // 视频直播间送礼
+  BILL_TYPE_LIVE_ROOM_GIFT_RECEIVE = 24;  // 视频直播间收礼
+  BILL_TYPE_GREEDY_REWARD = 25;  // greedy奖励
+  BILL_TYPE_GREEDY_CONSUME = 26;  // greedy消费
+  BILL_TYPE_GREEDY_REFUND = 27;  // greedy退款
+  BILL_TYPE_SICBO_REWARD = 28;  // Sicbo奖励
+  BILL_TYPE_SICBO_CONSUME = 29;  // Sicbo消费
+  BILL_TYPE_SICBO_REFUND = 30;  // Sicbo官方扣除退还
+  BILL_TYPE_SLOT_CONSUME  = 31; // slot 老虎机下注
+  BILL_TYPE_SLOT_REWARD = 32; // slot 老虎机奖励
+  BILL_TYPE_SLOT_REFUND = 33; // slot 老虎机退款
+  BILL_TYPE_LUCKY_GIFT_CONSUME = 34; // 幸运礼物消费
+  BILL_TYPE_LUCKY_GIFT_REWARD = 35; // 幸运礼物奖励
+  BILL_TYPE_RED_PACKET_SEND = 36; // 房间内发红包
+  BILL_TYPE_RED_PACKET_GRAB = 37; // 房间内抢红包
+  BILL_TYPE_RED_PACKET_REFUND = 38; // 房间内红包退款
+  BILL_TYPE_BUY_VIP = 39; // 购买VIP
+  BILL_TYPE_VIP_REBATE = 40; // VIP每日返钻
+  BILL_TYPE_UNLOCK_DIAMOND = 41; // 风险账户钻石解锁
+  BILL_TYPE_CHAT_CHARM_EXCHANGE_DIAMOND = 43;    // 语音房魅力兑换钻石
+  BILL_TYPE_LIVE_CHARM_EXCHANGE_DIAMOND = 44;    // 视频房魅力兑换钻石
+  BILL_TYPE_CHAT_CHARM_EXCHANGE_BANKNOTE = 45;   // 语音房魅力兑换现金
+  BILL_TYPE_LIVE_CHARM_EXCHANGE_BANKNOTE = 46;   // 视频房魅力兑换现金
+  BILL_TYPE_LUCKY_WHEEL_BET = 47;     // lucky wheel 下注
+  BILL_TYPE_LUCKY_WHEEL_WIN = 48;     // lucky wheel 中奖
+  BILL_TYPE_LUCKY_WHEEL_REFUND = 49;  // lucky wheel 退款
+  BILL_TYPE_LUCKY_WHEEL_SHARE = 50;   // lucky wheel 分成
+  BILL_TYPE_BUY_CHATROOM_BACKGROUND = 51; // 购买房间背景
+  BILL_TYPE_RAMADAN_RECEIVE_COLLECTOR_REWARD = 52; // 领取斋灯活动斋灯收藏家奖励
+  BILL_TYPE_RAMADAN_SEND_COLLECTOR_REWARD = 53; // 发放斋灯活动斋灯收藏家奖励
+  BILL_TYPE_RAMADAN_SIGNIN_SUPPLEMENTARY = 54; // 斋月节活动补签到
+  BILL_TYPE_LAYA_BET = 55; // laya扣除赌注
+  BILL_TYPE_LAYA_REFUND = 56; // laya退款
+  BILL_TYPE_LAYA_SETTLEMENT = 57; // laya结算
+  BILL_TYPE_LAYA_GUIDE = 58;// laya引导
+  BILL_TYPE_LAYA_MERGE = 59;// laya合并账单
+  BILL_TYPE_LUCKY_GIFT_BIG_PRIZE_REWARD = 60; // 幸运礼物大奖奖励
+  BILL_TYPE_LUCKY_GIFT_BIG_PRIZE_DEDUCT = 61; // 幸运礼物大奖奖励扣减
+  BILL_TYPE_GREEDY_BOX_REWARD = 62; // greedy宝箱返奖
+  BILL_TYPE_BUY_PRETTY        = 63; // 购买靓号
+  BILL_TYPE_BOOM_ROCKET_AWARD        = 64; // 爆火箭奖励
+  BILL_TYPE_BACKGROUND_BANKNOTE = 65;  // 官方薪资结算，现金banknote
+  BILL_TYPE_BACKGROUND_REWARD = 66;  // 官方奖励
+  BILL_TYPE_EID_AL_ADHA_RECEIVE_UPGRADE_REWARD = 67; // 领取宰牲节活动升级奖励
+  BILL_TYPE_EID_AL_ADHA_SEND_UPGRADE_REWARD = 68; // 发放宰牲节活动升级奖励
+  BILL_TYPE_CHAT_ROOM_PACKAGE_SEND = 69; // 语聊房送礼
+  BILL_TYPE_CHAT_ROOM_PACKAGE_RECV = 70; // 语聊房收礼
+  BILL_TYPE_CHAT_PACKAGE_SEND = 71; // 私聊收礼
+  BILL_TYPE_CHAT_PACKAGE_RECV = 72; // 私聊收礼
+  BILL_TYPE_CONSUME = 73; // 消费，未明确指定的消费行为
+  BILL_TYPE_CONSUME_DECO_PRESENT_PACKAGE = 74; // 赠送装扮
+  BILL_TYPE_INCOME = 75; //收入，未明确指定的收入行为
+  BILL_TYPE_RETURN = 76; //充值，PT的某种充值行为，暂未发现功能
+  BILL_TYPE_INCOME_LOCK = 77; // 邀约,PT
+  BILL_TYPE_INCOME_UNLOCK = 78; // 邀约完成,PT
+  BILL_TYPE_BACK = 79;  // 退款,PT
+  BILL_TYPE_INCOME_BACK = 80;  // 唱歌订单退款,PT
+  BILL_TYPE_CHANGE = 81;  // 余额兑换
+  BILL_TYPE_COLLECT = 82;
+  BILL_TYPE_CONFISCATE = 83; // 官方没收
+  BILL_TYPE_CASH_BACK = 84; // 提现失败退回，PT
+  BILL_TYPE_PUNISH = 85; // 冻结
+  BILL_TYPE_PUNISH_BACK = 86; // 冻结退还
+  BILL_TYPE_GIVE = 87; // 赠送
+  BILL_TYPE_AGENT_PAY = 88; // 币商充值
+  BILL_TYPE_REFUND = 89; // 原路退款
+  BILL_TYPE_SUBSIDY = 90; // 补贴
+  BILL_TYPE_CASH = 91; // 申请提现，PT
+  BILL_TYPE_PAY = 93; // 充值，包含谷歌、苹果和第三方充值
+  BILL_TYPE_DRAGON_TIGER_REWARD = 94;  // 龙虎斗奖励
+  BILL_TYPE_DRAGON_TIGER_CONSUME = 95;  // 龙虎斗消费
+  BILL_TYPE_DRAGON_TIGER_REFUND = 96;  // 龙虎斗官方扣除退还
+  BILL_TYPE_HORSE_RACE_REWARD = 97;  // 赛马奖励
+  BILL_TYPE_HORSE_RACE_CONSUME = 98;  // 赛马消费
+  BILL_TYPE_HORSE_RACE_REFUND = 99;  // 赛马退款
+  BILL_TYPE_OP_REASON_SYSTEM_ADD = 100;  // 系统补偿加cash
+  BILL_TYPE_OP_REASON_SYSTEM_SUB = 101;  // 系统回收扣cash
+  BILL_TYPE_CHAT_CHARM_EXCHANGE_COUPON = 102;    // 语音房魅力兑换优惠券
+  BILL_TYPE_LIVE_CHARM_EXCHANGE_COUPON = 103;    // 视频房魅力兑换优惠券
+  BILL_TYPE_OP_REASON_BANKNOTE_EXCHANGE_AGENT_MONEY = 104; // 薪资兑换币商钻石
+  BILL_TYPE_HALLOWEEN_RECEIVE_TASK_REWARD = 105; // 领取万圣节活动任务奖励
+  BILL_TYPE_HALLOWEEN_SEND_TASK_REWARD = 106; // 发放万圣节活动任务奖励
+  BILL_TYPE_ACT_RECEIVE_REWARD = 107; // 领取活动奖励
+  BILL_TYPE_ACT_SEND_REWARD = 108; // 发放活动奖励
+}
+// 添加账单枚举，需要重启bill_sync账单cmd ！！！！！
+
+message BillFlowMeta {
+  string type = 1;
+  EntityXsUserMoney before = 2;
+  EntityXsUserMoney after = 3;
+  uint32 to = 4;
+  uint32 from = 5;
+  int32 gift_id = 6;
+  uint64 session_id = 7;
+  int32 num = 8;
+  bool bag = 9;
+  uint32 rid = 10;
+  uint64 greedy_id = 11;
+  uint64 sic_bo_id = 12;
+  uint64 diamond = 13;
+  int32 gift_price = 14; // 礼物价格，幸运礼物下注记录
+  int32 bet = 15; // 幸运礼物下注价格
+  string goid = 16; // 游戏业务的订单 ID, game_order_id
+  uint32 vip_level = 17; // vip等级
+  int32 lucky_wheel_id = 18;
+  string round_uuid = 19; // 游戏唯一标识
+  string game_type = 20; // 游戏类型
+  string order_id = 21; // 订单id
+  int32 deduction = 22; // 优惠券抵扣金额
+  uint64 dragon_tiger_id = 23; // 龙虎斗id
+  uint64 horse_race_id = 24; // 赛马id
+  uint32 bid = 25;
+  uint32 coupon_product_id = 26;
+  uint32 coupon_product_num = 27;
+  int32 coupon_amount = 28;
+  uint32 coupon_id =  29;
+  string red_packet_pid = 30;  // 红包id
+  uint32 red_packet_sender = 31;  // 红包发送者
+  int64 red_packet_send_time = 32; // 红包发送时间
+}
+
+// php入账（送礼）
+message BillFlowMetaLiveRoomPHPReason {
+  string type = 1;
+  uint32 rid = 2;
+  uint32 to = 3;
+  uint32 from = 4;
+  int32 _id = 5; // gift id
+  int32 _num = 6; // gift num
+  int32 _in_c = 8;  // 收礼者礼物分成
+  int32 _in_c_b = 9; // 家族分成，暂时为使用，填0
+  int32 mx = 10; // isMengxin 注册7天内，且房间消费不超过2000
+  int32 diamond = 11; // 单个收礼用户收到的礼物钻石数
+  int32  _bag = 12;// 是否使用背包
+  bool multi = 13; // 批量赠送
+  int32 cid = 14; // 使用背包的cid
+  int32 duction_money = 15; //使用优惠券抵扣的金额
+  uint32 bid = 16;
+}
+
+// v2版本
+
+message BillFlowV2 {
+  uint32 BillType = 1;
+  oneof BillData{
+    BillInfo BillInfo = 2;
+  }
+  bool has_next = 3;
+  string cursor = 4;
+}
+
+
+message ReqWalletBillV2 {
+  // @gotags: v:"bill_type@integer|min:1"
+  int32 bill_type = 1;
+  // @gotags: v:"bill_version@integer|min:0"
+  int32 bill_version = 3;
+
+  int32 bill_condition = 4;
+
+  string cursor = 5;
+}
+
+message WalletBillV2Resp {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  BillFlowV2 bill_flow = 3;              //账单数据
+}
+
+message ReqRechargeLimit {
+  string product_id = 1; // 支付配置product_id
+}
+
+message RspRechargeLimit {
+  CommonData common = 1;
+  bool is_limit = 2;  // true 被限制，false 未限制
+}
+
+// 前端使用
+service RechargeLimitService {
+  // go/ps/walletbill/rechargeLimit 充值限制
+  rpc RechargeLimit (ReqRechargeLimit) returns (RspRechargeLimit);
+}
+
+message BillSyncIdx {
+  uint64 id = 1;
+  uint32 dateline = 2; 
+}

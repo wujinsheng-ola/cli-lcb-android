@@ -1,0 +1,59 @@
+syntax = "proto3";
+import "common.proto";
+import "coupon.proto";
+package pb;
+
+option go_package = "../app/pb";
+
+message CouponListRes {
+    CommonData common = 1;
+    repeated CouponShow coupon_list = 2;
+}
+
+/*message CouponDetailReq {
+    uint32 coupon_id = 1;  // 客户端背包ID
+}
+
+message CouponDetailRes {
+    CommonData common = 1;
+    string name = 2;
+    string desc = 3;
+    string icon = 4;
+    int32 amount = 5;
+    int32 expire_time = 6;
+    int32 num = 7;
+    uint32 coupon_id = 8;
+    int32 type = 9;
+}*/
+
+message CouponProductListReq {
+    // @gotags: v:"required|in:1"
+    uint32 money_type = 1;  // 0:金币,1:魅力值,2:钻石
+}
+
+message CouponProduct {
+    uint32 id = 1;			// 商品id
+    uint32 money = 2;					// 消耗魅力值
+    uint32 coupon_id = 3;       // 优惠券id
+    string name = 4;                    // 优惠券名字
+    string icon = 5;                    // 优惠券图片
+    int32 amount = 6;                   // 优惠券面额
+    string desc = 7;                    // 优惠券描述
+    string expire_time = 8;             // 过期时间
+    repeated string scenes = 9;         // 使用场景slot,greedy
+    string utc_timezone = 10;
+}
+
+message CouponProductListResp {
+    CommonData common = 1;
+    repeated CouponProduct list = 2;
+}
+
+
+service CouponService {
+    // /go/ps/economy/coupon/list 获取优惠券列表
+    rpc List (Empty) returns (CouponListRes);
+    // /go/ps/economy/coupon/detail 获取优惠券详情
+    //rpc Detail (CouponDetailReq) returns (CouponDetailRes);
+    rpc CouponProductList (CouponProductListReq) returns (CouponProductListResp);
+}

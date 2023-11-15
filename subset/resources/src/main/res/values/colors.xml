@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
-    <color name="colorPrimary">#FFFFC542</color>
+    <color name="colorPrimary">@color/mainBrandColor</color>
     <color name="colorPrimaryDark">#FF513090</color>
     <color name="colorAccent">#FF2B2B2F</color>
 
@@ -11,7 +11,7 @@
     <color name="forthTextColor">#FFFAFAFB</color>
     <color name="fifthTextColor">#FF2B2B2F</color>
     <!--    品牌颜色-->
-    <color name="mainBrandColor">#FF2B2B2F</color>
+    <color name="mainBrandColor">#FFFFC542</color>
     <color name="secondaryBrandColor">#FF2B2B2F</color>
 
     <!--    分割线-->

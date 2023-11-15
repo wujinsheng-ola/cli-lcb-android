@@ -1,0 +1,16 @@
+syntax = "proto3";
+package pb;
+
+// 表示目标文件生成的路径, go的包名就是最后的目录名
+// 目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ReqRoomDescription {
+    uint32 rid = 1; // 房间id
+    string room_description = 2; // 房间公告
+}
+
+message RspRoomDescription {
+    bool success = 1;
+    string msg = 2; // 错误信息
+}

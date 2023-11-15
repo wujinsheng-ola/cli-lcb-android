@@ -118,6 +118,12 @@ message RspAppHomeData {
     bool is_game_compatible_mode_whitelist = 32; // 是否在游戏兼容模式白名单
     bool is_support_rich = 33; //是否支持展示rich标签
     bool use_new_feed = 34; // 使用新的feed接口
+    ExchangePriceModel exchange_price_model = 35; // 定价模式
+}
+
+message ExchangePriceModel {
+    bool support_switch = 1; // 是否支持切换定价模式
+    uint32 price_type = 2;   // 当前定价模式类型 0:默认模式 1:特殊定价模式
 }
 
 message GuestRelationJumpSwitch {

@@ -1,0 +1,168 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+enum ECONOMY_CMD {
+    ECONOMY_CMD_START = 0;
+    ECONOMY_CMD_FIRST_RECHARGE = 1;  // 首充
+    ECONOMY_CMD_LIVE_ROOM_GIFT = 2;  // 视频直播送礼数据
+    ECONOMY_CMD_LINK_MIC_GIFT = 3;  // 视频连麦积分数据统计
+    ECONOMY_CMD_TOPUP_ACTIVITY = 4; // 充值活动
+    ECONOMY_CMD_VIDEO_LIVE_PK_GIFT = 5; // 视频直播 PK 时送礼统计
+    ECONOMY_CMD_END = 6;
+}
+
+message Economy {
+    ECONOMY_CMD EconomyCmd = 1;
+    string seq = 2;
+    string EncodeMsg = 3; 
+}
+
+enum ECONOMY_OP_TYPE {
+    ECONOMY_OP_TYPE_START = 0;
+    ECONOMY_OP_TYPE_RECHARGE = 1;  // 充值
+    ECONOMY_OP_TYPE_TRANSFER = 2;  // 转账
+    ECONOMY_OP_TYPE_END = 3;
+}
+
+message EconomyFirstPay {
+    uint32 uid = 1;   // 用户ID
+    int32 money = 2;  // 充值金额
+    ECONOMY_OP_TYPE op = 3;     // 操作
+}
+
+message EconomyTopUp {
+    uint32 uid = 1;   // 用户ID
+    int32 money = 2;  // 充值金额
+    ECONOMY_OP_TYPE op = 3;     // 操作
+}
+
+message EconomyLiveRoomGift {
+    uint64 session_id = 1;   // 用户ID
+    uint64 rid = 2;   // 用户房间ID
+    int32 diamond = 3;  // 送礼钻石数
+    int32 charm = 4;    // 送礼魅力值
+}
+
+message EconomyLinkMicGift {
+    uint64 session_id = 1;   // 连麦ID
+    uint32 uid = 2;   // 收礼uid
+    int32 diamond = 3;  // 送礼钻石数
+    int32 charm = 4;    // 送礼魅力值
+}
+
+message EconomyVideoLivePkGift {
+    string pk_id = 1;   // PK ID
+    uint32 uid = 2;   // 收礼 uid
+    int32 diamond = 3;  // 送礼钻石数
+    int32 charm = 4;    // 送礼魅力值
+    uint32 sender = 5; // 送礼人 uid
+}
+
+/*
+  这里的类型设置为按位操作0表示所有开关关闭，后续开关分别按位操作，如果是开关关闭，则不会设置该位的值，如果是开关打开，则会设置该位的值
+  所有开关打开，则该值为0xFFFFFFFF
+*/
+enum BANKNOTE_EXCHANGE_SWITCH {
+    BANKNOTE_EXCHANGE_SWITCH_CLOSE = 0; // 开关关闭
+    BANKNOTE_EXCHANGE_SWITCH_DIAMOND = 1; // 钻石开关
+    BANKNOTE_EXCHANGE_SWITCH_CASH = 2; // 提现开关
+    BANKNOTE_EXCHANGE_SWITCH_DIAMOND_AND_CASH = 3; // 钻石和提现开关都打开
+    BANKNOTE_EXCHANGE_SWITCH_AGENT_DIAMOND = 4; // 兑换币商钻石开关
+}
+
+message BanknoteExchangeConfig {
+    uint32 switch = 1; // 薪资开关
+    uint32 rate_self = 2; // 兑换给自己的比率，比率为万分位
+    uint32 rate_other = 3; // 兑换给他人的比率，比率为万分位
+}
+
+/*
+  这里的类型设置为按位操作0表示所有开关关闭，后续开关分别按位操作，如果是开关关闭，则不会设置该位的值，如果是开关打开，则会设置该位的值
+  所有开关打开，则该值为0xFFFFFFFF
+*/
+enum MONEY_EXCHANGE_TYPE{
+    MONEY_EXCHANGE_TYPENONE = 0; // 开关关闭
+    MONEY_EXCHANGE_TYPE_DIAMOND = 1; // 魅力值兑钻打开
+    MONEY_EXCHANGE_TYPE_BANKNOTE = 2;  // 薪资兑换开关
+    MONEY_EXCHANGE_TYPE_COUPON = 4; // 魅力值兑换优惠券
+}
+
+// 兑换黑名单类型
+enum CHARM_EXCHANGE_BLACK_LIST_TYPE{
+    CHARM_EXCHANGE_BLACK_LIST_TYPE_NONE = 0; // 无黑名单
+    CHARM_EXCHANGE_BLACK_LIST_TYPE_BANKNOTE = 1; // 魅力值兑薪资黑名单
+    CHARM_EXCHANGE_BLACK_LIST_TYPE_DIAMOND = 2;  // 魅力值兑钻石黑名单
+
+    // 现金兑换与魅力值兑换同用一张表，枚举值放一起
+    MONEY_EXCHANGE_FOR_DIAMOND            = 4;   // 现金兑换成钻石
+    MONEY_EXCHANGE_TO_PRIVATE_WALLET      = 8;   // 现金兑换到私人账户
+
+    CHARM_EXCHANGE_BLACK_LIST_TYPE_COUPON = 16; // 魅力值兑换优惠券黑名单
+    CHARM_EXCHANGE_BLACK_LIST_TYPE_AGENT_DIAMOND = 32; // 现金兑换币商钻石黑名单
+}
+
+message CharmExchangeConfig {
+    uint32 type = 1; // 开放兑换类型
+    uint32 level_diamond = 2; // 钻石兑换等级限制
+    uint32 level_banknote = 3; // 薪资兑换等级限制
+    uint32 level_coupon = 4; // 优惠券兑换等级限制
+}
+
+message BrokerVoiceData {
+    int32 income_charm = 1;
+}
+
+message BrokerVideoData {
+    int32 charm = 1;
+}
+
+message BrokerCharmData {
+    BrokerVoiceData voice_data = 1; 
+    BrokerVideoData video_data = 2;
+}
+
+message BrokerCharmRes {
+    bool success = 1;
+    repeated BrokerCharmData data = 2;
+}
+
+message BillReason {
+
+}
+
+// BanknoteExchangeAgentMoneyConfig 薪资兑换币商钻石配置
+message BanknoteExchangeAgentMoneyConfig {
+    uint32 switch = 1; // 大区开关
+    BanknoteExchangeAgentMoneyPriceConfig config = 2; // 兑换配置
+}
+
+enum BanknoteExchangeAgentMoneyPriceType {
+    BANKNOTE_EXCHANGE_AGENT_MONEY_PRICE_TYPE_NONE = 0;
+    BANKNOTE_EXCHANGE_AGENT_MONEY_PRICE_TYPE_FIXED = 1; // 固定定价
+    BANKNOTE_EXCHANGE_AGENT_MONEY_PRICE_TYPE_TIERED = 2; // 阶梯定价
+}
+
+message BanknoteExchangeAgentMoneyTieredPrice {
+    uint32 min_quota = 1; // 当前档位最低美金数量, 包含;
+    uint32 max_quota = 2; // 当前档位最高美金数量, 不包含;
+    uint32 price = 3; // 定价的比例, 代表 1 美金可以兑换的钻石数, 数值为万分比的值
+}
+
+// BanknoteExchangeAgentMoneyPriceConfig 薪资兑换币商钻石兑换比例配置
+message BanknoteExchangeAgentMoneyPriceConfig {
+    uint32 price_type = 1; // 定价模式, 参见 BanknoteExchangeAgentMoneyPriceType
+    uint32 fixed_price = 2; // 固定定价的比例, 代表 1 美金可以兑换的钻石数, 数值为万分比的值
+    repeated BanknoteExchangeAgentMoneyTieredPrice tiered_price_list = 3; // 阶梯定价的配置列表
+}
+
+enum EconomyExchangeType {
+    ECONOMY_EXCHANGE_TYPE_NONE = 0;
+    ECONOMY_EXCHANGE_TYPE_BANKNOTE_AGENT_MONEY = 1; // 薪资兑换币商钻石
+}
+
+enum ECONOMY_NOTIFY_CMD {
+    ECONOMY_NOTIFY_CMD_UNKNOW = 0;
+    ECONOMY_NOTIFY_CMD_TOP_UP_ACTIVITY = 1;
+}

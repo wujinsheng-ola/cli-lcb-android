@@ -1,0 +1,129 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+
+/*
+    **生效大区：**必选，包含每个大区&所有大区选项，选择“所有大区”表示该贴纸在所有大区均生效，每个大区生成一条数据；
+    **序号：**必填项，支持输入数字，表示该贴纸在对应大区的排序序号；
+    **贴纸id：**必填项，下拉选项，展示贴纸素材库中已有的贴纸素材，必填项，展示格式为【ID+名称】，并支持搜索，保存后不可修改；
+    **贴纸图标：**选择贴纸id后自动展示；
+    **贴纸名称：**选择贴纸id后自动展示；
+    **生效状态：**必填项，包含生效&不生效两个选项，默认选择为生效；
+*/
+message LiveRoomCustomStickerBigAreaConfig {
+    bool switch = 1; // 开关
+}
+
+message LiveRoomCustomSticker {
+    uint32 id = 1; // 贴纸id，业务使用，管理后台不会使用到该字段
+    uint32 sn = 2; // 序号sort number
+    string img = 3; // 展示图片
+    string resource = 4; // 资源文件
+    string name = 5;
+    string remark = 6; // 备注
+    bool is_open = 7; // 是否上架
+    string content = 8; // 内容
+    string extra_data = 9; // 位置信息，服务端透传
+}
+
+message RspLiveRoomCustomStickerConfig {
+    CommonData common = 1;
+    repeated LiveRoomCustomSticker custom_sticker_list = 2;
+}
+
+message ReqLiveRoomCustomStickerEdit {
+    uint32 id = 1;
+    string content = 2; // 内容
+    string extra_data = 3; // 位置信息，服务端透传
+}
+
+message RspLiveRoomCustomStickerEdit {
+    CommonData common = 1;
+}
+
+// ---------------------------------------管理后台调用---------------------------------------------
+// 素材部分
+message CmsCustomStickerResource {
+    LiveRoomCustomSticker custom_sticker = 1;
+    repeated uint32 using_big_area_list = 2; // 正在使用中的大区列表
+}
+message ReqGetCustomStickerResourceList {
+    PageParams page = 1; // 分页参数
+    uint32 custom_sticker_id = 2; // 贴纸id
+    string name = 3; // "贴纸名称"
+}
+message RspGetCustomStickerResourceList {
+    CommonData common = 1;
+    PageResData page = 2; // 分页信息
+    repeated CmsCustomStickerResource custom_sticker_list = 3; // 贴纸素材列表
+}
+message ReqCustomStickerResourceAdd {
+    LiveRoomCustomSticker custom_sticker = 1;
+}
+message RspCustomStickerResourceAdd {
+    CommonData common = 1;
+    uint32 id = 2; // 返回自增id，管理后台记录用
+}
+
+message ReqCustomStickerResourceEdit {
+    LiveRoomCustomSticker custom_sticker = 1;
+}
+
+// 管理部分
+message CmsCustomStickerManage {
+    uint32 manage_id = 1; //
+    uint32 big_area_id = 2; // "大区"
+    uint32 sn = 3; // "排序"
+    uint32 status = 4; // "生效状态查询"
+    LiveRoomCustomSticker custom_sticker = 5;
+}
+message ReqGetCustomStickerManageList {
+    PageParams page = 1; // 分页参数
+    uint32 custom_sticker_id = 2; // 贴纸id
+    string name = 3; // "贴纸名称"
+    uint32 big_area_id = 4; // "大区"
+    uint32 status = 5; // "生效状态查询"
+}
+message RspGetCustomStickerManageList {
+    CommonData common = 1;
+    PageResData page = 2; // 分页信息
+    repeated CmsCustomStickerManage custom_sticker_list = 3; // 贴纸管理列表
+}
+message ReqCustomStickerManageAdd {
+    CmsCustomStickerManage custom_sticker_manage = 1;
+}
+message RspCustomStickerManageAdd {
+    CommonData common = 1;
+    uint32 id = 2; // 返回自增id，管理后台记录用
+}
+message ReqCustomStickerManageEdit {
+    CmsCustomStickerManage custom_sticker_manage = 1;
+}
+
+message CustomStickerInfo {
+    bool switch = 1;
+    uint32 id = 2;
+    string content = 3;
+    string img = 4; // 展示图片
+    string resource = 5; // 资源文件
+    string name = 6;
+    string extra_data = 7; // 位置信息，服务端透传
+}
+
+message ReqCustomStickerNotifyPush {
+    uint32 rid = 1;
+    CustomStickerInfo custom_sticker_info = 2;
+}
+
+// ---------------------------------------管理后台调用 end---------------------------------------------
+
+service LiveRoomCustomStickerService {
+    // /go/room/live_room_custom_sticker/config 获取贴纸配置列表
+    rpc Config (Empty) returns (RspLiveRoomCustomStickerConfig);
+    // /go/room/live_room_custom_sticker/edit 设置用户贴纸（获取贴纸设置在go/room/purview/query接口获取）
+    rpc Edit (ReqLiveRoomCustomStickerEdit) returns (RspLiveRoomCustomStickerEdit);
+}
+

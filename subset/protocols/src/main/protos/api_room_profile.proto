@@ -1,0 +1,49 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "common.proto";
+
+message ReqRoomProfileInfo {
+    uint32 rid = 1;
+    uint32 uid = 2;
+}
+
+enum RoomProfileRole {
+    ROOM_PROFILE_ROLE_AUDIENCE = 0; // 普通观众
+    ROOM_PROFILE_ROLE_ADMIN = 1; // 管理员
+    ROOM_PROFILE_ROLE_GUEST_ADMIN = 2; // 巡管
+    ROOM_PROFILE_ROLE_CREATOR = 3; // 房主
+    ROOM_PROFILE_ROLE_SUPER_ADMIN = 4; // 超管
+}
+
+// 后续扩展更多字段，减少客户端点开 mini 资料卡时调用的接口数量
+message RoomProfileInfoData {
+    uint32 uid = 1;
+    uint32 role = 2; // 参见 RoomProfileRole
+}
+
+message RspRoomProfileInfo {
+    CommonData common = 1;
+    RoomProfileInfoData data = 2;
+}
+
+message ReqLiveRoomInfo {
+    uint32 uid = 1; // 房主id
+}
+
+message RspLiveRoomInfo {
+    CommonData common = 1;
+    uint32 rid = 2; // 正在开播的rid
+    string property = 3; // 房间类型
+}
+
+service RoomProfileService {
+    // go/room/profile/info 房间内 mini 资料卡信息
+    rpc Info (ReqRoomProfileInfo) returns (RspRoomProfileInfo);
+    // go/room/profile/liveRoomInfo 开播信息
+    rpc LiveRoomInfo (ReqLiveRoomInfo) returns (RspLiveRoomInfo);
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+
+message ReqQueryOpenScreenList {
+}
+
+message OpenScreenInfo {
+  uint32 id   = 1;  // 主键id
+  string img  = 2;  // 开屏图地址
+  string jump_addr = 3; // 跳转地址内容
+  uint32 weight     = 4; // 权重
+  uint32 start_time = 5; // 展示开始时间
+  uint32 end_time   = 6; // 展示结束时间
+}
+
+message RspQueryOpenScreenList {
+  CommonData common = 1;
+  repeated OpenScreenInfo info_list = 2;
+  int32    next_request_interval    = 3; // 下一次请求的间隔时间，单位秒
+}
+
+service OpenScreenService {
+  // go/ps/user/queryOpenScreenList 查询用户开屏页数据
+  rpc QueryOpenScreenList(ReqQueryOpenScreenList) returns(RspQueryOpenScreenList);
+}

@@ -1,0 +1,376 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "skin.proto";
+import "medal.proto";
+import "api_vip.proto";
+import "certification_sign.proto";
+import "api_gift.proto";
+
+
+enum PushRoomMessageTargetType {
+    PUSH_ROOM_MESSAGE_TARGET_TYPE_ALL = 0; // 所有房间类型
+    PUSH_ROOM_MESSAGE_TARGET_TYPE_VIP = 1; // 语音房
+    PUSH_ROOM_MESSAGE_TARGET_TYPE_LVIEROOM = 2; // 视频房
+    PUSH_ROOM_MESSAGE_TARGET_TYPE_WHITELIST = 3; // 房间ID白名单
+}
+
+message PushRoomMessageTarget {
+    uint32 target_type = 1; // 目标类型, 详见 PushRoomMessageTargetType
+    uint32 big_area_id = 2; // 大区 ID
+    repeated uint32 rid_list = 3; // 房间 ID 列表, 仅当 target_type = 3 时提供
+}
+
+message  PushRoomMessageData {
+    string msg_type = 1; // 业务定义的消息类型  详见sys_notify.proto
+    string msg_content = 2;
+    string data_type = 3; // RC:CmdMsg 或者 RC:TxtMsg
+    optional int64 delay = 4; // 要延迟的毫秒数, 默认为 0
+}
+
+message PushRoomMessage {
+    PushRoomMessageTarget target = 1;
+    PushRoomMessageData msg = 2;
+}
+
+message  PushRawRoomMessageData {
+    string serialize_type = 1; // msg_content 的序列化方式, json, pb
+    bytes msg_content = 2;
+    string data_type = 3; // RC:CmdMsg 或者 RC:TxtMsg
+    optional int64 delay = 4; // 要延迟的毫秒数, 默认为 0
+    optional string php_arr_key = 5; // msg_content 填充到 php_serialize.PhpArray 中的 key，默认为 data
+}
+
+message PushRawRoomMessage {
+    PushRoomMessageTarget target = 1;
+    PushRawRoomMessageData msg = 2;
+}
+
+enum RoomMessageContentType {
+    RoomMessageContentTypeUnknown = 0; // 未知消息类型
+    RoomMessageContentTypeRefreshMicPos    = 1; // 刷新麦位消息
+    RoomMessageContentTypeRefreshMicSkin   = 2; // 刷新房间麦位皮肤数据
+    RoomMessageContentTypeRefreshTitleSkin = 3; // 刷新房间标题皮肤数据
+}
+
+message RoomMessageContent {
+    RoomMessageContentType msg_type = 1; // 消息类型，用于区分消息的业务类型
+    oneof RoomMessageContentData {
+        RefreshMicPosData refresh_mic_pos = 2; // 刷新麦位数据
+        RoomSkinData refresh_skin_data    = 3; // 刷新房间皮肤
+    }
+}
+
+// message RoomMessage {
+//     int64 seq = 1; // 消息序号
+//     uint32 target_id = 2; // 房间号或者 uid
+//     string type = 3; // RC:CmdMsg 或者 RC:TxtMsg
+//     RoomMessageContent content = 4; // 具体消息内容
+// }
+
+message RefreshMicPosData {
+    message MicPosData {
+        uint32 position = 1; // 麦位序号
+        uint32 uid = 2; // uid
+        uint32 lock = 3; // 麦位是否上锁（上锁需要房主/管理员邀请才能上麦）
+        uint32 forbidden = 4; // 是否禁止上麦
+        int64 counter = 5;
+        uint32 package = 6;
+        uint32 mic_status = 7; // 麦位状态，0 闭麦，1 开麦
+        uint32 inflexion = 8; // 变声器枚举
+        string name = 9; // 麦上用户昵称
+        uint32 sex = 10; // 性别
+        uint32 age = 11; // 年龄
+        string icon = 12; // 头像
+        uint32 role = 13; // 角色, xs_user_profile 表的 role 字段，具体意义不明
+        string frame = 14; // 静态头像框链接
+        string frame_new = 15; // 动态头像框链接
+        string game_zone = 16; // 游戏区域（应该无用）
+        string game_id = 17; // 游戏 ID（应该无用）
+        string ring = 18; // 麦上光圈链接/房间麦波
+        uint32 live_only = 19; // 直播礼包字段（应该无用）
+        string live_label = 20; // 直播礼包字段（应该无用）
+    }
+    repeated MicPosData list = 1; // 麦位列表
+}
+
+
+message NotifyUserinfo {
+    // @inject_tag: json:"uid"
+    uint32 uid = 1;
+    // @inject_tag: json:"name"
+    string name = 2;
+    // @inject_tag: json:"icon"
+    string icon = 3;
+    // @inject_tag: json:"frame"
+    string frame = 4;
+    // @inject_tag: json:"lv"
+    uint32 lv = 5;
+    // @inject_tag: json:"wear_medal_list"
+    repeated WearMedal wear_medal_list = 6;
+    // @inject_tag: json:"vip_info"
+    VIPProfile vip_info = 7;
+    // @inject_tag: json:"fid"
+    string fid = 8;
+    // @inject_tag: json:"certification_sign"
+    UserCertificationSign certification_sign = 9;
+}
+
+message NotifyGiftInfo {
+    // @inject_tag: json:"id"
+    int32 id = 1;
+    // @inject_tag: json:"name"
+    string name = 2;
+    // @inject_tag: json:"type"
+    string type = 3;
+    // @inject_tag: json:"gift_type"
+    string gift_type = 4;
+    // @inject_tag: json:"size"
+    uint32 size = 5; // webp 礼物大小
+    // @inject_tag: json:"with_end"
+    uint32 with_end = 6;
+    // @inject_tag: json:"_num"
+    int32 _num = 7;
+    // @inject_tag: json:"_position"
+    uint32 _position = 8;
+    // @inject_tag: json:"displayNormalGiftRatio"
+    string displayNormalGiftRatio = 9;
+    // @inject_tag: json:"displayNormalGiftType"
+    string displayNormalGiftType = 10;
+    // @inject_tag: json:"size_big"
+    uint32 size_big = 11;
+    // @inject_tag: json:"worthy"
+    uint32 worthy = 12; // 是否是价值礼物 大礼物
+    // @inject_tag: json:"vap_header"
+    uint32 vap_header = 13;
+    // @inject_tag: json:"vap_type"
+    string vap_type = 14;
+    // @inject_tag: json:"vap_header_start"
+    uint32 vap_header_start = 15;
+    // @inject_tag: json:"vap_header_end"
+    uint32 vap_header_end = 16;
+    // @inject_tag: json:"show_start_end"
+    uint32 show_start_end = 17;
+    // @inject_tag: json:"nickname"
+    uint32 nickname = 18;
+    // @inject_tag: json:"is_named"
+    uint32 is_named = 19;
+    // @inject_tag: json:"header"
+    HeaderGiftInfo header = 20; // 冠名礼物信息
+    // @inject_tag: json:"vap_size"
+    uint32 vap_size = 21; // 视频礼物大小
+    // @inject_tag: json:"price"
+    float price = 22; // 礼物价格, 单位为钻石
+}
+
+message HeaderGiftInfo {
+    HeaderGiftProfileInfo from = 1;
+    HeaderGiftProfileInfo to = 2;
+    uint32 start = 3;
+    uint32 end = 4;
+}
+
+message HeaderGiftProfileInfo {
+    // @inject_tag: json:"uid"
+    uint32 uid = 1;
+    // @inject_tag: json:"name"
+    string name = 2;
+    // @inject_tag: json:"icon"
+    string icon = 3;
+    // @inject_tag: json:"pretty_uid"
+    string pretty_uid = 4;
+}
+
+message ComboInfo {
+    int64 combo_id = 1;
+    // @inject_tag: json:"combo_total"
+    int32 combo_total = 2;
+    // @inject_tag: json:"combo_index"
+    int32 combo_index = 3;
+    // @inject_tag: json:"combo_num"
+    int32 combo_num = 4;
+    // @inject_tag: json:"combo_state"
+    ComboStatus combo_status = 5; // 连击状态
+}
+
+message GiftMsgContent {
+    // @inject_tag: json:"type"
+    string type = 1;
+    // @inject_tag: json:"show_combo"
+    bool show_combo = 2;
+    // @inject_tag: json:"show_screen_msg"
+    bool show_screen_msg = 3;
+    // @inject_tag: json:"from"
+    NotifyUserinfo from = 4;
+    // @inject_tag: json:"to"
+    NotifyUserinfo to = 5;
+    // @inject_tag: json:"gift"
+    NotifyGiftInfo gift = 6;
+    // @inject_tag: json:"combo_info"
+    ComboInfo combo_info = 7;
+    // @inject_tag: json:"uids"
+    repeated uint32 uids = 8;
+    // @inject_tag: json:"is_all_mic"
+    bool is_all_mic = 9; // 是否全麦
+    string uuid = 10; // 用于控制播放礼物特效次数
+    // @inject_tag: json:"room_total_score"
+    uint64 room_total_score = 11; // 房间总积分
+}
+
+// nsq 消息
+message GiftParams {
+    uint32 giftId = 1;
+    uint32 giftNum = 2;
+    uint32 nun = 3;
+    uint32 duction_money = 4;
+    uint32 cid = 5;
+    uint32 useBag = 6;
+    uint32 to = 7;
+    uint32 version = 8; 
+}
+
+message PushPackageAsync {
+    uint32 rid = 1;
+    uint32 uid = 2;
+    uint32 payId = 3;
+    bool isRealPackage = 4;
+    uint32 money = 5;
+    uint32 giftId = 6;
+    uint32 giftNum = 7;
+    repeated uint32 uids = 8;
+    repeated string names = 9;
+    repeated uint64 payChangedIds = 10;
+    GiftParams params = 11;
+}
+
+message UserExpConsume {
+    uint32 uid = 1;
+    uint32 money = 2;
+    string type = 3;
+}
+
+message MoneyExchangeCharm {
+    uint32 money = 1;
+    map<uint32, uint64> payChangedIds = 2;
+    map<uint32, float> shareRate = 3;
+}
+
+message ActivityGiftSend {
+    uint32 rid = 1;
+    uint32 uid = 2;
+    uint32 money = 3;
+    repeated uint32 uids = 4;
+    uint32 giftId = 5;
+    uint32 giftNum = 6;
+    uint32 pay_money = 7;
+    int64 dateline = 8;
+}
+
+message ActivityLiveroomGiftSend {
+    uint32 rid = 1;
+    uint32 uid = 2;
+    uint32 money = 3;
+    repeated uint32 uids = 4;
+    uint32 giftId = 5;
+    uint32 giftNum = 6;
+    int64 dateline = 7;
+    int64 session_id = 8;
+}
+
+message LiveRoomGiftSend {
+    uint32 rid = 1;
+    uint32 uid = 2;
+    uint32 money = 3;
+    repeated uint32 uids = 4;
+    uint32 giftId = 5;
+    uint32 giftNum = 6;
+    int64 dateline = 7;
+    int64 session_id = 8;
+}
+
+message BetaActivityPackage {
+    uint32 rid = 1;
+    uint32 sender = 2;
+    repeated uint32 uids = 3;
+    uint32 giftId = 4;
+    uint32 giftNum = 5;
+    uint32 money = 6;
+}
+
+message UnityGiftGive {
+    uint32 rid = 1;
+    uint32 uid = 2;
+    repeated uint32 uids = 3;
+    uint32 giftId = 4;
+    uint32 giftNum = 5;
+    uint32 money = 6;
+}
+
+message CmdGiftReward {
+    uint32 uid = 1;
+    uint32 money = 2;
+    uint32 price = 3;
+    repeated uint32 uids = 4;
+    uint32 giftNum = 5;
+    uint32 giftId = 6;
+    string ip = 7;
+    uint32 rid = 8;
+    string rname = 9;
+}
+
+message StGiftSend {
+    uint32 uid = 1;
+    uint32 money = 2;
+    repeated uint32 uids = 3;
+    uint32 giftId = 4;
+    uint32 giftNum = 5;
+    repeated uint64 payChangedIds = 6;
+    repeated string names = 7;
+    uint32 payId = 8;
+    GiftParams params = 11;
+}
+
+message ChatroomExpAdd {
+    uint32 rid = 1;
+    uint32 fansUid = 2;
+    string type = 3;
+    uint32 exp = 4;
+    int64 dateline = 5;
+}
+
+message PushPackageSend {
+    uint32 uid = 1;
+    uint32 rid = 2;
+    uint32 vip = 3;
+    uint32 vip_new = 4;
+    uint32 title = 5;
+    uint32 money = 6;
+    repeated uint32 uids = 7;
+    repeated string names = 8;
+    repeated string icons = 9;
+    repeated uint32 giftNumArray = 10;
+    string from = 11;
+    uint32 box_gift = 12; // 原php字段是 box-gift 需要兼容
+    uint32 is_newer = 13;
+    bool is_cplink_aid = 14;
+    uint32 all_mic = 15;
+    uint32 hit_new = 16;
+    string diy_gift_sign = 17;
+    uint32 diy_gift_image_type = 18;
+    string diy_gift_color = 19;
+    int32 giftId = 20;
+    int32 giftNum = 21;
+    int32 giftPosition = 22;
+    string rname = 23;
+    int64 combo_id = 24;
+    uint32 combo_state = 25;
+    uint32 from_new_api = 26; // 是否来自新接口
+    int32 combo_total = 27; // 当前连击总数
+    int32 combo_num = 28; // 本次combo请求的连击次数
+    repeated uint32 vips = 29;
+    string icon = 30; // 送礼人的头像
+    int32 defend = 31; // 守护模式
+    string boxName = 32; // 礼盒名称
+}

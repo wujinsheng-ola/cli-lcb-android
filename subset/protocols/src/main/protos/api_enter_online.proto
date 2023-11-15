@@ -1,0 +1,35 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "common.proto";
+
+enum EnterOnlineScene {
+    ENTER_ONLINE_SCENE_ENTER = 0; //进房
+    ENTER_ONLINE_SCENE_SLIPPERY = 1; //滑动在线列表
+}
+
+message EnterOnlineData {
+    uint32 uid = 1;
+    string icon = 2;
+}
+
+message RspEnterRoomOnline {
+    CommonData common = 1;
+    uint32 rid = 2;
+    uint32 num = 3;
+    repeated EnterOnlineData datas = 4;
+}
+
+message ReqEnterRoomOnline {
+    uint32 rid = 1; // 房间id
+    uint32 scene = 2; //请求场景 见EnterOnlineScene
+}
+
+service EnterRoomOnlineService {
+    // go/room/online/enterRoomOnlineList 进房在线列表
+    rpc EnterRoomOnlineList (ReqEnterRoomOnline) returns (RspEnterRoomOnline);
+}

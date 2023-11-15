@@ -100,7 +100,7 @@ message VIPCache {
     VIPRebateCache  vip_rebate = 2;
 }
 
-message VIPInfo {
+message VipInfo {
     VIPProfile vip_profile = 1;
     int32 can_rebate = 2;
 }

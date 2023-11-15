@@ -1,0 +1,213 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+import "common.proto";
+
+/*  /go/ps/account/mobileRegister 手机号注册    */
+message ReqMobileRegister {
+    // @gotags: v:"required|min-length:1"
+    string mobile = 1; // 手机号
+    // @gotags: v:"required"
+    string code = 2; // 短信验证码
+    string token = 3; // 用户 token
+    string dtoken = 4; // 设备 token
+    string area = 5; // 手机号区号，比如 86
+    string mcc = 6; // Mobile Country Code，参见： https://www.jianshu.com/p/bea50c65ccb9
+    float lat = 7; // 纬度
+    float lng = 8; // 经度
+    string campaign = 9; // branch数据的campaign字段
+    string country_code = 10; // 定位获取的国家码
+}
+
+message MobileRegisterData {
+    uint32 app_id = 1;
+    uint32 uid = 2;
+    string name = 3;
+    string icon = 4;
+    uint32 role = 5;
+    uint32 sex = 6;
+    uint32 pay_num = 7;
+    uint32 pay_money = 8;
+    uint32 vip = 9;
+    uint32 vip_new = 10;
+    uint32 title = 11;
+    uint32 age = 12;
+    string birthday = 13;
+    uint32 job = 14;
+    uint32 dateline = 15;
+    uint32 version = 16;
+    double longitude = 17;
+    double latitude = 18;
+    string city = 19;
+    uint32 city_code = 20;
+    string position = 21;
+    string sign = 22;
+    uint32 online_dateline = 23;
+    uint32 server_time = 24;
+    uint32 star = 25;
+    uint32 deleted = 26;
+    string tmp_icon = 27;
+    uint32 god_num = 28;
+    uint32 friend = 29;
+    uint32 cash_min = 30;
+    uint32 cash_rate = 31;
+    uint32 group_enabled = 32; // 同之前 PHP 服务的 group.enabled
+    string game_login_token = 33;
+    uint32 title_new = 34;
+    string token = 35;
+    string dtoken = 36;
+}
+
+message RespMobileRegister {
+    optional bool success = 1;
+    optional string msg = 2;
+    MobileRegisterData data = 3;
+}
+/*  /go/ps/account/mobileRegister 手机号注册    */
+
+message ReqAppleRegister {
+    string dtoken = 1; // 设备 token
+    string type = 2; // 操作类型，"login"：注册登陆，"bind"：绑定。
+    // @gotags: v:"required"
+    string code = 3; // 苹果校验码
+    string email = 4; // 邮箱
+    string nickname = 5; // 昵称account
+    int32 v = 6; // 版本
+    string mcc = 7; // Mobile Country Code，参见： https://www.jianshu.com/p/bea50c65ccb9
+    float lat = 8; // 纬度
+    float lng = 9; // 经度
+    string campaign = 10; // branch数据的campaign字段
+    string country_code = 11; // 定位获取的国家码
+}
+
+message ReqFacebookRegister {
+    string dtoken = 1; // 设备 token
+    string type = 2; // 操作类型，"login"：注册登陆，"bind"：绑定。
+    // @gotags: v:"required"
+    string t = 3; // facebook校验码
+    string email = 4; // 邮箱
+    string nickname = 5; // 昵称account
+    int32 v = 6; // 版本
+    string mcc = 7; // Mobile Country Code，参见： https://www.jianshu.com/p/bea50c65ccb9
+    float lat = 8; // 纬度
+    float lng = 9; // 经度
+    string campaign = 10; // branch数据的campaign字段
+    uint32 way      = 11; // 注册途径; 1:官网;
+    string country_code = 12; // 定位获取的国家码
+}
+
+message ReqGoogleRegister {
+    string dtoken = 1; // 设备 token
+    string type = 2; // 操作类型，"login"：注册登陆，"bind"：绑定。
+    // @gotags: v:"required"
+    string idToken = 3; // google校验码
+    string accessToken = 4; // google校验码
+    string email = 5; // 邮箱
+    string nickname = 6; // 昵称account
+    int32 v = 7; // 版本
+    string mcc = 8; // Mobile Country Code，参见： https://www.jianshu.com/p/bea50c65ccb9
+    float lat = 9; // 纬度
+    float lng = 10; // 经度
+    string campaign = 11; // branch数据的campaign字段
+    uint32 way      = 12; // 注册途径; 1:官网;
+    string country_code = 13; // 定位获取的国家码
+}
+
+message ThirdRegisterData {
+    uint32 app_id = 1;
+    uint32 uid = 2;
+    string name = 3;
+    string icon = 4;
+    uint32 role = 5;
+    uint32 sex = 6;
+    uint32 pay_num = 7;
+    uint32 pay_money = 8;
+    uint32 vip = 9;
+    uint32 vip_new = 10;
+    uint32 title = 11;
+    uint32 age = 12;
+    string birthday = 13;
+    uint32 job = 14;
+    uint32 dateline = 15;
+    uint32 version = 16;
+    double longitude = 17;
+    double latitude = 18;
+    string city = 19;
+    uint32 city_code = 20;
+    string position = 21;
+    string sign = 22;
+    uint32 online_dateline = 23;
+    uint32 server_time = 24;
+    uint32 star = 25;
+    uint32 deleted = 26;
+    string tmp_icon = 27;
+    uint32 god_num = 28;
+    uint32 friend = 29;
+    uint32 cash_min = 30;
+    uint32 cash_rate = 31;
+    uint32 group_enabled = 32; // 同之前 PHP 服务的 group.enabled
+    string game_login_token = 33;
+    uint32 title_new = 34;
+    string token = 35;
+    string dtoken = 36;
+}
+
+message RespThirdRegister {
+    optional bool success = 1;
+    optional string msg = 2;
+    ThirdRegisterData data = 3;
+    bool is_same_facebook_account = 4; // facebook绑定时使用，false-绑定跟之前的不是同一个facebook，true-绑定的跟之前的是同一个facebook账号
+}
+
+message ReqThirdRegisterParam {
+    string dtoken = 1; // 设备 token
+    string email = 2; // 邮箱
+    string nickname = 3; // 昵称account
+    string mcc = 4; // Mobile Country Code，参见： https://www.jianshu.com/p/bea50c65ccb9
+    float lat = 5; // 纬度
+    float lng = 6; // 经度
+    string campaign = 7; // branch数据的campaign字段
+    uint32 way      = 8; // 注册途径; 1:官网;
+}
+
+enum RegisterWay {
+    Unknown = 0;
+    OfficialWebsite = 1;  // 官网途径
+}
+
+message ReqLoginOptions {}
+
+message LoginOptionsData {
+    repeated string main = 1;
+    repeated string sub = 2;
+}
+
+message RspLoginOptions {
+    optional bool success = 1;
+    optional string msg = 2;
+    LoginOptionsData data = 3;
+}
+
+// 登录方式绑定上报
+message LoginBindReport {
+    uint32 uid = 1;
+    string mac = 2;
+    string ip = 3;
+    string source = 4;
+    string type = 5;
+    string nickname = 6;
+    string email = 7;
+    string phone = 8;
+}
+
+message RespCheckBindOldFacebook {
+    CommonData common = 1;
+    bool needUpdateBinding = 2; // 是否需要换绑
+}
+
+service AccountService {
+    rpc LoginOptions (ReqLoginOptions) returns (RspLoginOptions);
+    // go/ps/account/checkBindOldFacebook 校验是否需要换绑facebook
+    rpc CheckBindOldFacebook (Empty) returns (RespCheckBindOldFacebook);
+}

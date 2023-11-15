@@ -10,7 +10,7 @@
         android:top="68dp">
         <bitmap
             android:gravity="center_horizontal"
-            android:src="@drawable/unity_static_splash" />
+            android:src="@drawable/ic_launcher" />
     </item>
 
 </layer-list>

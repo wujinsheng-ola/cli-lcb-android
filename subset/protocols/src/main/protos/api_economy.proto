@@ -1,0 +1,179 @@
+syntax = "proto3";
+import "economy.proto";
+import "common.proto";
+package pb;
+
+option go_package = "../app/pb";
+
+message ReqCharmSwitch {
+}
+
+message ResCharmSwitch {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    CharmExchangeConfig charmExchangeMeta = 3; // 魅力值兑换配置元数据
+}
+
+message CharmExchangeGear {
+    int32 product_id = 1; // 兑换id
+    int32 charm = 2; // 魅力值
+    int32 exchange = 3; // 兑换货币
+}
+
+message ReqCharmExchangeGear {
+    // @gotags: v:"required|between:1,2"
+    int32 op = 1;
+}
+
+message ResCharmExchangeGear {
+    bool success = 1;
+    string msg = 2;
+    repeated CharmExchangeGear charm_exchange_gear_list = 3;
+}
+
+message ReqCharmExchange {
+    // @gotags: v:"required|min:1"
+    int32 product_id = 1; // 兑换id
+    // @gotags: v:"required|min:1"
+	int32 charm = 2;      // 魅力值余额，cash + cash_b
+	int32 exchange = 3;    // 被兑换货币，可能是薪资，也可能是钻石
+    int32 type = 4;        // 兑换货币类型,1-钻石,2-薪资
+}
+
+message ResCharmExchange {
+    bool success = 1;
+	string msg = 2;
+}
+
+message ReqCharmExchangeWithType {
+    // @gotags: v:"required|min:1"
+    int32 product_id = 1; // 兑换id
+    // @gotags: v:"required|min:1"
+	int32 charm = 2;      // 魅力值余额，cash + cash_b
+	int32 exchange = 3;    // 被兑换货币，可能是薪资，也可能是钻石
+    int32 type = 4;        // 兑换货币类型,1-钻石,2-薪资 4-优惠券
+    // @gotags: v:"required|in:1,2"
+    int32 charm_type = 5;  // 魅力值类型,1-语音房魅力值,2-视频房魅力值
+    int32 money = 6;// 客户端展示价格
+}
+
+message ResCharmExchangeWithType {
+    bool success = 1;
+	string msg = 2;
+}
+
+message ReqBanknoteSwitch {
+}
+
+message ResBanknoteSwitch {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    BanknoteExchangeConfig bankNoteExchangeMeta = 3; // 魅力值兑换配置元数据
+}
+
+message ReqBanknoteExchange {
+    // @gotags: v:"required|min:1"
+    int64 banknote = 1;      // 魅力值余额，cash + cash_b
+    // @gotags: v:"required|between:100000000,999999999"
+    uint32 target_id = 2;    // 兑换至的账户id
+    // @gotags: v:"required|min:1"
+    int64 amount = 3;        // 提现金额
+    int64 expect = 5;        // 预期收益
+}
+
+message ResBanknoteExchange {
+    bool success = 1;
+	  string msg = 2;
+    optional int32 err_code = 3; // 0 成功，其他失败
+}
+
+message UserBalanceWithCharmData {
+    // @inject_tag: json:"diamond"
+    int32      diamond = 1;     // 钻石余额
+    // @inject_tag: json:"total_charm"
+    int32      total_charm = 2; // 总魅力值
+    // @inject_tag: json:"live_charm"
+    int32      live_charm = 3;  // 视频房周期内剩余魅力值
+    // @inject_tag: json:"chat_charm"
+    int32      chat_charm = 4;  // 语音房房周期内魅力值
+    // @inject_tag: json:"banknote"
+    int64      banknote = 5;
+    // @inject_tag: json:"is_live"
+    bool       is_live = 6; // 是否视频主播
+    // @inject_tag: json:"is_chat"
+    bool       is_chat = 7; // 是否语音主播
+}
+
+message ResUserBalanceWithCharm {
+    CommonData common  = 1;
+    UserBalanceWithCharmData data = 2;
+}
+
+// ReqBanknoteExchangeAgentMoney 薪资兑换币商钻石请求体
+message ReqBanknoteExchangeAgentMoney {
+    // @gotags: v:"required|min:100"
+    int64 amount = 1; // 要兑换的金额, 单位为 banknote, 1 美金 = 10 伴伴币 = 1000 钻石 = 1000 币商钻石 = 10000 banknote
+    // @gotags: v:"required|min:1"
+    int64 banknote = 2; // 用户的薪资余额, 用于防重
+    int64 expect = 3;   // 预期收益
+}
+
+// RspBanknoteExchangeAgentMoney 薪资兑换币商钻石响应体
+message RspBanknoteExchangeAgentMoney {
+    CommonData common  = 1;
+    BanknoteExchangeAgentMoneyData data = 2;
+}
+
+message BanknoteExchangeAgentMoneyData {
+    int64 agent_money = 1; // 用户的币商钻石余额
+    int64 banknote = 2; // 用户的薪资余额
+}
+
+// ReqGetBanknoteExchangeAgentMoneyConfig 获取薪资兑换币商钻石配置请求体
+message ReqGetBanknoteExchangeAgentMoneyConfig {}
+
+// RspGetBanknoteExchangeAgentMoneyConfig 获取薪资兑换币商钻石配置响应体
+message RspGetBanknoteExchangeAgentMoneyConfig {
+    CommonData common  = 1;
+    GetBanknoteExchangeAgentMoneyConfigData data = 2;
+}
+
+message GetBanknoteExchangeAgentMoneyConfigData {
+    BanknoteExchangeAgentMoneyConfig banknote_exchange_agent_money_config = 1;
+    int64 agent_money = 2; // 用户的币商钻石余额
+    int64 banknote = 3; // 用户的薪资余额
+}
+
+// 切换定价模式
+message ReqSwitchExchangePriceModel {
+    uint32 price_type  = 1;  // 定价模式 0:默认模式 1:特殊定价模式
+}
+
+enum ExchangePriceType {
+    ExchangePriceTypeDefault = 0;  // 特殊定价
+    ExchangePriceTypeSpecial = 1;  // 默认定价
+}
+
+
+message RspSwitchExchangePriceModel {
+    CommonData common  = 1;
+}
+
+message CountryInfo {
+    string country_code = 1; // 国家代码
+    string country_en   = 2; // 国家英文名
+}
+
+message UserEconomyConfigExtraData {
+    repeated CountryInfo support_country_list = 1;  // 支持送礼的国家的信息
+}
+
+service EconomyService {
+    // go/ps/economy/banknote/exchangeAgentMoney 薪资兑换币商钻石
+    rpc ExchangeAgentMoney(ReqBanknoteExchangeAgentMoney) returns (RspBanknoteExchangeAgentMoney);
+    // go/ps/economy/banknote/getBanknoteExchangeAgentMoneyConfig 获取薪资兑换币商钻石配置
+    rpc GetBanknoteExchangeAgentMoneyConfig(ReqGetBanknoteExchangeAgentMoneyConfig) returns (RspGetBanknoteExchangeAgentMoneyConfig);
+
+    // go/ps/economy/banknote/switchExchangePriceModel 切换定价模式
+    rpc SwitchExchangePriceModel(ReqSwitchExchangePriceModel) returns(RspSwitchExchangePriceModel);
+}

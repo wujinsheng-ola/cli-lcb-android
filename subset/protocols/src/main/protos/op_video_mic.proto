@@ -1,0 +1,18 @@
+syntax = "proto3";
+package pb;
+
+// 表示目标文件生成的路径, go的包名就是最后的目录名
+// 目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "common.proto";
+
+message ReqOpVideoMic {
+    uint32 rid = 1;
+    uint32 op = 2; // 0关1开
+}
+
+service OpVideoMicService {
+    // go/room/option/opVideoMic 
+    rpc OpVideoMic(ReqOpVideoMic) returns (RspCommon);
+}

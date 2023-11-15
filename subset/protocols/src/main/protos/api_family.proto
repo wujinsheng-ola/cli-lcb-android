@@ -1,0 +1,260 @@
+syntax = "proto3";
+import "common.proto";
+package pb;
+
+option go_package = "../app/pb";
+
+import "friend.proto";
+
+// 产品定义的一些枚举, 客户端也应该从这里取值
+enum FamilyCommonEnumType {
+    FAMILY_COMMON_ENUM_TYPE_UNKNOWN = 0;
+    MAX_FAMILY_NAME_LENGTH = 15; // 家族名称最大字符长度
+    MAX_FAMILY_MEMBER_NUM = 120; // 最大成员数量
+    MIN_CREATE_FAMILY_LV = 30; // 最小可创建家族等级
+    MAX_FAMILY_ANNOUNCEMENT_LENGTH = 100; // 家族公告最大字符长度
+    MAX_FAMILY_MANAGE_NUM = 5; // 家族最大管理员数量
+}
+
+// 用户查看家族信息的身份
+enum FamilyInfoRoleType {
+    FAMILY_INFO_ROLE_NOT_IN_FAMILY = 0;
+    FAMILY_INFO_ROLE_PATRIARCH = 1; // 族长
+    FAMILY_INFO_ROLE_MGR = 2; // 管理员
+    FAMILY_INFO_ROLE_MEMBER = 3; // 普通成员
+    FAMILY_INFO_ROLE_HAS_APPLY = 4; // 已申请该家族
+    FAMILY_INFO_ROLE_ANOTHER_FAMILY = 5; // 已加入其他家族
+}
+
+// 创建
+message FamilyCreateReq {
+    // @gotags: v:"required"
+    string name = 1;
+    // @gotags: v:"required"
+    string badge = 2;
+    // @gotags: v:"required"
+    string announcement = 3;
+    // @gotags: v:"required|min:1"
+    uint32 join_limit_lv = 4;
+}
+
+message FamilyCreateRes {
+    CommonData common = 1;
+    uint32 fid = 2;
+}
+
+message FamilyEditReq {
+    // @gotags: v:"required|min:100000"
+    uint32 fid = 1;
+    string name = 2;
+    string badge = 3;
+    string announcement = 4;
+    uint32 join_limit_lv = 5;
+}
+
+// 申请
+message FamilyApply2JoinReq {
+    // @gotags: v:"required|min:100000"
+    uint32 fid = 1;
+}
+
+// 申请列表
+message FamilyApplyListReq {
+    // @gotags: v:"required|min:100000"
+    uint32 fid = 1;
+    int64 ts = 2;
+    int64 offset = 3;
+}
+
+message FamilyApply2JoinUser{
+    uint32 uid = 1;
+    string name = 2;
+    uint32 lv = 3;
+    int64 applyTimestamp = 4;
+    string icon = 5;
+    int32 gender = 6; // 性别
+}
+
+message FamilyApplyListRes {
+    CommonData common = 1;
+    repeated FamilyApply2JoinUser applyList = 2;
+    bool end_tag = 3;  // 分页结束标志
+    int64 offset = 4;
+    int64 count = 5; // 当前申请数量
+    int64 timestamp = 6;
+}
+
+// 同意
+message FamilyAgree2JoinReq {
+    uint32 agreed_uid = 1;
+    // @gotags: v:"required|min:100000"
+    uint32 fid = 2;
+}
+
+
+// 同意后发送给成功加入的用户
+message FamilyAgree2JoinNtf {
+    uint32 fid = 1;
+    string name = 2;
+    string badge = 3;
+    string announcement = 4;
+}
+
+message FamilyRefuseUserJoinReq {
+    uint32 refuse_uid = 1;
+    // @gotags: v:"required|min:100000"
+    uint32 fid = 2;
+}
+
+message FamilyLeaveReq {
+    // @gotags: v:"required|min:100000"
+    uint32 fid = 1;
+}
+
+message FamilyKickOutReq {
+    // @gotags: v:"required|min:100000"
+    uint32 fid = 1;
+    uint32 kick_uid = 2;
+}
+
+
+message FamilySetRoleReq {
+    // @gotags: v:"required|min:100000"
+    uint32 fid = 1;
+    uint32 family_member = 2; // 被操作用户，可能是管理员，也可能是普通用户
+    uint32 role_type = 3; // 权限参考--family.proto -- FamilyRoleType
+}
+
+enum RoomType {
+    ROOM_TYPE_UNKNOWN = 0; // 未知，仅占位用
+    ROOM_TYPE_CHAT = 1; // 语音房
+    ROOM_TYPE_VIDEO = 2; // 视频房
+}
+
+message FamilyRoomListReq {
+    // @gotags: v:"required|min:100000"
+    uint32 fid = 1;
+    int32 room_type = 2; // 房间类型, 参见 RoomType
+    // @gotags: v:"required|min:1"
+    uint32 page_index = 3;
+    // @gotags: v:"required|min:1"
+    uint32 page_size = 4;
+}
+
+message FamilyRoomListData {
+    uint32 rid = 1; // 房间 ID
+    string name = 2; // 房间标题
+    uint32 uid = 3; // 房主 uid
+    string icon = 4; // 房间封面
+    uint32 online_num = 5; // 房间在线人数
+    string area_code = 6; // 用于展示国旗, 房主 uid 在 user_settings 表的 area_code 字段
+    string tags = 7; // 视频房间 tag
+    int32 link_mic_status = 8; // 连麦状态, 0 连麦初始化; 1 连麦中; 2 连麦已挂断。对客户端来说, 1 展示连麦的标志, 其他不展示
+    int32 pk_state = 9; // PK状态, 0 PK初始化; 1 PK中; 2 PK正常结束（倒计时结束）; 3 PK被中断。对客户端来说, 1 展示PK的标志, 其他不展示
+    bool show_red_packet = 10; // 是否展示红包标志
+}
+
+message FamilyRoomListRsp {
+    CommonData common = 1;
+    uint32 total = 2; // 总数
+    repeated FamilyRoomListData data = 3;
+    bool has_more = 4; // 是否还有下一页
+}
+
+message FamilyInfoReq {
+    uint32 fid = 1;
+}
+
+message FamilyMemberInfo {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    uint32 contribution = 4;
+    uint32 lv = 5;
+    int32 gender = 6; // 性别
+    uint32 role_type = 7;
+}
+
+message FamilyInfoRes {
+    CommonData common = 1;
+    string name = 2;
+    string badge = 3;  // 沿用之前处理逻辑可能有资源泄露的风险
+    string announcement = 4;
+    uint32 contribution = 5;
+    uint32 my_role = 6; // 类型对应FamilyRoleType 0 非家族成员
+    uint32 apply_count = 7; // 申请数量
+    uint32 member_num = 8;
+    uint32 member_max_num = 9;
+    uint32 join_need_lv = 10;
+    repeated FamilyMemberInfo family_member = 11;
+}
+
+message FamilyMemberReq {
+    uint32 fid = 1;
+    int32 tag = 2;
+}
+
+message FamilyMemberRes {
+    CommonData common = 1;
+    repeated FamilyMemberInfo family_member = 2;
+    bool end_tag = 3;
+    uint32 apply_count = 4;
+    uint32 my_role = 5; // 类型对应FamilyRoleType 0 非家族成员
+}
+
+message FamilyInviteMemeberListReq {
+    uint32 page = 1;
+    uint32 page_size = 2;
+    uint32 search = 3;
+}
+
+message FamilyInviteMemberList {
+    FriendData friend_data = 1;
+    uint32 status = 2;
+}
+
+message FamilyInviteMemberListRes {
+    CommonData common = 1;
+    repeated FamilyInviteMemberList data = 2;
+    bool is_has_more = 3;
+}
+
+message FamilySendInviteMsgReq {
+    uint32 to_uid = 1;
+    uint32 fid = 2;
+}
+
+message FamilySendInviteMsgRes {
+    CommonData common = 1;
+}
+
+service FamilyService {
+    // go/ps/family/create 创建家族
+    rpc Create (FamilyCreateReq) returns (FamilyCreateRes);
+    // go/ps/family/edit 编辑信息
+    rpc Edit (FamilyEditReq) returns (RspCommon);
+    // go/ps/family/apply 申请加入
+    rpc Apply (FamilyApply2JoinReq) returns (RspCommon);
+    // go/ps/family/applyList 获取申请列表
+    rpc ApplyList (FamilyApplyListReq) returns (FamilyApplyListRes);
+    // go/ps/family/agree 同意加入
+    rpc Agree (FamilyAgree2JoinReq) returns (RspCommon);
+    // go/ps/family/refuse 拒绝加入
+    rpc Refuse (FamilyRefuseUserJoinReq) returns (RspCommon);
+    // go/ps/family/leave 离开家族
+    rpc Leave (FamilyLeaveReq) returns (RspCommon);
+    // go/ps/family/kickOut 踢出家族
+    rpc KickOut (FamilyKickOutReq) returns (RspCommon);
+    // go/ps/family/setRole 设置权限
+    rpc SetRole (FamilySetRoleReq) returns (RspCommon);
+    // go/ps/family/roomList 家族房间列表
+    rpc RoomList (FamilyRoomListReq) returns (FamilyRoomListRsp);
+    // go/ps/family/info 家族房间列表
+    rpc Info (FamilyInfoReq) returns (FamilyInfoRes);
+    // go/ps/family/member 家族房间列表
+    rpc Member (FamilyMemberReq) returns (FamilyMemberRes);
+    // go/ps/family/inviteMemberList 家族邀请列表
+    rpc InviteMemberList (FamilyInviteMemeberListReq) returns (FamilyInviteMemberListRes);
+    // go/ps/family/sendInviteMsg 发送家族邀请
+    rpc sendInviteMsg (FamilySendInviteMsgReq) returns (FamilySendInviteMsgRes);
+}

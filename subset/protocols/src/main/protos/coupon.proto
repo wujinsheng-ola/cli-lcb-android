@@ -1,0 +1,55 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+enum COUPON_TYPE {
+    COUPON_TYPE_UNKNOWN = 0;
+    COUPON_TYPE_GAME = 1;
+}
+
+enum COUPON_SCENE {
+    COUPON_SCENE_UNKNOWN = 0;
+    COUPON_SCENE_GREEDY = 1;
+    COUPON_SCENE_SLOT = 2;
+}
+
+enum COUPON_OP {
+    OP_UNKNOWN = 0;
+    OP_GRANT = 1;
+    OP_DEDUCT = 2;
+    OP_USED = 3;
+    OP_EXPIRE = 4;
+    OP_EXCHANGE = 5;
+    OP_GIFT_BAG_GRANT = 6;
+    OP_GIFT_BAG_EXPIRE = 7;
+    OP_GIFT_BAG_DELETE = 8;
+}
+
+enum COUPON_ACTION {
+    ACTION_UNKNOWN = 0;
+    ACTION_ADD = 1;
+    ACTION_DEDUCT = 2;
+}
+
+
+message CouponShow {
+    uint32 coupon_id = 1;
+    string name = 2;
+    string icon = 3;
+    int32 amount = 4;
+    int32 expire_time = 5;
+    int32 num = 6;
+    string desc = 7;
+}
+
+message GameCoupon {
+    uint32 coupon_id = 1;
+    int32 amount = 2;
+    int32 num = 3;
+}
+
+message CouponReason {
+    int32 scene = 1; // 场景
+    string id = 2;  // 场景ID，非必填，如Greedy轮次ID，Slot请求id
+}

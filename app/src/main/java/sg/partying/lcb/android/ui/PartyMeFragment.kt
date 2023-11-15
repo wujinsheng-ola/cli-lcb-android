@@ -27,12 +27,12 @@ class PartyMeFragment : BaseFragment() {
         tvUid = f(R.id.tvUid)
         tvName.text = Session.name.ifEmpty { "未登录" }
         tvUid.text = "${Session.uid}"
-        f<TextView>(R.id.tvLogout).singleClick {
-            Session.uid = 0
-            Session.token = ""
-            activity?.finish()
-            openActivity(LoginActivity::class.java, Bundle())
-        }
+//        f<TextView>(R.id.tvLogout).singleClick {
+//            Session.uid = 0
+//            Session.token = ""
+//            activity?.finish()
+//            openActivity(LoginActivity::class.java, Bundle())
+//        }
         ImageLoader.loadCenterCrop(ivAvatar, AppProperty.RESOURCE_PREFIX_URL + Session.icon)
         ivAvatar.singleClick {
             RouterManager.goEditProfile(activity())

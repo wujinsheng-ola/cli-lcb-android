@@ -1,0 +1,172 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+import "medal.proto";
+import "api_vip.proto";
+import "certification_sign.proto";
+import "api_user.proto";
+
+/* /go/ps/room/online 获取房间内的在线用户列表 */
+// body 中的数据
+message ReqBodyRoomOnline {
+    // @gotags: v:"required|min:1"
+    uint32 rid = 1; // 房间id
+}
+
+// 响应体 body
+message RspBodyRoomOnline {
+
+    message RookieTag {
+        uint32 seven_new = 1;
+        uint32 pay_level = 2;
+        uint32 money = 3;
+    }
+
+    message UserInfo {
+        string uid = 1;
+        string name = 2;
+        string icon = 3;
+        uint32 sex = 4;
+        string birthday = 5;
+        uint32 version = 6;
+        uint32 title = 7;
+        string role = 8;
+        uint32 mic = 9;
+        uint32 position = 10;
+        uint32 title_new = 11;
+        uint32 vip = 12;
+        uint32 year = 13;
+        uint32 online_time = 14;
+        uint32 popularity_level = 15;
+        RookieTag rookie_tag = 16;
+        uint32 ordering = 17;
+        string is_party_rich = 18;
+        string party_nation = 19;
+        string gcc_nation = 20;
+        bool is_official_account = 21;
+        uint32 easy_pay = 22;
+        uint32 lv = 23; // 用户等级
+        bool is_new_user = 24; // 是否为新用户
+        repeated WearMedal wear_medal_list = 25; // 用户佩戴的勋章
+        VIPProfile vip_info = 26; // VIP 信息
+        UserCertificationSign certification_sign = 27;
+        bool is_rich = 28;
+        UserMountIcon user_mount = 29; // 用户的座驾
+    }
+
+    message Config {
+        string rid = 1;
+        string app_id = 2;
+        string uid = 3;
+        string prefix = 4;
+        string name = 5;
+        string icon = 6;
+        string type = 7;
+        string property = 8;
+        string types = 9;
+        string description = 10;
+        string display_message = 11;
+        string online_num = 12;
+        string online_admin = 13;
+        string version = 14;
+        string deleted = 15;
+        string boss = 16;
+        string reception = 17;
+        string paier = 18;
+        string theme = 19;
+        string background = 20;
+        string counter = 21;
+        string mode = 22;
+        string package = 23;
+        string o_total = 24;
+        string o_num = 25;
+        string o_duration = 26;
+        string nine = 27;
+        string dateline = 28;
+        string weight = 29;
+        string display_rank = 30;
+        string bicon = 31;
+        string sex = 32;
+        string close_box = 33;
+        string game = 34;
+        string state = 35;
+        string auction = 36;
+        string area = 37;
+        string language = 38;
+        string room_factory_type = 39;
+        string fixed_tag_id = 40;
+        string room_module_id = 41;
+        string settlement_channel = 42;
+    }
+
+    bool success = 1;
+    repeated UserInfo data = 2; // 在线用户列表
+    uint32 online = 3;
+    uint32 version = 4;
+    Config config = 5; // 房间配置
+    string msg = 6; // 错误信息
+}
+/* /go/ps/room/online 获取房间内的在线用户列表 */
+
+/* /go/ps/room/admins 获取房间内的管理员列表 */
+// body 中的数据
+message ReqBodyRoomAdmins {
+    // @gotags: v:"required|min:1"
+    uint32 rid = 1; // 房间id
+}
+
+message RspBodyRoomAdmins {
+
+    message AdminInfo {
+        string uid = 1;
+        string name = 2;
+        string icon = 3;
+        uint32 sex = 4;
+        string birthday = 5;
+        string version = 6;
+        string title = 7;
+        uint32 title_new = 8;
+        uint32 vip = 9;
+        uint32 year = 10;
+        uint32 lv = 11; // 用户等级
+        uint32 online_time = 12;
+        repeated WearMedal wear_medal_list = 13; // 用户佩戴的勋章
+        VIPProfile vip_info = 14; // VIP 信息
+        UserCertificationSign certification_sign = 15;
+    }
+
+    bool success = 1;
+    string msg = 2; // 错误信息
+    repeated AdminInfo data = 3; // 管理员列表
+}
+/* /go/ps/room/admins 获取房间内的管理员列表 */
+
+/* /go/ps/room/forbiddenLog 获取房间封禁列表 */
+message ReqRoomForbiddenLog {
+    // @gotags: v:"required|min:1"
+    uint32 rid = 1; // 房间id
+}
+
+message RspBodyRoomForbiddenLog {
+
+    message ForbiddenedUserInfo {
+        string uid = 1;
+        string name = 2;
+        string icon = 3;
+        string title = 4;
+        uint32 sex = 5;
+        string birthday = 6;
+        string version = 7;
+        uint32 title_new = 8;
+        uint32 vip = 9;
+        string dateline = 10;
+        uint32 duration = 11;
+        uint32 year = 12;
+        uint32 lv = 13; // 用户等级
+    }
+
+    bool success = 1;
+    repeated ForbiddenedUserInfo data = 2;
+}
+/* /go/ps/room/forbiddenLog 获取房间封禁列表 */

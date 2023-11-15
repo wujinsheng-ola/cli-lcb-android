@@ -1,0 +1,43 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+import "api_gift.proto";
+
+enum QuickGiftType {
+	GIFT_TYPE_NONE = 0;
+	GIFT_TYPE_CHAT_ROOM = 1; // 语音直播
+	GIFT_TYPE_VIDEO_ROOM = 2; // 视频直播
+}
+
+message QuickGiftConfig {
+	uint32 gift_id = 1;
+	string icon = 2;
+	float price = 3;
+	string gift_type = 4;
+	string name = 5;
+	ComboConfig combo_config = 6;
+}
+
+message RspQuickGiftConfig {
+	CommonData common = 1;
+	QuickGiftConfig data = 2;
+}
+
+message ReqInternalUpdateQuickGiftConfig {
+	uint32 bigarea_id = 1;
+	uint32 gift_id = 2;
+	optional uint32 status = 3;
+	uint32 quick_gift_type = 4;
+}
+
+message RspInternalUpdateQuickGiftConfig {
+	CommonData common = 1;
+}
+
+service QuickGiftConfigService {
+	// go/ps/gift/quickGiftConfig 获取用户明细数据
+	rpc QuickGiftConfig (ReqInternalUpdateQuickGiftConfig) returns (RspQuickGiftConfig);
+ }

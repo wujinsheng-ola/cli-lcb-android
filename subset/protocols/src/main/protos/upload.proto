@@ -1,0 +1,64 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "common.proto";
+
+message ReqUploadSignature {
+    int32 content_type = 1; // 文件类型, 参见 UploadContentType
+}
+
+enum UploadContentType {
+    UPLOAD_CONTENT_TYPE_UNKNOWN = 0;
+    UPLOAD_CONTENT_TYPE_IMAGE = 1; // 图片
+    UPLOAD_CONTENT_TYPE_AUDIO = 2; // 音频
+    UPLOAD_CONTENT_TYPE_VIDEO = 3; // 视频
+}
+
+message UploadSignatureData {
+    string host = 1; // 上传使用的 域名
+    string accessid = 2; // access key id
+    string signature = 3; // 签名
+    string dir = 4; // 文件前缀, 如 202309/09/, 设置 form 表单的 key 字段值时，需要使用这个前缀
+    string policy = 5; // 策略， base64 编码字符串
+    int64 expire = 6; // 过期时间戳
+}
+
+message RspUploadSignature {
+    CommonData common = 1;
+    UploadSignatureData data = 2;
+}
+
+message ReqUploadCallback {
+    int32 scene = 1; // 场景, 参见 UploadCallbackScene
+    string params = 2; // 回调参数, json 字符串
+}
+
+enum UploadCallbackScene {
+    UPLOAD_CALLBACK_SCENE_UNKNOWN = 0;
+    UPLOAD_CALLBACK_SCENE_PROFILE_ICON = 1; // 上传 profile 头像
+    UPLOAD_CALLBACK_SCENE_PROFILE_PHOTO_WALL = 2; // 上传 profile 页面图片墙
+    UPLOAD_CALLBACK_SCENE_ROOM_COVER = 3; // 上传房间封面
+}
+
+// 上传 profile 头像和上传 profile 页面图片墙的回调参数
+message UploadCallbackParamsProfile {
+    uint32 uid = 1;
+    string img = 2; // 图片链接, 不带域名
+}
+
+// 上传房间封面的回调参数
+message UploadCallbackParamsRoomCover {
+    uint32 rid = 1;
+    string img = 2; // 图片链接, 不带域名
+}
+
+service UploadService {
+    // go/ps/upload/signature 获取上传的签名参数等
+    rpc Signature (ReqUploadSignature) returns (RspUploadSignature);
+    // go/ps/upload/callback 上传成功之后的回调
+    rpc Callback (ReqUploadCallback) returns (RspCommon);
+}

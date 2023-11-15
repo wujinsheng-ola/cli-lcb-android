@@ -1,0 +1,186 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+
+// 商城靓号tab栏相关接口协议
+
+// 查询商城可售靓号列表请求参数
+message QueryPrettyInfoListReq {
+}
+
+// 靓号信息
+message PrettyInfo {
+  string   pretty_uid                = 1; // 靓号id
+  repeated PrettyPrice price_list = 2; // 价格列表
+}
+
+// 靓号价格
+message PrettyPrice {
+  uint32 effective_day = 1;  // 有效天数
+  uint32 price         = 2;  // 价格，单位：钻石
+}
+
+// 靓号信息列表
+message QueryPrettyInfoListData {
+  repeated PrettyInfo  info_list = 1;  // 靓号列表
+}
+
+// 查询商城可售靓号列表返回参数
+message QueryPrettyInfoListResp {
+  CommonData              common    = 1;
+  QueryPrettyInfoListData data    = 2;
+}
+
+// 购买靓号请求参数
+message BuyPrettyReq {
+  // @gotags: v:"required|length:1,60"
+  string   pretty_uid    = 1;  // 靓号id
+  // @gotags: v:"required|min:1"
+  uint32   effective_day = 2;  // 有效天数
+}
+
+// 购买靓号返回参数
+message BuyPrettyResp {
+  CommonData              common    = 1;  // 返回状态信息，文案在msg中
+}
+
+// 获取用户当前持有靓号信息
+message GetUserPrettyReq {
+}
+
+// 用户当前靓号信息
+message GetUserPrettyData {
+  string   pretty_uid        = 1; // 靓号id
+  uint64   expire_time       = 2; // 靓号过期时间的时间戳
+}
+
+message GetUserPrettyResp {
+  CommonData                 common = 1;
+  optional GetUserPrettyData data   = 2;  // 用户当前靓号信息,用户当前不持有靓号或持有靓号已过期时该字段为空
+}
+
+// 可兑换的自选靓号
+message RespQueryCustomizePretty{
+  CommonData common    = 1;
+  repeated CustomizePrettyInfo  info_list = 2;  // 可自选靓号
+}
+
+// 自选靓号
+message CustomizePrettyInfo {
+  int64 id = 1;
+  int64 pretty_validity_day = 2; // 靓号有效天数
+  int64 qualification_expire_dateline = 3; // 资格使用到期时间
+  int32 short_limit = 4; // 靓号最短字符数
+  int32 long_limit = 5; // 靓号最长字符数
+  int32  repeat_limit = 6; // 同一字符最多出现次数
+  repeated CustomizePrettyExample customize_pretty_example_list = 7; // 自选靓号示例
+}
+
+// 自选靓号示例
+message CustomizePrettyExample {
+  string pretty = 1; // 靓号
+  uint32 example = 2; // 示例，0-正确，1-错误
+}
+
+// 兑换自选靓号
+message ReqExchangeCustomizePretty{
+  int64 id = 1; // id
+  string pretty = 2; // 靓号
+}
+
+// 管理后台发放自选靓号资格
+message ReqGiveCustomizePretty {
+  repeated uint32 uid_list = 1; // uid集合
+  int64 customize_pretty_id = 2; // 自选靓号类型id，对应xs_customize_pretty_style的主键
+  int64 pretty_validity_day = 3; // 靓号有效天数
+  int64 qualification_expire_dateline = 4; // 资格使用到期时间，时间戳，单位秒
+  string remark = 5; // 操作备注
+}
+
+message CustomizePretty {
+  int64 customize_pretty_id = 1; // 自选靓号类型id，对应xs_customize_pretty_style的主键
+  int64 pretty_validity_day = 2; // 靓号有效天数
+  int64 qualification_expire_dateline = 3; // 资格使用到期时间，时间戳，单位秒
+  string remark = 4; // 操作备注
+}
+
+message RespGiveCustomizePretty {
+  CommonData common = 1;
+  optional CmsGiveCustomizePretty data = 2;
+}
+
+message CmsGiveCustomizePretty {
+  uint32 id = 1;
+}
+
+// 管理后台更新自选靓号资格
+message ReqUpdateCustomizePretty {
+  int64 id = 1; // id，对应xs_user_customize_pretty的主键
+  int64 pretty_validity_day = 2; // 靓号有效天数
+  int64 qualification_expire_dateline = 3; // 资格使用到期时间，时间戳，单位秒
+}
+
+// 获取要购买的靓号信息请求参数
+message GetPrettyForBuyReq {
+  // @gotags: v:"required|length:1,60"
+  string   pretty_uid    = 1;  // 靓号id
+}
+
+message GetPrettyForBuyData {
+  repeated PrettyPrice  price_list = 1;  // 靓号价格列表
+  uint64                balance    = 2;  // 用户账户余额，单位：钻石
+}
+
+// 获取要购买的靓号信息返回参数
+message GetPrettyForBuyResp {
+  CommonData common                 = 1;
+  optional GetPrettyForBuyData data = 2;
+}
+
+// 管理后台下发靓号给用户
+message ReqGivePrettyUid {
+  uint32  uid = 1;
+  string  pretty_uid = 2; // 靓号
+  int64   expire_time = 3; // 到期时间
+}
+
+// 管理后台修改用户靓号信息
+message ReqUpdatePrettyUid {
+  uint32  id = 1;
+  string  pretty_uid = 2; // 靓号
+  int64   expire_time = 3; // 到期时间
+}
+
+message RespGivePrettyUid {
+  CommonData common = 1;
+  optional CmsGivePrettyUid data = 2;
+}
+
+message CmsGivePrettyUid {
+  uint32 id = 1;
+}
+
+// 靓号来源
+enum PrettySource {
+  FromSystem    = 0;  // 管理后台下发
+  FromCommodity = 1;  // 靓号商城兑换
+  FromUser      = 2;  // 用户自选靓号
+}
+
+service PrettyService {
+  // go/ps/pretty/queryPrettyInfoList 查询商城靓号列表
+  rpc QueryPrettyInfoList (QueryPrettyInfoListReq) returns (QueryPrettyInfoListResp);
+  // go/ps/pretty/buyPretty 购买靓号
+  rpc BuyPretty (BuyPrettyReq) returns (BuyPrettyResp);
+  // go/ps/pretty/getUserPretty 获取用户当前持有的靓号信息
+  rpc GetUserPretty (GetUserPrettyReq) returns (GetUserPrettyResp);
+  // go/ps/pretty/queryCustomizePretty 查询自选靓号
+  rpc QueryCustomizePretty (Empty) returns (RespQueryCustomizePretty);
+  // go/ps/pretty/exchangeCustomizePretty 兑换自选靓号
+  rpc ExchangeCustomizePretty (ReqExchangeCustomizePretty) returns (RspCommon);
+  // go/ps/pretty/getPrettyForBuy 获取要购买的靓号信息
+  rpc GetPrettyForBuy (GetPrettyForBuyReq) returns (GetPrettyForBuyResp);
+}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "common.proto";
+
+// agora
+enum LogType {
+    UNKNOWN = 0;
+    ALL = 1; // 所有日志
+    PS_FLUTTER = 2; // ps 本身的日志
+    AGORA_SDK = 3; // 声网 SDK 的日志
+}
+
+message ReqHelperUploadLog {
+    // @inject_tag: json:"uid"
+    uint32 uid = 1; // 要上传日志的 uid
+    // @inject_tag: json:"type"
+    uint32 type = 2; // 上传的日志的类型, 参见 LogType
+}
+
+message ReqCloseRoom {
+    uint32 rid = 1; // 要关闭的房间 ID
+}
+
+service HelperService {
+    rpc UploadLog (ReqHelperUploadLog) returns (RspCommon);
+    rpc CloseRoom (ReqCloseRoom) returns (RspCommon);
+}

@@ -1,0 +1,55 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+import "common.proto";
+
+message RespCertificationList {
+  CommonData common = 1;
+  repeated CertificationSign certification_sign_list= 2;
+}
+
+message CertificationSign {
+  uint32 id = 1; // 认证id
+  string content = 2; // 展示文案
+  string icon = 3; // 认证icon
+  string label = 4; // 认证标识
+  string font_color = 5;  // 字体颜色
+  uint32 wear_status = 6; //佩戴状态，0:未佩戴，1:佩戴
+  int64 expire_time = 7;  // 到期时间戳，单位秒，如果等于4294967295(maxUint32)，则表示永不过期
+}
+
+
+message ReqCertificationWear {
+  uint32 id = 1; // 认证id
+}
+
+// 管理后台发放认证标识
+message ReqGiveCertificationSign {
+  repeated uint32 uid_list = 1; // uid集合
+  uint32 cer_id = 2;  // 认证标识id
+  string content = 3;  // 展示文案
+  int64 validity_value = 4;  // 下发有效期，单位为秒，永久传-1
+  string remark = 5; // 操作备注
+}
+
+// 管理后台修改认证标识
+message ReqUpdateCertificationSign {
+  uint32 id = 1;
+  string content = 2;  // 展示文案
+  int64 validity_value = 3;  // 有效期截止时间，传时间戳，单位为秒，永久传-1
+}
+
+service CertificationSignService {
+  // go/ps/certification/list 获取认证标识列表
+  rpc List (Empty) returns (RespCertificationList);
+
+  // go/ps/certification/wear 选择佩戴认证标识
+  rpc Wear (ReqCertificationWear) returns (RspCommon);
+
+  // /go/internal/cms/giveCertificationSign 管理后台发放认证标识
+  rpc GiveCertificationSign (ReqGiveCertificationSign) returns (RspCommon);
+
+  // /go/internal/cms/updateCertificationSign 管理后台修改认证标识
+  rpc UpdateCertificationSign (ReqUpdateCertificationSign) returns (RspCommon);
+}

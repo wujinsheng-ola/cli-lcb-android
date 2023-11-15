@@ -38,7 +38,13 @@ message UserMountWallCache {
     repeated UserMount data = 2;
 }
 
+message ReqSetDiamondDisplay {
+	uint32 diamond_switch = 1; // 1：打开 2：关闭
+}
+
 service UserService {
-    // go/ps/user/mountWall
-    rpc MountWall (ReqUserMountWall) returns (RspUserMountWall);
+	// go/ps/user/mountWall
+	rpc MountWall (ReqUserMountWall) returns (RspUserMountWall);
+	// go/ps/user/setDiamondDisplay
+	rpc SetDiamondDisplay (ReqSetDiamondDisplay) returns (RspCommon);
 }
