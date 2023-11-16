@@ -228,7 +228,7 @@ data class AccountInfo(
     @SerializedName("areaCode") var areaCode: String = "",
     @SerializedName("birthday") var birthday: String = "",
     @SerializedName("block_un_auther_message") var blockUnAutherMessage: Int = 0,
-    @SerializedName("certification_sign") var certificationSign: CertificationSign,
+    @SerializedName("certification_sign") var certificationSign: List<CertificationSign>,
     @SerializedName("city_code") var cityCode: String = "",
     @SerializedName("cover") var cover: String = "",
     @SerializedName("credit_god_level") var creditGodLevel: Int = 0,

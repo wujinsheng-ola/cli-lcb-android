@@ -29,14 +29,14 @@
             android:layout_weight="1"
             android:clipChildren="true"
             android:gravity="center"
-            app:iconHeight="40dp"
+            app:iconHeight="35dp"
             app:iconNormal="@drawable/ic_home_tab_game_normal"
             app:iconSelected="@drawable/ic_home_tab_game_selected"
-            app:iconWidth="40dp"
+            app:iconWidth="35dp"
             app:itemMarginTop="2dp"
             app:itemText="@string/tab_home"
-            app:itemTextSize="16sp"
-            app:textColorNormal="#FF4E5969"
+            app:itemTextSize="14sp"
+            app:textColorNormal="#FFD8D8D8"
             app:textColorSelected="#FF4E5969" />
 
         <com.salton123.widget.BottomBarItem
@@ -46,14 +46,14 @@
             android:layout_weight="1"
             android:clipChildren="true"
             android:gravity="center"
-            app:iconHeight="40dp"
+            app:iconHeight="35dp"
             app:iconNormal="@drawable/ic_home_tab_me_normal"
             app:iconSelected="@drawable/ic_home_tab_me_selected"
-            app:iconWidth="40dp"
+            app:iconWidth="35dp"
             app:itemMarginTop="2dp"
             app:itemText="@string/tab_gallery"
-            app:itemTextSize="16sp"
-            app:textColorNormal="#FF4E5969"
+            app:itemTextSize="14sp"
+            app:textColorNormal="#FFD8D8D8"
             app:textColorSelected="#FF4E5969" />
 
     </com.salton123.widget.BottomBarLayout>

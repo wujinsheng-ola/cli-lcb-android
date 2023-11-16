@@ -1,6 +1,11 @@
 package sg.olaparty.network.service
 
+import pb.ReqFeedRoom
+import pb.ReqGiftConfig
+import pb.ResFeedRecommendRoom
 import pb.RspActionEnterV2
+import pb.RspGiftConfig
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -22,4 +27,7 @@ interface LiveRoomService {
         @Field("user_memory") userMemory: String,
     ): RspActionEnterV2
 
+    @Headers("Content-Type: application/protobuf")
+    @POST("go/ps/gift/config/(PB)")
+    suspend fun giftConfig(@Body req: ReqGiftConfig): RspGiftConfig
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Party Go</string>
+    <string name="app_name">PG</string>
     <string name="login_via_type">通过%s登录</string>
     <string name="login_policy_lable">登录即表示您同意</string>
     <string name="setting_user_help_protocol">用户服务协议</string>

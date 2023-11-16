@@ -234,6 +234,8 @@ public class BottomBarItem extends LinearLayout {
 
     public void refreshTab() {
         mImageView.setImageDrawable(isSelected() ? selectedIcon : normalIcon);
+        mImageView.setScaleX((isSelected() ? 1.1f : 1.0f));
+        mImageView.setScaleY((isSelected() ? 1.1f : 1.0f));
         mTextView.setTextColor(isSelected() ? titleSelectedColor : titleNormalColor);
     }
 
@@ -555,16 +557,16 @@ public class BottomBarItem extends LinearLayout {
      * @param spValue
      * @return
      */
-    public static int sp2px(Context context,float spValue) {
+    public static int sp2px(Context context, float spValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
     }
 
-    public static int getColor(Context context,int colorId){
+    public static int getColor(Context context, int colorId) {
         return context.getResources().getColor(colorId);
     }
 
-    public static Drawable getDrawable(Context context, int resId){
-        return  context.getResources().getDrawable(resId);
+    public static Drawable getDrawable(Context context, int resId) {
+        return context.getResources().getDrawable(resId);
     }
 }

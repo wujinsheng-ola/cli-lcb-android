@@ -4,13 +4,4 @@
     <item>
         <bitmap android:src="@drawable/unity_static_splash_bg" />
     </item>
-
-    <item
-        android:gravity="top"
-        android:top="68dp">
-        <bitmap
-            android:gravity="center_horizontal"
-            android:src="@drawable/ic_launcher" />
-    </item>
-
 </layer-list>

@@ -3,38 +3,38 @@ package sg.partying.lcb.android.ui
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.salton123.base.BaseFragment
+import com.salton123.profile.databinding.ActivityUserProfileBinding
 import com.salton123.soulove.api.RouterManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kt.singleClick
+import pb.ReqGiftConfig
+import sg.olaparty.network.RequestCenter.liveRoomService
 import sg.olaparty.network.base.NetworkConfigProvider
+import sg.olaparty.network.base.ServiceCreator
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.Session
 import sg.partying.lcb.util.ImageLoader
 import sg.partying.lcb.AppProperty
+import sg.partying.lcb.android.databinding.FragmentPartyMeBinding
 
 class PartyMeFragment : BaseFragment() {
-    private lateinit var ivAvatar: ImageView
-    private lateinit var tvName: TextView
-    private lateinit var tvUid: TextView
     override fun getLayout(): Int = R.layout.fragment_party_me
 
     override fun initVariable(savedInstanceState: Bundle?) {
     }
 
     override fun initViewAndData() {
-        ivAvatar = f(R.id.ivAvatar)
-        tvName = f(R.id.tvName)
-        tvUid = f(R.id.tvUid)
-        tvName.text = Session.name.ifEmpty { "未登录" }
-        tvUid.text = "${Session.uid}"
-//        f<TextView>(R.id.tvLogout).singleClick {
-//            Session.uid = 0
-//            Session.token = ""
-//            activity?.finish()
-//            openActivity(LoginActivity::class.java, Bundle())
-//        }
-        ImageLoader.loadCenterCrop(ivAvatar, AppProperty.RESOURCE_PREFIX_URL + Session.icon)
-        ivAvatar.singleClick {
+        val binding = FragmentPartyMeBinding.bind(rootView)
+        binding.tvName.text = Session.name.ifEmpty { "未登录" }
+        binding.tvUid.text = "${Session.uid}"
+        ImageLoader.loadCenterCrop(binding.ivAvatar, AppProperty.RESOURCE_PREFIX_URL + Session.icon)
+        binding.tvRecharge.singleClick {
+
+        }
+        binding.ivAvatar.singleClick {
             RouterManager.goEditProfile(activity())
 //            PictureSelector.create(this@PartyMeFragment)
 //                .openGallery(SelectMimeType.ofImage())

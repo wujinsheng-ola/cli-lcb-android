@@ -6,14 +6,22 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.liveData
+import com.blankj.utilcode.util.GsonUtils
 import com.salton123.base.BaseFragment
 import com.salton123.live.R
 import com.salton123.rtc.agora.AgoraFacade
 import com.salton123.soulove.api.ProviderManager
 import com.salton123.utils.ScreenUtils
 import io.agora.rtc2.video.VideoCanvas
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kt.toast
+import pb.ReqGiftConfig
+import sg.olaparty.network.RequestCenter
+import sg.olaparty.network.base.NetworkConfigProvider
+import sg.partying.lcb.AppProperty
 import sg.partying.lcb.android.Prop
 import sg.partying.lcb.android.Session
 import sg.partying.lcb.model.RoomInfo
@@ -38,6 +46,30 @@ class LiveRoomFragment : BaseFragment() {
         roomInfo = Prop.currentRoomInfo
         viewModel.seatInfoRet.observe(this) { dataSet ->
             setupLiveView(dataSet)
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+//            display->room\chat\video
+            val ret = RequestCenter.liveRoomService.giftConfig(ReqGiftConfig("chat", roomInfo?.rid?.toInt()
+                ?: 0))
+            ret.data_.forEach {
+                it.gifts.forEach {
+                    val giftUrl = AppProperty.RESOURCE_PREFIX_URL + "https://xs-aws-proxy.starcloud.rocks/static/gift_big/${it.id}.mp4"
+                    println("giftUrl:$giftUrl")
+                }
+            }
+//            println(GsonUtils.toJson(ret))
+
+            AppProperty.RESOURCE_PREFIX_URL + "static/gift_big/6216969.mp4"
+//            https://xs-aws-proxy.starcloud.rocks/static/gift_big/10000408.mp4
+//            "https://xs-aws-proxy.starcloud.rocks/static/commodity/c19103115300444.png"
+//            "https://xs-aws-proxy.starcloud.rocks/static/gift_big/6216969.mp4"
+//            "https://apc-admin-test.oss-cn-hangzhou.aliyuncs.com/static/gift_big/6216969.mp4"
+//            "http://xs-image.oss-cn-hangzhou.aliyuncs.com/static/gift_big/6216969.mp4"
+//            "https://xs-image.oss-cn-hangzhou.aliyuncs.com/static/gift_big/6216969.mp4"
+//            https://apc-admin-test.oss-cn-hangzhou.aliyuncs.com/static/gift_big/10000680.mp4
+//            https://apc-admin-test.oss-cn-hangzhou.aliyuncs.com/static/gift_big/10000408.mp4
+//            https://xs-aws-proxy.starcloud.rocks/static/gift_big/10000408.mp4
+//            https://apc-admin-test.oss-cn-hangzhou.aliyuncs.com/static/gift_big/6216969.mp4
         }
 //        viewModel.isJoinedRoom()?.observe(this) {
 //            if (!it) {
