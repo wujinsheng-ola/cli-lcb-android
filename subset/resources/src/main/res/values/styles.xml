@@ -15,39 +15,6 @@
         <item name="android:background">@color/colorLine</item>
         <item name="android:layout_width">@dimen/secondLine</item>
     </style>
-    <!-- Base application theme. -->
-    <style name="EmuiAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowDisablePreview">false</item>
-        <item name="android:fitsSystemWindows">false</item>
-        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
-        <item name="android:windowBackground">@color/default_background</item>
-        <!-- 默认文本颜色，Button、TextView 的文字颜色-->
-        <item name="android:textColor">@color/textColor</item>
-        <!-- 默认提示颜色，Button、TextView 的提示文字颜色 -->
-        <item name="android:textColorHint">@color/textColorHint</item>
-        <!-- ActionMode 覆盖 Actionbar 不被顶下来 -->
-        <item name="windowActionModeOverlay">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <!-- ActionMode 的颜色 -->
-        <item name="actionModeBackground">@color/colorPrimary</item>
-        <!-- 解决 Android 5.1 及以上版本 Button 英文字符串自动变大写的问题 -->
-        <item name="android:textAllCaps">false</item>
-        <!-- 默认隐藏输入法，开启这个选项后会导致输入对话框在关闭之后不能关闭软键盘   -->
-        <!--<item name="android:windowSoftInputMode">stateHidden</item>-->
-        <!-- 关闭 RecyclerView ScrollView ViewPager 水波纹效果 -->
-        <item name="android:overScrollMode">never</item>
-    </style>
-
-    <style name="EmuiAppThemeSplash" parent="EmuiAppTheme">
-        <item name="android:windowAnimationStyle">@null</item>
-        <item name="android:windowBackground">@drawable/layer_windows_background</item>
-    </style>
 
 
     <style name="AnimationActivity" parent="@android:style/Animation">　
@@ -232,12 +199,6 @@
         <item name="android:windowExitAnimation">@anim/window_right_out</item>
     </style>
 
-    <style name="defaule_activity_configuration">
-        <item name="android:configChanges">keyboardHidden|orientation|screenSize|locale</item>
-        <item name="android:resizeableActivity" tools:targetApi="n">false</item>
-        <item name="android:screenOrientation">portrait</item>
-        <item name="android:theme">@style/EmuiAppTheme</item>
-    </style>
 
     <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>

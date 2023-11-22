@@ -83,7 +83,7 @@
             android:exported="true"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
-            android:theme="@style/SplashTheme"
+            android:theme="@style/EmuiAppThemeSplash"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -108,7 +108,6 @@
             android:launchMode="singleTop"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme"
             tools:targetApi="n" />
 
         <activity

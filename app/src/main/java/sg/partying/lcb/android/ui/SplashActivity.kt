@@ -15,13 +15,15 @@ class SplashActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         ImmersionFeature(this).onBind()
         super.onCreate(savedInstanceState)
-        if (Session.isLogined) {
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
-        } else {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
+//        if (Session.isLogined) {
+//            startActivity(Intent(this, HomeActivity::class.java))
+//            finish()
+//        } else {
+//            startActivity(Intent(this, LoginActivity::class.java))
+//            finish()
+//        }
     }
 
     override fun onBackPressed() {
