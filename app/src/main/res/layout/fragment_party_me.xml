@@ -18,7 +18,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_window_edge"
                 android:layout_marginEnd="@dimen/default_window_edge"
                 android:layout_marginBottom="@dimen/default_window_edge"
@@ -77,8 +77,9 @@
                         android:textStyle="bold"
                         tools:text="爱的魔法师" />
 
-                    <TextView
+                    <com.salton123.widget.IconFontTextView
                         android:id="@+id/tvUid"
+                        android:drawableStart="@drawable/ic_ludo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -327,8 +328,10 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:layout_margin="@dimen/default_window_edge">
+            android:layout_marginStart="@dimen/default_window_edge"
+            android:layout_marginTop="@dimen/default_window_edge"
+            android:layout_marginEnd="@dimen/default_window_edge"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -595,7 +598,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:text="@string/setting_about"
+                    android:text="@string/contact_us"
                     android:textStyle="bold" />
 
                 <ImageView

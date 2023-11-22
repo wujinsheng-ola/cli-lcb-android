@@ -147,7 +147,7 @@
     <color name="titleLine">#aaaaaa</color>
     <color name="background">@color/white</color>
 
-    <color name="default_background">#B06940B2</color>
+    <color name="default_background">#FFF1F3F5</color>
     <color name="color_f44336_material">#f44336</color>
     <color name="color_e91e63_material">#e91e63</color>
     <color name="color_9c27b0_material">#9c27b0</color>

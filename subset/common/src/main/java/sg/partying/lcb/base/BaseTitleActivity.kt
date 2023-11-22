@@ -13,7 +13,7 @@ import com.salton123.common.R
  * Author:
  * Description:
  */
-abstract class BaseActivity : DelegateActivity() {
+abstract class BaseTitleActivity : DelegateActivity() {
     override fun getLayout(): Int = R.layout.activity_base
     lateinit var mImmersionFeature: ImmersionFeature
     lateinit var tvBack: TextView
