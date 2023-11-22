@@ -2,7 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item>
-        <bitmap android:src="@drawable/unity_static_splash_bg" />
-    </item>
 
+        <bitmap android:src="@drawable/unity_static_splash_bg"
+            android:gravity="fill"
+            />
+    </item>
 </layer-list>

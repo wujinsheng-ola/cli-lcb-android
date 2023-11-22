@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
 
+
     <declare-styleable name="RoundButton">
         <attr name="strokeWidth" format="dimension" />
         <attr name="bigCircleColor" format="color" />
