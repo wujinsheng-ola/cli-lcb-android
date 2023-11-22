@@ -8,7 +8,7 @@ import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.salton123.app.BaseApplication
 import sg.partying.lcb.android.R
-import sg.partying.lcb.base.BaseActivity
+import sg.partying.lcb.base.BaseTitleActivity
 
 /**
  * User: newSalton@outlook.com
@@ -16,7 +16,7 @@ import sg.partying.lcb.base.BaseActivity
  * ModifyTime: 16:40
  * Description:
  */
-class WebActivity : BaseActivity() {
+class WebActivity : BaseTitleActivity() {
     var url = "https://www.salton123.com/privacy-policy"
     var title = BaseApplication.sInstance.getString(R.string.privacy_policy)
     override fun getLayoutId(): Int = R.layout.aty_web_view

@@ -5,9 +5,9 @@ import android.widget.RadioGroup
 import com.salton123.config.AppModeEnum
 import com.salton123.soulove.CommonClassPath
 import sg.partying.lcb.android.R
-import sg.partying.lcb.base.BaseActivity
+import sg.partying.lcb.base.BaseTitleActivity
 
-class DevelopModeActivity : BaseActivity() {
+class DevelopModeActivity : BaseTitleActivity() {
     override fun getLayoutId(): Int = R.layout.avtivity_develop_mode
 
     private lateinit var radioGroup: RadioGroup
