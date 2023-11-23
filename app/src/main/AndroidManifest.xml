@@ -118,7 +118,7 @@
             android:screenOrientation="portrait"
             tools:targetApi="n" />
         <activity
-            android:name=".ui.WebActivity"
+            android:name="sg.partying.lcb.profile.ui.WebActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:launchMode="singleTop"
             android:resizeableActivity="false"

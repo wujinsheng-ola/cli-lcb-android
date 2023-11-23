@@ -1,13 +1,15 @@
-package sg.partying.lcb.android.ui
+package sg.partying.lcb.profile.ui
 
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.salton123.app.BaseApplication
-import sg.partying.lcb.android.R
+import com.salton123.profile.R
+import com.salton123.soulove.Constants
 import sg.partying.lcb.base.BaseTitleActivity
 
 /**
@@ -16,10 +18,11 @@ import sg.partying.lcb.base.BaseTitleActivity
  * ModifyTime: 16:40
  * Description:
  */
+@Route(path = Constants.Router.Profile.WEB)
 class WebActivity : BaseTitleActivity() {
     var url = "https://www.salton123.com/privacy-policy"
     var title = BaseApplication.sInstance.getString(R.string.privacy_policy)
-    override fun getLayoutId(): Int = R.layout.aty_web_view
+    override fun getLayoutId(): Int = R.layout.activity_web_view
 
     private lateinit var mAgentWeb: AgentWeb
     private lateinit var llContainer: FrameLayout

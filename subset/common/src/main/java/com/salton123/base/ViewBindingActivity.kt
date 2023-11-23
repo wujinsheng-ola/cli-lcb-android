@@ -21,8 +21,7 @@ abstract class ViewBindingActivity<VB : ViewBinding> : DelegateActivity() {
         viewBind = lazy { getViewBinding() }.value
         return viewBind.root
     }
-
-
+    
     override fun initVariable(savedInstanceState: Bundle?) {
         addFeature(ImmersionFeature(this))
     }

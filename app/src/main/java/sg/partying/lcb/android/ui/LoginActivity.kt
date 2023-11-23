@@ -13,11 +13,13 @@ import com.salton123.base.feature.ImmersionFeature
 import com.salton123.config.AppModeEnum
 import com.salton123.coroutine.Ret
 import com.salton123.soulove.CommonClassPath
+import com.salton123.soulove.api.RouterManager
 import kt.getString
 import kt.singleClick
 import sg.olaparty.network.viewmodel.NetworkViewModel
 import sg.partying.lcb.android.R
 import sg.partying.lcb.android.dialog.PhoneLoginDialog
+import sg.partying.lcb.profile.ui.WebActivity
 
 class LoginActivity : DelegateActivity() {
     private val viewModel by viewModels<NetworkViewModel>()
@@ -95,23 +97,19 @@ class LoginActivity : DelegateActivity() {
         tvUserService.paint.flags = Paint.UNDERLINE_TEXT_FLAG
         tvUserService.paint.isAntiAlias = true
         tvUserService.setOnClickListener {
-            openActivity(
-                WebActivity::class.java,
-                Bundle().apply {
-                    putString("url", "https://www.salton123.com/terms-of-service")
-                }
-            )
+            RouterManager.goWeb(this@LoginActivity, Bundle().apply {
+                putString("url", "https://www.salton123.com/terms-of-service")
+                putString("title", R.string.terms_of_services.getString())
+            })
         }
 
         tvPrivatePolicy.paint.flags = Paint.UNDERLINE_TEXT_FLAG
         tvPrivatePolicy.paint.isAntiAlias = true
         tvPrivatePolicy.setOnClickListener {
-            openActivity(
-                WebActivity::class.java,
-                Bundle().apply {
-                    putString("url", "https://www.salton123.com/terms-of-service")
-                }
-            )
+            RouterManager.goWeb(this@LoginActivity, Bundle().apply {
+                putString("url", "https://www.salton123.com/privacy-policy")
+                putString("title", R.string.privacy_policy.getString())
+            })
         }
     }
 }

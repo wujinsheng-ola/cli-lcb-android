@@ -1,6 +1,7 @@
 package com.salton123.soulove.api
 
 import android.content.Context
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.NavigationCallback
@@ -40,5 +41,12 @@ object RouterManager {
 
     fun goAccountSetting(context: Context) {
         Constants.Router.Profile.ACCOUNT_SETTING.goPage(context)
+    }
+
+    fun goWeb(context: Context, bundle: Bundle) {
+        ARouter.getInstance().build(Constants.Router.Profile.WEB)
+            .with(bundle)
+            .navigation(context)
+
     }
 }

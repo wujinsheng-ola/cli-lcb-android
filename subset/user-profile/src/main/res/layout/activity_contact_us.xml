@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Nice to meet you"
+        android:text="@string/app_name"
         android:textColor="#ff171725"
         android:textSize="21sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,12 +32,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:text="version 2.20.0（334）"
         android:textColor="#ff92929d"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
+        tools:text="version 2.20.0（334）" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -57,12 +58,11 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tvWebSite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:autoLink="web"
             android:text="www.hellopartygo.com"
             android:textColor="#ffffc542"
-            android:textColorLink="#ffffc542"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -86,6 +86,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvVersion">
 
             <TextView
+                android:id="@+id/tvPrivatePolicy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/privacy_policy"
@@ -100,6 +101,7 @@
                 android:background="#FFFFC542" />
 
             <TextView
+                android:id="@+id/tvUserService"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/terms_of_services"

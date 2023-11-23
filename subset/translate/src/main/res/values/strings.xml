@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Party Star</string>
     <string name="tab_home">派对</string>
     <string name="tab_gallery">我的</string>
     <string name="relate">相关</string>

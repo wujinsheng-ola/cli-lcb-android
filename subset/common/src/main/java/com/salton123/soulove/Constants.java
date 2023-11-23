@@ -16,6 +16,7 @@ public interface Constants {
         interface Profile {
             String EDIT = "/profile/aty/edit";
             String CONTACT_US = "/profile/aty/contact_us";
+            String WEB = "/profile/aty/web";
             String ACCOUNT_SETTING = "/profile/aty/account_setting";
         }
     }
