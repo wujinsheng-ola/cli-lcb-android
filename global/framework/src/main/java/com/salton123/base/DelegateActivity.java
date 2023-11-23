@@ -126,4 +126,8 @@ public abstract class DelegateActivity extends AppCompatActivity implements ICom
 
     }
 
+    @Override
+    public View getContentView() {
+        return inflater().inflate(getLayout(), null);
+    }
 }

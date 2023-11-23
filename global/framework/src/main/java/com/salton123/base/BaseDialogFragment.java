@@ -158,4 +158,8 @@ public abstract class BaseDialogFragment extends DialogFragment implements IComp
 
     }
 
+    @Override
+    public View getContentView() {
+        return inflater().inflate(getLayout(), null);
+    }
 }

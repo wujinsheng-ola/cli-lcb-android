@@ -40,7 +40,7 @@ public abstract class LifeDelegate {
     }
 
     private ViewGroup buildRootView() {
-        View mainContentView = inflater().inflate(mComponentLife.getLayout(), null);
+        View mainContentView = mComponentLife.getContentView();
         if (getTitleBar() != null) {
             LinearLayout topLayout = new LinearLayout(activity());
             topLayout.setId(R.id.salton_id_top_layout);

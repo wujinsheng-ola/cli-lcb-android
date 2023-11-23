@@ -158,4 +158,8 @@ public abstract class BaseFragment extends Fragment implements IComponentLife {
 
     }
 
+    @Override
+    public View getContentView() {
+        return inflater().inflate(getLayout(), null);
+    }
 }

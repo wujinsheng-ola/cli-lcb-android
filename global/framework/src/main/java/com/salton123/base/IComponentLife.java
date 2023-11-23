@@ -15,6 +15,8 @@ public interface IComponentLife extends View.OnClickListener {
 
     int getLayout();    //当前布局
 
+    View getContentView();
+
     View getRootView();
 
     View getTitleBar();
