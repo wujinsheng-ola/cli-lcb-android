@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/immersionBarHeight"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -19,7 +20,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/if_arrow_backward"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="24sp" />
 
         <TextView
@@ -29,7 +30,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:singleLine="true"
-            android:textColor="@color/black"
+            android:textColor="@color/mainTextColor"
             android:textSize="16.0sp" />
 
         <com.salton123.widget.IconFontTextView

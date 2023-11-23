@@ -13,7 +13,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="380dp"
             android:background="@drawable/bg_profile_page_header">
 
             <LinearLayout
@@ -37,7 +37,7 @@
                         android:layout_marginTop="20dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_placeholder"
-                        app:siBorderAlpha="0.0"
+                        app:siBorderAlpha="1"
                         app:siBorderColor="@android:color/white"
                         app:siBorderWidth="1dp"
                         app:siForeground="@color/color_ffc3b4d2"
@@ -45,8 +45,8 @@
                         app:siSquare="false" />
 
                     <View
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
                         android:layout_weight="1" />
 
                     <ImageView
@@ -60,7 +60,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginTop="12dp"
@@ -87,16 +87,16 @@
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/secondTextColor"
                         android:textColor="@color/secondTextColor"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
-                        tools:text="816964652" />
+                        tools:text="ID:816964652" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="50dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -255,8 +255,7 @@
                     android:layout_marginBottom="5dp"
                     android:text="48394k"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="21sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -286,8 +285,7 @@
                     android:layout_marginBottom="5dp"
                     android:text="48394k"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="21sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -317,8 +315,7 @@
                     android:layout_marginBottom="5dp"
                     android:text="48394k"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="21sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -568,6 +565,7 @@
                 <ImageView
                     android:layout_width="27dp"
                     android:layout_height="27dp"
+                    android:layout_marginStart="12dp"
                     android:src="@drawable/ic_setting" />
 
                 <TextView
@@ -597,6 +595,7 @@
                 <ImageView
                     android:layout_width="27dp"
                     android:layout_height="27dp"
+                    android:layout_marginStart="12dp"
                     android:src="@drawable/ic_contact_us" />
 
                 <TextView

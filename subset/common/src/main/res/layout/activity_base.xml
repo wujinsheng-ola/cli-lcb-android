@@ -6,20 +6,6 @@
     android:orientation="vertical">
 
     <include layout="@layout/common_title_bar" />
-    <com.wuhenzhizao.titlebar.widget.CommonTitleBar
-        android:id="@+id/titlebar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        titlebar:bottomShadowHeight="0dp"
-        titlebar:centerText="通用标题栏"
-        titlebar:centerTextColor="#ffffff"
-        titlebar:centerType="textView"
-        titlebar:rightText="切换图标颜色"
-        titlebar:rightTextColor="#ffffff"
-        titlebar:rightType="textView"
-        titlebar:showBottomLine="false"
-        titlebar:statusBarMode="light" />
-
 
     <LinearLayout
         android:id="@+id/llContent"

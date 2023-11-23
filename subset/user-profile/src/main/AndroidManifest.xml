@@ -11,6 +11,22 @@
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             tools:targetApi="n" />
+
+        <activity
+            android:name="sg.partying.lcb.profile.ui.ContactUsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTop"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
+
+        <activity
+            android:name="sg.partying.lcb.profile.ui.AccountSettingActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTop"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
     </application>
 
 </manifest>

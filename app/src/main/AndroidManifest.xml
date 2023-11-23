@@ -124,22 +124,6 @@
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             tools:targetApi="n" />
-
-        <activity
-            android:name=".ui.ContactUsActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
-            android:launchMode="singleTop"
-            android:resizeableActivity="false"
-            android:screenOrientation="portrait"
-            tools:targetApi="n" />
-
-        <activity
-            android:name=".ui.AccountSettingActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
-            android:launchMode="singleTop"
-            android:resizeableActivity="false"
-            android:screenOrientation="portrait"
-            tools:targetApi="n" />
     </application>
 
 </manifest>
