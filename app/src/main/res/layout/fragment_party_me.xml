@@ -72,17 +72,21 @@
                         android:id="@+id/tvName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textColor="@color/mainTextColor"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         tools:text="爱的魔法师" />
 
                     <com.salton123.widget.IconFontTextView
                         android:id="@+id/tvUid"
-                        android:drawableStart="@drawable/ic_ludo"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:drawableEnd="@drawable/ic_copy"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/secondTextColor"
+                        android:textColor="@color/secondTextColor"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         tools:text="816964652" />
@@ -554,6 +558,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/llAccountSetting"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
@@ -570,7 +575,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:text="@string/setting_title"
+                    android:text="@string/account_setting"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -582,6 +587,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llContactUs"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"

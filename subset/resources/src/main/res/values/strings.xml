@@ -232,4 +232,5 @@
     <string name="login_with_account">Login with account</string>
     <string name="login_failed">登录失败</string>
     <string name="recharge">Recharge</string>
+    <string name="account_setting">账号设置</string>
 </resources>

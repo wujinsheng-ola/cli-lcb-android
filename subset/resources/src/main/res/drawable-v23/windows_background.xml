@@ -6,12 +6,9 @@
     </item>
 
     <item
-        android:width="50dp"
-        android:height="50dp"
         android:gravity="top|center"
         android:top="135dp">
         <bitmap
-
             android:gravity="center_horizontal"
             android:src="@drawable/unity_static_splash"
 

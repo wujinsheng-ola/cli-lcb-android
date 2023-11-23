@@ -1,5 +1,7 @@
 package sg.partying.lcb.android.ui
 
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.salton123.soulove.Constants
 import sg.partying.lcb.android.R
 import sg.partying.lcb.base.BaseTitleActivity
 
@@ -8,7 +10,8 @@ import sg.partying.lcb.base.BaseTitleActivity
  * Author:
  * Description:
  */
-class ContactUsTitleActivity : BaseTitleActivity() {
+@Route(path = Constants.Router.Profile.CONTACT_US)
+class ContactUsActivity : BaseTitleActivity() {
     override fun getLayoutId(): Int = R.layout.activity_contact_us
 
 

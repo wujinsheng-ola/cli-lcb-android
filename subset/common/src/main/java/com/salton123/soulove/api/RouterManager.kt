@@ -33,4 +33,12 @@ object RouterManager {
     fun goEditProfile(context: Context) {
         Constants.Router.Profile.EDIT.goPage(context)
     }
+
+    fun goContactUs(context: Context) {
+        Constants.Router.Profile.CONTACT_US.goPage(context)
+    }
+
+    fun goAccountSetting(context: Context) {
+        Constants.Router.Profile.ACCOUNT_SETTING.goPage(context)
+    }
 }

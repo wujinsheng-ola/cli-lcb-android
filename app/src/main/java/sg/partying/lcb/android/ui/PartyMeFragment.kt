@@ -36,22 +36,13 @@ class PartyMeFragment : BaseFragment() {
         }
         binding.ivAvatar.singleClick {
             RouterManager.goEditProfile(activity())
-//            PictureSelector.create(this@PartyMeFragment)
-//                .openGallery(SelectMimeType.ofImage())
-//                .isDisplayCamera(true)
-//                .setCropEngine(ImageFileCropEngine())
-//                .isCameraForegroundService(true)
-//                .setMaxSelectNum(1)
-//                .setImageEngine(GlideEngine.createGlideEngine())
-//                .forResult(object : OnResultCallbackListener<LocalMedia> {
-//                    override fun onResult(result: ArrayList<LocalMedia>?) {
-//                        println(result)
-//                        Glide.with(ivAvatar).load(result?.get(0)!!.realPath).into(ivAvatar)
-//                    }
-//
-//                    override fun onCancel() {
-//                    }
-//                })
+        }
+        binding.llContactUs.singleClick {
+            RouterManager.goContactUs(activity())
+        }
+
+        binding.llAccountSetting.singleClick {
+            RouterManager.goAccountSetting(activity())
         }
     }
 
