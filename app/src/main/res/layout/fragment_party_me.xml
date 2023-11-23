@@ -13,60 +13,57 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="380dp"
-            android:background="@drawable/bg_profile_page_header">
+            android:layout_height="350dp"
+            android:background="@drawable/bg_profile_page_header"
+            android:paddingStart="@dimen/default_window_edge"
 
-            <LinearLayout
+            android:paddingEnd="@dimen/default_window_edge">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_window_edge"
-                android:layout_marginEnd="@dimen/default_window_edge"
-                android:layout_marginBottom="@dimen/default_window_edge"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/actionBarHeight">
+                android:layout_height="match_parent">
+
+                <com.github.siyamed.shapeimageview.RoundedImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="70dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_placeholder"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:siBorderAlpha="1"
+                    app:siBorderColor="@android:color/white"
+                    app:siBorderWidth="1dp"
+                    app:siForeground="@color/color_ffc3b4d2"
+                    app:siRadius="36dp"
+                    app:siSquare="false" />
+
+                <ImageView
+                    android:id="@+id/ivMore"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_red_dot"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_next_style"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivAvatar" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.github.siyamed.shapeimageview.RoundedImageView
-                        android:id="@+id/ivAvatar"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_marginTop="20dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_placeholder"
-                        app:siBorderAlpha="1"
-                        app:siBorderColor="@android:color/white"
-                        app:siBorderWidth="1dp"
-                        app:siForeground="@color/color_ffc3b4d2"
-                        app:siRadius="36dp"
-                        app:siSquare="false" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/bg_red_dot"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_next_style" />
-                </LinearLayout>
-
-                <LinearLayout
+                    android:id="@+id/llUseInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="15dp"
                     android:layout_weight="1"
                     android:gravity="start|center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivAvatar">
 
                     <TextView
                         android:id="@+id/tvName"
@@ -96,8 +93,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:orientation="horizontal">
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/llMyWallet"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -185,48 +185,50 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="@dimen/default_window_edge"
-                android:layout_marginEnd="@dimen/default_window_edge"
-                android:background="@drawable/bg_profile_wallet"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_profile_wallet" />
-
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/llMyWallet"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="9dp"
-                    android:layout_weight="1"
-                    android:text="@string/my_wallet"
-                    android:textColor="#ffffffff"
-                    android:textSize="15sp" />
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:background="@drawable/bg_profile_wallet"
+                    android:gravity="center_vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
-                <TextView
-                    android:id="@+id/tvRecharge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:background="@drawable/bg_profile_wallet_recharge"
-                    android:gravity="center"
-                    android:paddingStart="5dp"
-                    android:paddingTop="3dp"
-                    android:paddingEnd="5dp"
-                    android:paddingBottom="3dp"
-                    android:text="@string/recharge"
-                    android:textColor="#ffffc200"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="12dp"
+                        android:src="@drawable/ic_profile_wallet" />
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
+                        android:layout_weight="1"
+                        android:text="@string/my_wallet"
+                        android:textColor="#ffffffff"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvRecharge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_profile_wallet_recharge"
+                        android:gravity="center"
+                        android:paddingStart="5dp"
+                        android:paddingTop="3dp"
+                        android:paddingEnd="5dp"
+                        android:paddingBottom="3dp"
+                        android:text="@string/recharge"
+                        android:textColor="#ffffc200"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
 
         <LinearLayout
