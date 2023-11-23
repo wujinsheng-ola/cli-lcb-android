@@ -15,7 +15,7 @@ import kt.toast
  */
 @Route(path = Constants.Router.Profile.CONTACT_US)
 class ContactUsActivity : BaseViewBindingActivity<ActivityContactUsBinding>() {
-    override fun getViewBinding(): ActivityContactUsBinding = ActivityContactUsBinding.inflate(layoutInflater)
+    override fun getViewBinding() = ActivityContactUsBinding.inflate(layoutInflater)
     override fun initVariable(savedInstanceState: Bundle?) {
     }
 
