@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.salton123.base.feature.ImmersionFeature
 import sg.partying.lcb.android.Session
+import sg.partying.lcb.profile.ui.LoginActivity
 
 /**
  * Time:2022/1/27 10:52

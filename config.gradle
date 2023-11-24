@@ -82,6 +82,7 @@ ext {
             "google-play-services-auth"    : "com.google.android.gms:play-services-auth:20.2.0",
             "agentweb-core"                : "com.github.Justson.AgentWeb:agentweb-core:v5.0.6-androidx",
             "item-decoration"              : "com.github.zyyoona7:RecyclerViewItemDecoration:1.0.3",
+            "qmui"                         : 'com.qmuiteam:qmui:2.0.1',
             "wire"                         : "com.squareup.wire:wire-runtime:${ext.wire_version}",
             "agora-rtc-basic"              : "io.agora.rtc:full-rtc-basic:${ext.agora_sdk_version}"
 

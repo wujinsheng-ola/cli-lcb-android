@@ -102,7 +102,7 @@
 
 
         <activity
-            android:name=".ui.LoginActivity"
+            android:name="sg.partying.lcb.profile.ui.LoginActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:launchMode="singleTop"
             android:resizeableActivity="false"

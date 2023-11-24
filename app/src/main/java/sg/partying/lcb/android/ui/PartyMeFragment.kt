@@ -45,16 +45,4 @@ class PartyMeFragment : BaseFragment() {
             RouterManager.goAccountSetting(activity())
         }
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode == RESULT_OK) {
-//            when (requestCode) {
-//                PictureConfig.CHOOSE_REQUEST,
-//                PictureConfig.REQUEST_CAMERA -> {
-//                    val phoneList = PictureSelector.obtainMultipleResult(data)
-//                }
-//            }
-//        }
-//    }
 }

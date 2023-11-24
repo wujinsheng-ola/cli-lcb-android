@@ -1,9 +1,14 @@
 package sg.partying.lcb.profile.ui
 
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.salton123.profile.R
+import com.salton123.base.ViewBindingActivity
+import com.salton123.profile.databinding.ActivityAccountSettingBinding
 import com.salton123.soulove.Constants
-import sg.partying.lcb.base.BaseTitleActivity
+import com.salton123.soulove.api.RouterManager
+import kt.singleClick
+import sg.partying.lcb.AppProperty
+import sg.partying.lcb.android.Session
+import sg.partying.lcb.util.ImageLoader
 
 /**
  * Time:2023/11/20 17:54
@@ -11,12 +16,19 @@ import sg.partying.lcb.base.BaseTitleActivity
  * Description:
  */
 @Route(path = Constants.Router.Profile.ACCOUNT_SETTING)
-class AccountSettingActivity : BaseTitleActivity() {
-    override fun getLayoutId(): Int = R.layout.activity_contact_us
-
+class AccountSettingActivity : ViewBindingActivity<ActivityAccountSettingBinding>() {
+    override fun getViewBinding(): ActivityAccountSettingBinding = ActivityAccountSettingBinding.inflate(layoutInflater)
     override fun initViewAndData() {
-        super.initViewAndData()
-        tvTitle.setText(R.string.account_setting)
+        viewBind.apply {
+            tvName.text = Session.name.ifEmpty { "未登录" }
+            tvUid.text = "${Session.uid}"
+            ImageLoader.loadCenterCrop(ivAvatar, AppProperty.RESOURCE_PREFIX_URL + Session.icon)
+            btnLogout.singleClick {
+                Session.uid = 0
+                Session.token = ""
+                activity()?.finish()
+                RouterManager.goLogin(activity())
+            }
+        }
     }
-
 }

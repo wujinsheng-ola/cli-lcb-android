@@ -8,6 +8,10 @@ package com.salton123.soulove;
  */
 public interface Constants {
     interface Router {
+        interface App {
+            String HOME = "/app/aty/home";
+            String DEV = "/app/aty/dev";
+        }
 
         interface Live {
             String LIVE_ROOM = "/live/aty/live_room";
@@ -18,6 +22,7 @@ public interface Constants {
             String CONTACT_US = "/profile/aty/contact_us";
             String WEB = "/profile/aty/web";
             String ACCOUNT_SETTING = "/profile/aty/account_setting";
+            String LOGIN = "/profile/aty/login";
         }
     }
 

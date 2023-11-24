@@ -2,11 +2,14 @@ package sg.partying.lcb.android.ui
 
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.salton123.config.AppModeEnum
 import com.salton123.soulove.CommonClassPath
+import com.salton123.soulove.Constants
 import sg.partying.lcb.android.R
 import sg.partying.lcb.base.BaseTitleActivity
 
+@Route(path = Constants.Router.App.DEV)
 class DevelopModeActivity : BaseTitleActivity() {
     override fun getLayoutId(): Int = R.layout.avtivity_develop_mode
 

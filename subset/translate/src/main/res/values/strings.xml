@@ -10,4 +10,5 @@
     <string name="complete_status">完成度%s</string>
     <string name="my_wallet">My wallet</string>
     <string name="contact_us">联系我们</string>
+    <string name="logout">登出</string>
 </resources>

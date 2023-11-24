@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.AppUtils
 import com.salton123.base.DelegateActivity
 import com.salton123.base.feature.ImmersionFeature
 import com.salton123.base.feature.PermissionFeature
+import com.salton123.soulove.Constants
 import com.salton123.utils.FragmentUtils
 import com.salton123.widget.BottomBarLayout
 import kt.toast
@@ -18,6 +20,7 @@ import sg.partying.lcb.android.R
  * Author:
  * Description:
  */
+@Route(path = Constants.Router.App.HOME)
 class HomeActivity : DelegateActivity() {
 
     override fun getLayout(): Int = R.layout.activity_home
