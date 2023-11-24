@@ -9,6 +9,7 @@ import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.salton123.base.DelegateActivity
+import com.salton123.base.ViewBindingActivity
 import com.salton123.base.feature.ImmersionFeature
 import com.salton123.profile.R
 import com.salton123.profile.databinding.ActivityUserProfileBinding
@@ -36,53 +37,54 @@ import java.io.File
  * Description:
  */
 @Route(path = Constants.Router.Profile.EDIT)
-class EditProfileActivity : DelegateActivity() {
-    override fun getLayout(): Int = R.layout.activity_user_profile
+class EditProfileActivity : ViewBindingActivity<ActivityUserProfileBinding>() {
+    override fun getViewBinding(): ActivityUserProfileBinding = ActivityUserProfileBinding.inflate(layoutInflater)
 
     override fun initVariable(savedInstanceState: Bundle?) {
         addFeature(ImmersionFeature(this))
     }
 
     override fun initViewAndData() {
-//        tvTitle.setText("修改个人资料")
-        val binding = ActivityUserProfileBinding.bind(rootView)
-        binding.apply {
-            tvBack.singleClick { finish() }
-            tvMore.visibility = View.GONE
-            tvTitle.text = getString(R.string.edit_profile)
-            tvSubTitle.text = getString(R.string.complete_status, "30%")
+        viewBind.apply {
             ImageLoader.loadCenterCrop(ivAvatar, AppProperty.RESOURCE_PREFIX_URL + Session.icon)
             ivAvatar.singleClick {
-                PictureSelector.create(this@EditProfileActivity)
-                    .openGallery(SelectMimeType.ofImage())
-                    .isDisplayCamera(true)
-                    .setCropEngine(ImageFileCropEngine(true))
-                    .isCameraForegroundService(true)
-                    .setMaxSelectNum(1)
-                    .setSelectorUIStyle(PartyPictureSelectorStyle(activity()))
-                    .setCompressEngine(ImageFileCompressEngine())
-                    .setImageEngine(GlideEngine.createGlideEngine())
-                    .forResult(object : OnResultCallbackListener<LocalMedia> {
-                        override fun onResult(result: ArrayList<LocalMedia>?) {
-                            if (!result.isNullOrEmpty()) {
-                                val path = result[0].cutPath
-                                ImageLoader.loadCenterCrop(ivAvatar, path)
-                                uploadAvatar(path)
-                            }
-                        }
-
-                        override fun onCancel() {
-                        }
-                    })
+                selectAvatar()
             }
         }
         accountInfo()
+        tvTitle?.text = getString(R.string.edit_profile)
     }
+
 
     private fun accountInfo() {
         lifecycleScope.launch(Dispatchers.IO) {
             RequestCenter.profileService.accountInfo()
         }
+    }
+
+
+    fun selectAvatar() {
+        PictureSelector.create(this@EditProfileActivity)
+            .openGallery(SelectMimeType.ofImage())
+            .isDisplayCamera(true)
+            .setCropEngine(ImageFileCropEngine(true))
+            .isCameraForegroundService(true)
+            .setMaxSelectNum(1)
+            .setSelectorUIStyle(PartyPictureSelectorStyle(activity()))
+            .setCompressEngine(ImageFileCompressEngine())
+            .setImageEngine(GlideEngine.createGlideEngine())
+            .forResult(object : OnResultCallbackListener<LocalMedia> {
+                override fun onResult(result: ArrayList<LocalMedia>?) {
+                    if (!result.isNullOrEmpty()) {
+                        val path = result[0].cutPath
+                        ImageLoader.loadCenterCrop(viewBind.ivAvatar, path)
+                        uploadAvatar(path)
+                    }
+                }
+
+                override fun onCancel() {
+                }
+            })
     }
 
     private fun uploadAvatar(localFilePath: String) {
@@ -91,8 +93,6 @@ class EditProfileActivity : DelegateActivity() {
             val requestFile = file.asRequestBody("image/*".toMediaType())
             val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
             val resp = RequestCenter.profileService.uploadAvatar(body)
-            println(resp.data)
-//            {"success":true,"data":{"name":"202311\/02\/816260300_654355fbcd32f1.33504396.jpg","width":900,"height":900}}
         }
     }
 }
