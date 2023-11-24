@@ -31,16 +31,16 @@ public class TRefreshHeader extends LinearLayout implements RefreshHeader {
 
     public TRefreshHeader(Context context) {
         super(context);
-        filter = new SimpleColorFilter(context.getResources().getColor(R.color.colorAccent));
+        filter = new SimpleColorFilter(context.getResources().getColor(com.salton123.resources.R.color.colorAccent));
         initView(context);
     }
 
     public TRefreshHeader(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.LottieAnimationView);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, com.airbnb.lottie.R.styleable.LottieAnimationView);
         filter = new SimpleColorFilter(
-            typedArray.getColor(R.styleable.LottieAnimationView_lottie_colorFilter,
-                context.getResources().getColor(R.color.colorAccent)));
+            typedArray.getColor(com.airbnb.lottie.R.styleable.LottieAnimationView_lottie_colorFilter,
+                context.getResources().getColor(com.salton123.resources.R.color.colorAccent)));
         typedArray.recycle();
         initView(context);
     }

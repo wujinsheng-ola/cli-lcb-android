@@ -1,7 +1,7 @@
 package com.hjq.base.action;
 
 
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 /**
  * author : Android 轮子哥

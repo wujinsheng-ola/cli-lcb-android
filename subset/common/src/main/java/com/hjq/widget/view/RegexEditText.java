@@ -6,7 +6,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.AttributeSet;
 
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 import java.util.regex.Pattern;
 

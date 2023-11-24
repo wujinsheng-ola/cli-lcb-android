@@ -39,7 +39,7 @@ class PartyHomeFragment : BaseFragment() {
                         putString("type", "liveroom")
                     }
                 },
-                getString(R.string.live)
+                getString(com.salton123.translate.R.string.live)
             )
         )
         fragments.add(
@@ -49,10 +49,10 @@ class PartyHomeFragment : BaseFragment() {
                         putString("type", "chatroom")
                     }
                 },
-                getString(R.string.chat)
+                getString(com.salton123.translate.R.string.chat)
             )
         )
-        fragments.add(Pair(HelloFragment(), getString(R.string.relate)))
+        fragments.add(Pair(HelloFragment(), getString(com.salton123.translate.R.string.relate)))
         fragmentPagerIndicator = f(R.id.fragmentPagerIndicator)
         viewPager = f(R.id.viewPager)
         mIndexFragmentAdapter.setData(fragments)
@@ -67,8 +67,8 @@ class PartyHomeFragment : BaseFragment() {
                 if (index < fragments.size) {
                     val simplePagerTitleView = SimplePagerTitleView(getContext())
                     simplePagerTitleView.text = fragments[index].second
-                    simplePagerTitleView.normalColor = R.color.white60.getColor()
-                    simplePagerTitleView.selectedColor = R.color.white.getColor()
+                    simplePagerTitleView.normalColor = com.salton123.resources.R.color.white60.getColor()
+                    simplePagerTitleView.selectedColor = com.salton123.resources.R.color.white.getColor()
                     simplePagerTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
                     simplePagerTitleView.setOnClickListener { viewPager.currentItem = index }
                     return simplePagerTitleView
@@ -81,7 +81,7 @@ class PartyHomeFragment : BaseFragment() {
                 indicator.lineWidth = UIUtil.dip2px(context, 15.0).toFloat()
                 indicator.mode = LinePagerIndicator.MODE_EXACTLY
                 indicator.yOffset = UIUtil.dip2px(context, 8.0).toFloat()
-                indicator.setColors(R.color.white.getColor(), R.color.white.getColor())
+                indicator.setColors(com.salton123.resources.R.color.white.getColor(), com.salton123.resources.R.color.white.getColor())
                 return indicator
             }
         }

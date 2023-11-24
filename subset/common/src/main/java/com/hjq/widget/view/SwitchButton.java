@@ -18,7 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 import androidx.annotation.Nullable;
 

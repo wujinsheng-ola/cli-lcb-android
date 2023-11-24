@@ -14,7 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 
 @SuppressWarnings("WeakerAccess")

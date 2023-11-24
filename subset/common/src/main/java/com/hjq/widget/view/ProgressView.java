@@ -14,7 +14,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 import androidx.annotation.NonNull;
 

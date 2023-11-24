@@ -70,7 +70,7 @@ public class BottomBarItem extends LinearLayout {
 
         this.context = context;
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BottomBarItem);
+        TypedArray ta = context.obtainStyledAttributes(attrs, com.salton123.resources.R.styleable.BottomBarItem);
 
         initAttrs(ta); //初始化属性
 
@@ -82,34 +82,34 @@ public class BottomBarItem extends LinearLayout {
     }
 
     private void initAttrs(TypedArray ta) {
-        normalIcon = ta.getDrawable(R.styleable.BottomBarItem_iconNormal);
-        selectedIcon = ta.getDrawable(R.styleable.BottomBarItem_iconSelected);
+        normalIcon = ta.getDrawable(com.salton123.resources.R.styleable.BottomBarItem_iconNormal);
+        selectedIcon = ta.getDrawable(com.salton123.resources.R.styleable.BottomBarItem_iconSelected);
 
-        title = ta.getString(R.styleable.BottomBarItem_itemText);
-        titleTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_itemTextSize, sp2px(context, titleTextSize));
-        titleNormalColor = ta.getColor(R.styleable.BottomBarItem_textColorNormal, 0x999999);
-        titleSelectedColor = ta.getColor(R.styleable.BottomBarItem_textColorSelected, 0xff0000);
+        title = ta.getString(com.salton123.resources.R.styleable.BottomBarItem_itemText);
+        titleTextSize = ta.getDimensionPixelSize(com.salton123.resources.R.styleable.BottomBarItem_itemTextSize, sp2px(context, titleTextSize));
+        titleNormalColor = ta.getColor(com.salton123.resources.R.styleable.BottomBarItem_textColorNormal, 0x999999);
+        titleSelectedColor = ta.getColor(com.salton123.resources.R.styleable.BottomBarItem_textColorSelected, 0xff0000);
 
-        marginTop = ta.getDimensionPixelSize(R.styleable.BottomBarItem_itemMarginTop, dip2Px(context, marginTop));
+        marginTop = ta.getDimensionPixelSize(com.salton123.resources.R.styleable.BottomBarItem_itemMarginTop, dip2Px(context, marginTop));
 
-        openTouchBg = ta.getBoolean(R.styleable.BottomBarItem_openTouchBg, openTouchBg);
-        touchDrawable = ta.getDrawable(R.styleable.BottomBarItem_touchDrawable);
+        openTouchBg = ta.getBoolean(com.salton123.resources.R.styleable.BottomBarItem_openTouchBg, openTouchBg);
+        touchDrawable = ta.getDrawable(com.salton123.resources.R.styleable.BottomBarItem_touchDrawable);
 
-        iconWidth = ta.getDimensionPixelSize(R.styleable.BottomBarItem_iconWidth, 0);
-        iconHeight = ta.getDimensionPixelSize(R.styleable.BottomBarItem_iconHeight, 0);
-        itemPadding = ta.getDimensionPixelSize(R.styleable.BottomBarItem_itemPadding, 0);
+        iconWidth = ta.getDimensionPixelSize(com.salton123.resources.R.styleable.BottomBarItem_iconWidth, 0);
+        iconHeight = ta.getDimensionPixelSize(com.salton123.resources.R.styleable.BottomBarItem_iconHeight, 0);
+        itemPadding = ta.getDimensionPixelSize(com.salton123.resources.R.styleable.BottomBarItem_itemPadding, 0);
 
-        unreadTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_unreadTextSize, sp2px(context, unreadTextSize));
-        unreadTextColor = ta.getColor(R.styleable.BottomBarItem_unreadTextColor, getColor(context, R.color.white));
-        unreadTextBg = ta.getDrawable(R.styleable.BottomBarItem_unreadTextBg);
+        unreadTextSize = ta.getDimensionPixelSize(com.salton123.resources.R.styleable.BottomBarItem_unreadTextSize, sp2px(context, unreadTextSize));
+        unreadTextColor = ta.getColor(com.salton123.resources.R.styleable.BottomBarItem_unreadTextColor, getColor(context,android.R.color.white));
+        unreadTextBg = ta.getDrawable(com.salton123.resources.R.styleable.BottomBarItem_unreadTextBg);
 
-        msgTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_msgTextSize, sp2px(context, msgTextSize));
-        msgTextColor = ta.getColor(R.styleable.BottomBarItem_msgTextColor, getColor(context, R.color.white));
-        msgTextBg = ta.getDrawable(R.styleable.BottomBarItem_msgTextBg);
+        msgTextSize = ta.getDimensionPixelSize(com.salton123.resources.R.styleable.BottomBarItem_msgTextSize, sp2px(context, msgTextSize));
+        msgTextColor = ta.getColor(com.salton123.resources.R.styleable.BottomBarItem_msgTextColor, getColor(context, android.R.color.white));
+        msgTextBg = ta.getDrawable(com.salton123.resources.R.styleable.BottomBarItem_msgTextBg);
 
-        notifyPointBg = ta.getDrawable(R.styleable.BottomBarItem_notifyPointBg);
+        notifyPointBg = ta.getDrawable(com.salton123.resources.R.styleable.BottomBarItem_notifyPointBg);
 
-        unreadNumThreshold = ta.getInteger(R.styleable.BottomBarItem_unreadThreshold, unreadNumThreshold);
+        unreadNumThreshold = ta.getInteger(com.salton123.resources.R.styleable.BottomBarItem_unreadThreshold, unreadNumThreshold);
     }
 
     /**
@@ -130,15 +130,15 @@ public class BottomBarItem extends LinearLayout {
         }
 
         if (unreadTextBg == null) {
-            unreadTextBg = getResources().getDrawable(R.drawable.shape_unread);
+            unreadTextBg = getResources().getDrawable(com.salton123.resources.R.drawable.shape_unread);
         }
 
         if (msgTextBg == null) {
-            msgTextBg = getResources().getDrawable(R.drawable.shape_msg);
+            msgTextBg = getResources().getDrawable(com.salton123.resources.R.drawable.shape_msg);
         }
 
         if (notifyPointBg == null) {
-            notifyPointBg = getResources().getDrawable(R.drawable.shape_notify_point);
+            notifyPointBg = getResources().getDrawable(com.salton123.resources.R.drawable.shape_notify_point);
         }
     }
 
@@ -342,9 +342,9 @@ public class BottomBarItem extends LinearLayout {
             titleSelectedColor = 0xff0000;
             unreadTextSize = sp2px(context, 10);
             msgTextSize = sp2px(context, 6);
-            unreadTextColor = getColor(R.color.white);
+            unreadTextColor = getColor(com.salton123.resources.R.color.white);
             unreadNumThreshold = 99;
-            msgTextColor = getColor(R.color.white);
+            msgTextColor = getColor(com.salton123.resources.R.color.white);
         }
 
         /**

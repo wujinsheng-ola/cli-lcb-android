@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 
 import androidx.cardview.widget.CardView;
 
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 /**
  * User: wujinsheng1@yy.com

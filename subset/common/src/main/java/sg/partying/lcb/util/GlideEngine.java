@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.luck.picture.lib.engine.ImageEngine;
 import com.luck.picture.lib.utils.ActivityCompatHelper;
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 /**
  * Time:2023/10/31 18:02
@@ -69,7 +69,7 @@ public class GlideEngine implements ImageEngine {
             .sizeMultiplier(0.5f)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .transform(new CenterCrop(), new RoundedCorners(8))
-            .placeholder(R.drawable.ic_placeholder)
+            .placeholder(com.salton123.resources.R.drawable.ic_placeholder)
             .into(imageView);
     }
 

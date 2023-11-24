@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 /**
  * author : Android 轮子哥

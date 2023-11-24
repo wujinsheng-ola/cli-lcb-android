@@ -70,8 +70,8 @@ class LoginActivity : DelegateActivity() {
                             ).inflate(R.layout.login_type_view_holder, null)
                             val ivLoginIcon = loginTypeView.findViewById<ImageView>(R.id.ivLoginIcon)
                             val tvLoginName = loginTypeView.findViewById<TextView>(R.id.tvLoginName)
-                            ivLoginIcon.setImageResource(R.drawable.ic_google_login)
-                            tvLoginName.text = String.format(R.string.login_via_type.getString(), "Google")
+                            ivLoginIcon.setImageResource(com.salton123.resources.R.drawable.ic_google_login)
+                            tvLoginName.text = String.format(com.salton123.translate.R.string.login_via_type.getString(), "Google")
                             loginTypeView.setOnClickListener {
                             }
                             llLoginType.addView(loginTypeView)
@@ -83,8 +83,8 @@ class LoginActivity : DelegateActivity() {
                             ).inflate(R.layout.login_type_view_holder, null)
                             val ivLoginIcon = loginTypeView.findViewById<ImageView>(R.id.ivLoginIcon)
                             val tvLoginName = loginTypeView.findViewById<TextView>(R.id.tvLoginName)
-                            ivLoginIcon.setImageResource(R.drawable.ic_phone_login)
-                            tvLoginName.text = String.format(R.string.login_via_type.getString(), "Phone")
+                            ivLoginIcon.setImageResource(com.salton123.resources.R.drawable.ic_phone_login)
+                            tvLoginName.text = String.format(com.salton123.translate.R.string.login_via_type.getString(), "Phone")
                             loginTypeView.setOnClickListener {
                                 PhoneLoginDialog.show(activity()) {
                                     RouterManager.goHome(activity())
@@ -101,7 +101,7 @@ class LoginActivity : DelegateActivity() {
         tvUserService.setOnClickListener {
             RouterManager.goWeb(this@LoginActivity, Bundle().apply {
                 putString("url", "https://www.salton123.com/terms-of-service")
-                putString("title", R.string.terms_of_services.getString())
+                putString("title", com.salton123.translate.R.string.terms_of_services.getString())
             })
         }
 
@@ -110,7 +110,7 @@ class LoginActivity : DelegateActivity() {
         tvPrivatePolicy.setOnClickListener {
             RouterManager.goWeb(this@LoginActivity, Bundle().apply {
                 putString("url", "https://www.salton123.com/privacy-policy")
-                putString("title", R.string.privacy_policy.getString())
+                putString("title", com.salton123.translate.R.string.privacy_policy.getString())
             })
         }
     }

@@ -52,7 +52,7 @@ class EditProfileActivity : ViewBindingActivity<ActivityUserProfileBinding>() {
             }
         }
         accountInfo()
-        tvTitle?.text = getString(R.string.edit_profile)
+        tvTitle?.text = getString(com.salton123.translate.R.string.edit_profile)
     }
 
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 import androidx.appcompat.widget.AppCompatImageView;
 

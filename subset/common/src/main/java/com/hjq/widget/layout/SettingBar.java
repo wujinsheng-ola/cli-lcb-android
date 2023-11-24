@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;

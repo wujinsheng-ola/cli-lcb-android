@@ -40,7 +40,7 @@ object ImageLoader {
         Glide.with(imageView!!)
             .load(url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(R.drawable.ic_placeholder)
+            .placeholder(com.salton123.resources.R.drawable.ic_placeholder)
             .fitCenter()
             .thumbnail(0.5f)
             .into(imageView)

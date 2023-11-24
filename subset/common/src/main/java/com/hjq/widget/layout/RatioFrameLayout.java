@@ -5,7 +5,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 
 /**

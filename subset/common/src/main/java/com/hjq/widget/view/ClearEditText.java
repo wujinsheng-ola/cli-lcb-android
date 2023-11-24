@@ -15,7 +15,7 @@ import java.util.Objects;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
-import com.salton123.common.R;
+import com.salton123.resources.R;
 
 /**
  * author : Android 轮子哥

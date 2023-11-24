@@ -43,8 +43,8 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
 
     public BottomBarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BottomBarLayout);
-        mSmoothScroll = ta.getBoolean(R.styleable.BottomBarLayout_smoothScroll, false);
+        TypedArray ta = context.obtainStyledAttributes(attrs, com.salton123.resources.R.styleable.BottomBarLayout);
+        mSmoothScroll = ta.getBoolean(com.salton123.resources.R.styleable.BottomBarLayout_smoothScroll, false);
         ta.recycle();
     }
 

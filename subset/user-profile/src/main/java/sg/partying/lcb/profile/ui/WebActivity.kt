@@ -21,7 +21,7 @@ import sg.partying.lcb.base.BaseTitleActivity
 @Route(path = Constants.Router.Profile.WEB)
 class WebActivity : BaseTitleActivity() {
     var url = "https://www.salton123.com/privacy-policy"
-    var title = BaseApplication.sInstance.getString(R.string.privacy_policy)
+    var title = BaseApplication.sInstance.getString(com.salton123.translate.R.string.privacy_policy)
     override fun getLayoutId(): Int = R.layout.activity_web_view
 
     private lateinit var mAgentWeb: AgentWeb
