@@ -17,6 +17,9 @@ project(":protocols").projectDir = new File("subset/protocols")
 include ':network'
 project(":network").projectDir = new File("subset/network")
 
+include ':websocket'
+project(":websocket").projectDir = new File("subset/websocket")
+
 include ':crash-core'
 include ':crash-core-no-op'
 project(":crash-core").projectDir = new File("global/crash-core")

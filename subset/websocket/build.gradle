@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    namespace 'sg.olaparty.network'
+    compileSdkVersion "${rootProject.ext.android.compileSdkVersion}" as Integer
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion as Integer
+        targetSdkVersion rootProject.ext.android.targetSdkVersion as Integer
+        multiDexEnabled true
+    }
+
+    android {
+        compileOptions {
+            sourceCompatibility 1.8
+            targetCompatibility 1.8
+        }
+    }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES', 'META-INF/NOTICE', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/proguard/androidx-annotations.pro']
+        }
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api rootProject.ext.otherDependenciesLibs
+
+}
