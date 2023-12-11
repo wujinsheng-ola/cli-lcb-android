@@ -15,6 +15,9 @@ public interface Constants {
 
         interface Live {
             String LIVE_ROOM = "/live/aty/live_room";
+            //主播 观众端分开
+            String LIVE_HOST_ROOM = "/live/aty/live_host_room";
+
         }
 
         interface Profile {

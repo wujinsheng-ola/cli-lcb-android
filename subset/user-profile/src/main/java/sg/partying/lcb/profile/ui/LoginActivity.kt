@@ -58,7 +58,8 @@ class LoginActivity : DelegateActivity() {
             }
         }
         tvDevelopMode.singleClick {
-            RouterManager.goDev(activity())
+            //RouterManager.goDev(activity())
+            RouterManager.goLiveHostRoom(activity())
         }
         viewModel.loginOptions().observe(this) {
             if (it is Ret.Success) {

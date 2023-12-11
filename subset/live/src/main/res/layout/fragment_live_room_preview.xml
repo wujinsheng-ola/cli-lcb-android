@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/previewView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+    <ImageView
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_30"
+        android:src="@drawable/badge_today"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_48"/>
+
+    <RelativeLayout
+        android:layout_marginEnd="@dimen/dp_45"
+        android:layout_marginStart="@dimen/dp_45"
+        android:layout_marginTop="@dimen/dp_112"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="@dimen/dp_660"
+        android:layout_height="@dimen/dp_180">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_18"
+            android:src="@drawable/badge_today"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_150"/>
+
+        <ImageView
+            android:id="@+id/refresh"
+            android:layout_marginEnd="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_18"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/badge_today"
+            android:layout_width="@dimen/dp_41"
+            android:layout_height="@dimen/dp_41"/>
+
+        <TextView
+            android:maxLines="2"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_toEndOf="@+id/icon"
+            android:layout_toStartOf="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        
+        <ImageView
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginBottom="@dimen/dp_21"
+            android:layout_alignBottom="@+id/icon"
+            android:layout_toRightOf="@+id/icon"
+            android:src="@drawable/badge_today"
+            android:layout_width="@dimen/dp_90"
+            android:layout_height="@dimen/dp_30"/>
+        
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginBottom="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_21"
+        android:layout_marginStart="@dimen/dp_21"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_112">
+
+
+        <ImageView
+            android:id="@+id/switch_camera"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_21"
+            android:src="@drawable/badge_today"
+            android:layout_width="@dimen/dp_90"
+            android:layout_height="@dimen/dp_90"/>
+
+        <ImageView
+            android:layout_alignParentEnd="true"
+            android:id="@+id/beauty"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_21"
+            android:src="@drawable/badge_today"
+            android:layout_width="@dimen/dp_90"
+            android:layout_height="@dimen/dp_90"/>
+
+        <TextView
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_toStartOf="@+id/beauty"
+            android:layout_toEndOf="@+id/switch_camera"
+            android:id="@+id/start_live"
+            android:text="start live"
+            android:background="@color/yellow"
+            android:textColor="@color/white"
+            android:layout_width="@dimen/dp_480"
+            android:layout_height="@dimen/dp_112"
+            />
+
+    </RelativeLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
